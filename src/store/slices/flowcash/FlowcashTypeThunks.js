@@ -1,3 +1,4 @@
+
 import { flowcashApi } from "../../../api/flowcashApi";
 import { setFlowcashTypes, startLoading } from "./FlowcashType";
 
@@ -8,11 +9,9 @@ export const FlowcashTypeThunks = {
             dispatch( startLoading() );
 
             // Request HTTP
-            const { data } = await flowcashApi.get("/flowcash/flowcashtype");
+            const rest = await flowcashApi.get("/flowcash/flowcashtype");
 
-            console.log("DESDE TL THUNKS: ", data)
-
-            dispatch(setFlowcashTypes( { rows: data.data}));
+            dispatch(setFlowcashTypes( { rows: rest.data.data.rows }));
         }
-    }
+    }  
 };

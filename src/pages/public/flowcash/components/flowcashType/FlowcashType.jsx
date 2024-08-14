@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
 import { useEffect } from "react";
+import { formatDate } from '../../../../../utils/fomartDate';
 
 
 function showFlowcash(data) {
@@ -66,17 +67,16 @@ function showFlowcash(data) {
 
           <Tbody>
             {
-              data.map(flowcash => {
+              data.map((element, i) => {
                 return (
-                  <Tr key={flowcash.id}>
-                    <Td>{flowcash.name}</Td>
-                    <Td>{flowcash.balance}</Td>
-                    <Td>{flowcash.datetime}</Td>
+                  <Tr key={i}>
+                    <Td>{String(element.name).toLocaleUpperCase()}</Td>
+                    <Td>{element.balance}</Td>
+                    <Td>{ formatDate.getDateFormatedLarge(element.datetime)}</Td>
                   </Tr>
                 );
               })
-            }
-          
+            } 
           </Tbody>
 
         </Table>
@@ -93,17 +93,13 @@ function loading() {
 export default function FlowcashType() {
 
   const dispatch = useDispatch();
-  const flowcashs = useSelector(state => state.flowcashType);
-  const isLoading=flowcashs.isLoading;
+  const { rows, isLoading } = useSelector(state => state.flowcashType);
+
 
   useEffect(() => {
-    
-    dispatch(OperationThunks.getOperations());
     dispatch(FlowcashTypeThunks.getFlowcashTypes());
-    console.log("isLoading? : ", flowcashs.isLoading);
-    console.log("Si Trajo DATOS? : ", flowcashs.data)
-  
-  }, [])
+    dispatch(OperationThunks.getOperations());
+  }, []);
   
 
   return (
@@ -153,10 +149,9 @@ export default function FlowcashType() {
         isLoading ?
           loading()
         : 
-        showFlowcash(flowcashs.data.rows)
+        showFlowcash(rows)
       }
 
-      
     </Box>
   )
 }
