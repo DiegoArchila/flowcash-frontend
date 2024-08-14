@@ -7,6 +7,6 @@ export const formatDate = {
      * @param {String} date 
      */
     getDateFormatedLarge: (date) =>{
-        return  moment(date).format("DD/MM/YYY hh:mm:ss A");
+        return  moment(date).format("DD/MM/YYYY hh:mm:ss A");
     }
 }
