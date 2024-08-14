@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
 import { useEffect } from "react";
-import { formatDate } from '../../../../../utils/fomartDate';
+import { formatDate } from '../../../../../utils/formatDate';
 
 
 function showFlowcash(data) {
