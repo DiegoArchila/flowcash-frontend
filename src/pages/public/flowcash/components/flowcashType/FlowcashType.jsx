@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { 
   Box, 
   Heading, 
@@ -11,14 +13,16 @@ import {
   Td,
   TableContainer,
   Spinner,
+  useDisclosure,
+  Center
 } from '@chakra-ui/react'
 import { FaMoneyBills } from "react-icons/fa6";
 import { IoIosAdd } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
-import { useEffect } from "react";
 import { formatDate } from '../../../../../utils/formatDate';
+import NewFlowcashType from './newFlowcashType';
+import { formatCurrencyCOP } from '../../../../../utils/formatCurrency';
 
 
 function showFlowcash(data) {
@@ -71,8 +75,8 @@ function showFlowcash(data) {
                 return (
                   <Tr key={i}>
                     <Td>{String(element.name).toLocaleUpperCase()}</Td>
-                    <Td>{element.balance}</Td>
-                    <Td>{ formatDate.getDateFormatedLarge(element.datetime)}</Td>
+                    <Td textAlign={"right"}>{ formatCurrencyCOP(element.balance) }</Td>
+                    <Td textAlign={"right"}>{ formatDate.getDateFormatedLarge(element.datetime)}</Td>
                   </Tr>
                 );
               })
@@ -86,12 +90,24 @@ function showFlowcash(data) {
 
 function loading() {
   return (
-    <Spinner size={"lg"}/>
+    <Center mt={3} mb={3}>
+      <Spinner size={"xl"}/>
+    </Center>
   );
 }
 
+
 export default function FlowcashType() {
 
+  //modal handle
+  const { 
+    isOpen: isOpenNewFlowcashType, 
+    onOpen: onOpenNewFlowcashType, 
+    onClose: onCloseNewFlowcashType
+  } = useDisclosure()
+
+
+  // Redux
   const dispatch = useDispatch();
   const { rows, isLoading } = useSelector(state => state.flowcashType);
 
@@ -99,7 +115,7 @@ export default function FlowcashType() {
   useEffect(() => {
     dispatch(FlowcashTypeThunks.getFlowcashTypes());
     dispatch(OperationThunks.getOperations());
-  }, []);
+  }, [dispatch]);
   
 
   return (
@@ -136,10 +152,13 @@ export default function FlowcashType() {
           colorScheme='red'
           size={"md"}
           variant={"ghost"}
+          onClick={onOpenNewFlowcashType}
         >
           Nueva
           <IoIosAdd size={24}/>
         </Button>
+
+        <NewFlowcashType isOpen={isOpenNewFlowcashType} onClose={onCloseNewFlowcashType} />
 
       </HStack>
 
@@ -147,9 +166,15 @@ export default function FlowcashType() {
 
       {
         isLoading ?
-          loading()
+          <>
+            <Center>
+              {loading()}
+            </Center>
+          
+          </>
         : 
         showFlowcash(rows)
+ 
       }
 
     </Box>

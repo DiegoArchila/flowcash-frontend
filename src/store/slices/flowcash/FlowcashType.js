@@ -4,7 +4,9 @@ export const flowcashTypeSlice = createSlice({
   name: 'flowcashs',
   initialState: {
     rows:[],
-    isLoading: false
+    isLoading: false,
+    isCreating: false,
+    errors: null
   },
   reducers: {
     startLoading: (state) =>{
@@ -13,11 +15,32 @@ export const flowcashTypeSlice = createSlice({
     setFlowcashTypes: (state, action) => {
       state.isLoading = false;
       state.rows = action.payload.rows
+    },
+    startCreating: (state) => {
+      state.isCreating=true
+    },
+    created: (state) => {
+      state.isCreating=false
+    },
+    isError: (state, action) => {
+      state.isCreating=false
+      state.errors=action.payload
+    },
+    errorsClear: (state) => {
+      state.errors=null;
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { startLoading, setFlowcashTypes } = flowcashTypeSlice.actions
+export const { 
+  startLoading, 
+  setFlowcashTypes,
+  startCreating,
+  created,
+  isError,
+  errorsClear
+
+} = flowcashTypeSlice.actions
 
 export default flowcashTypeSlice.reducer
