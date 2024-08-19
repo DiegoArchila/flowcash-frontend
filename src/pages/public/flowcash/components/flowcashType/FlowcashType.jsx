@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  Box, 
-  Heading, 
-  HStack, 
+import {
+  Box,
+  Heading,
+  HStack,
   Button,
   Table,
   Thead,
@@ -17,6 +17,8 @@ import {
   Center
 } from '@chakra-ui/react'
 import { FaMoneyBills } from "react-icons/fa6";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
@@ -27,71 +29,98 @@ import { formatCurrencyCOP } from '../../../../../utils/formatCurrency';
 
 function showFlowcash(data) {
   return (
-    
-    <TableContainer>
-        <Table size={"sm"}>
 
-          {/* TABLE HEADER */}
-          <Thead>
-            <Tr>
-              <Th>
-                <Heading 
-                  as={"h5"} 
-                  size={"sx"}
-                  textAlign={'center'}
-                >
-                  {"nombre"}
-                </Heading>
-              </Th>
-              
-              <Th isNumeric>
-                <Heading 
-                  as={"h5"} 
-                  size={"sx"}
-                  textAlign={'center'}
-                >
-                  {"Base"}
-                </Heading>
-              </Th>
+    <TableContainer
+      maxHeight={"246px"}
+      paddingBottom={3}
+      overflowX={"auto"}
+      overflowY={"auto"}
+    >
+      <Table size={"sm"}
 
-              <Th>
-                <Heading 
-                  as={"h5"} 
-                  size={"sx"}
-                  textAlign={'center'}
-                >
-                  {"fecha"}
-                </Heading>
-              </Th>
+      >
 
-            </Tr>
-          </Thead>
+        {/* TABLE HEADER */}
+        <Thead>
+          <Tr>
+            <Th>
+              <Heading
+                as={"h5"}
+                size={"sx"}
+                textAlign={'center'}
+              >
+                {"nombre"}
+              </Heading>
+            </Th>
 
-          {/* TABLE BODY */}
+            <Th isNumeric>
+              <Heading
+                as={"h5"}
+                size={"sx"}
+                textAlign={'center'}
+              >
+                {"Base"}
+              </Heading>
+            </Th>
 
-          <Tbody>
-            {
-              data.map((element, i) => {
-                return (
-                  <Tr key={i}>
-                    <Td>{String(element.name).toLocaleUpperCase()}</Td>
-                    <Td textAlign={"right"}>{ formatCurrencyCOP(element.balance) }</Td>
-                    <Td textAlign={"right"}>{ formatDate.getDateFormatedLarge(element.datetime)}</Td>
-                  </Tr>
-                );
-              })
-            } 
-          </Tbody>
+            <Th>
+              <Heading
+                as={"h5"}
+                size={"sx"}
+                textAlign={'center'}
+              >
+                {"fecha"}
+              </Heading>
+            </Th>
 
-        </Table>
-      </TableContainer>
+            <Th>
+              <Heading
+                as={"h5"}
+                size={"sx"}
+                textAlign={'center'}
+              >
+                {"acciones"}
+              </Heading>
+            </Th>
+
+          </Tr>
+        </Thead>
+
+        {/* TABLE BODY */}
+
+        <Tbody>
+          {
+            data.map((element, i) => {
+              return (
+                <Tr key={i}>
+                  <Td>{String(element.name).toLocaleUpperCase()}</Td>
+                  <Td textAlign={"right"}>{formatCurrencyCOP(element.balance)}</Td>
+                  <Td textAlign={"right"}>{formatDate.getDateFormatedLarge(element.datetime)}</Td>
+                  <Td textAlign={"center"}>
+                    <HStack 
+                      alignContent={"space-between"}
+                      alignItems={"center"}
+                      gap={5}
+                    >
+                      <Box cursor={"pointer"}><MdOutlineDeleteForever size={26} color={"#FF0800"} /></Box>
+                      <Box cursor={"pointer"}><FaRegEdit size={22} color={"#7BA05B"} /></Box>
+                    </HStack>
+                  </Td>
+                </Tr>
+              );
+            })
+          }
+        </Tbody>
+
+      </Table>
+    </TableContainer>
   );
 }
 
 function loading() {
   return (
     <Center mt={3} mb={3}>
-      <Spinner size={"xl"}/>
+      <Spinner size={"xl"} />
     </Center>
   );
 }
@@ -100,9 +129,9 @@ function loading() {
 export default function FlowcashType() {
 
   //modal handle
-  const { 
-    isOpen: isOpenNewFlowcashType, 
-    onOpen: onOpenNewFlowcashType, 
+  const {
+    isOpen: isOpenNewFlowcashType,
+    onOpen: onOpenNewFlowcashType,
     onClose: onCloseNewFlowcashType
   } = useDisclosure()
 
@@ -116,35 +145,43 @@ export default function FlowcashType() {
     dispatch(FlowcashTypeThunks.getFlowcashTypes());
     dispatch(OperationThunks.getOperations());
   }, [dispatch]);
-  
+
 
   return (
-    <Box width={"95%"} bgColor={'#EDF2F7'} borderTopRadius="md" mt={3} pb={3} border={"1px"} borderColor={"#E2E8F0"}>
-      
+    <Box
+      width={"95%"}
+      bgColor={'#EDF2F7'}
+      borderTopRadius="md"
+      mt={3} pb={3}
+      border={"1px"}
+      borderColor={"#E2E8F0"}
+      maxHeight={"305px"}
+    >
+
       {/* HEADER */}
-      
-      <HStack 
-        pt={1} w={"100%"} 
-        justifyContent={"space-between"} 
+
+      <HStack
+        pt={1} w={"100%"}
+        justifyContent={"space-between"}
         px={2} bgColor={"#41d3bd"}
-        borderTopRadius="md"  
+        borderTopRadius="md"
       >
 
         <HStack pb={1}>
           <Box>
-            <FaMoneyBills size={32} color='#2F855A'/>
+            <FaMoneyBills size={32} color='#2F855A' />
           </Box>
 
           <Box borderRadius={2}>
-            <Heading 
+            <Heading
               textAlign={'center'}
               fontFamily={"Input-SemiBold"}
               color={"#276749"}
               as={"h3"}
               size={"md"}
-              >
-                CAJAS
-              </Heading>
+            >
+              CAJAS
+            </Heading>
           </Box>
         </HStack>
 
@@ -155,7 +192,7 @@ export default function FlowcashType() {
           onClick={onOpenNewFlowcashType}
         >
           Nueva
-          <IoIosAdd size={24}/>
+          <IoIosAdd size={24} />
         </Button>
 
         <NewFlowcashType isOpen={isOpenNewFlowcashType} onClose={onCloseNewFlowcashType} />
@@ -170,11 +207,11 @@ export default function FlowcashType() {
             <Center>
               {loading()}
             </Center>
-          
+
           </>
-        : 
-        showFlowcash(rows)
- 
+          :
+          showFlowcash(rows)
+
       }
 
     </Box>

@@ -31,8 +31,6 @@ export default function NewFlowcashType({ isOpen, onClose }) {
   const dispatch = useDispatch();
   const { isCreating, errors } = useSelector(state => state.flowcashType);
 
-  
-    console.log("Esta creando?: ", isCreating);
 
     /**
      * States Form
@@ -62,16 +60,13 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     const HandleForm = (e) => {
         const { name, value } = e.target;
 
-        // is errors
-        if (errors) dispatch(errorsClear());
-
         setnewFlowcash({
             ...newFlowcash,
             [name]: value
         });
         
         if (name=="balance") {
-                setdisplaybalanceFormat(value);
+            setdisplaybalanceFormat(value);
         }   
     }
 
@@ -88,91 +83,94 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     }
 
     const HandleCreate= () => {
+        
+        // is errors
+        if (errors) dispatch(errorsClear());
+
         dispatch(FlowcashTypeThunks.createFlowcashType(newFlowcash));
     }
 
 
-
     return (
         <>
-            <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} >
-                <ModalOverlay bg={"blackAlpha.300"} backdropFilter="blur(10px) hue-rotate(90deg)"/>
-                <ModalContent>
-                    <ModalHeader bgColor={"#6c584c"} color={"white"}>Nueva Caja</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6} mt={3}>
-                        
-                        {/* Error Message */}
-                        <Alert status='error' mb={3} display={!(errors===null) ? "block" : "none"}>
-                            <HStack>
-                                <AlertIcon />
-                                <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
-                            </HStack>
-                            <AlertDescription>{(errors) ? errors[0].message : ""}</AlertDescription>                            
-                        </Alert>
-                        
-                        <form>
+        <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} >
+            <ModalOverlay bg={"blackAlpha.300"} backdropFilter="blur(10px) hue-rotate(90deg)"/>
+            <ModalContent>
+                <ModalHeader bgColor={"#6c584c"} color={"white"}>Nueva Caja</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6} mt={3}>
+                    
+                    {/* Error Message */}
+                    <Alert status='error' mb={3} display={!(errors===null) ? "block" : "none"}>
+                        <HStack>
+                            <AlertIcon />
+                            <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
+                        </HStack>
+                        <AlertDescription>{(errors) ? errors[0].message : ""}</AlertDescription>                            
+                    </Alert>
+                    
+                    <form>
 
-                            {/* FIELD: name */}
-                            <FormControl isRequired isInvalid={checkFormErrors.name} >
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Nombre"}</FormLabel>
-                                <Input type="text" value={[newFlowcash.name]} name="name" onChange={HandleForm} maxLength={64}/>
-                                {
-                                    (checkFormErrors.name) ?
-                                    <FormHelperText>{"Por favor ingresa el nombre de la nueva caja a registrar."}</FormHelperText>
-                                    :
-                                    undefined
-                                }                                
-                            </FormControl>
+                        {/* FIELD: name */}
+                        <FormControl isRequired isInvalid={checkFormErrors.name} >
+                            <FormLabel fontFamily={"Input-SemiBold"}>{"Nombre"}</FormLabel>
+                            <Input type="text" value={[newFlowcash.name]} name="name" onChange={HandleForm} maxLength={64}/>
+                            {
+                                (checkFormErrors.name) ?
+                                <FormHelperText>{"Por favor ingresa el nombre de la nueva caja a registrar."}</FormHelperText>
+                                :
+                                undefined
+                            }                                
+                        </FormControl>
 
-                            {/* FIELD: balance */}
-                            <FormControl isRequired mt={5} isInvalid={checkFormErrors.balance}>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Balance"}</FormLabel>
-                                <Input 
-                                    type="text" 
-                                    value={displaybalanceFormat} 
-                                    name="balance" 
-                                    onChange={HandleForm}
-                                    onBlur={HandleBlurForm}
-                                    onFocus={HandleFocusForm}
-                                    autoComplete="off"
-                                />
+                        {/* FIELD: balance */}
+                        <FormControl isRequired mt={5} isInvalid={checkFormErrors.balance}>
+                            <FormLabel fontFamily={"Input-SemiBold"}>{"Balance"}</FormLabel>
+                            <Input 
+                                type="text" 
+                                value={displaybalanceFormat} 
+                                name="balance" 
+                                onChange={HandleForm}
+                                onBlur={HandleBlurForm}
+                                onFocus={HandleFocusForm}
+                                autoComplete="off"
+                            />
 
-                                {
-                                    (checkFormErrors.balance) ?
-                                    <FormHelperText>{"Ingresa el saldo actual con el cual cuenta esta caja al momento de registrarla. Si la caja esta vacía, solo ingresa cero(0)."}</FormHelperText>
-                                    :
-                                    undefined
-                                }
-                                
-                            </FormControl>
+                            {
+                                (checkFormErrors.balance) ?
+                                <FormHelperText>{"Ingresa el saldo actual con el cual cuenta esta caja al momento de registrarla. Si la caja esta vacía, solo ingresa cero(0)."}</FormHelperText>
+                                :
+                                undefined
+                            }
+                            
+                        </FormControl>
 
-                            {/* FIELD: notes */}
-                            <FormControl mt={5}>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Descripción o notas"}</FormLabel>
-                                <Textarea value={[newFlowcash.notes]} name="notes" onChange={HandleForm} />
-                                <FormHelperText>{"Aquí puedes explicar los detalles de esta caja, o dejar notas. Este campo es opcional."}</FormHelperText>
-                            </FormControl>
+                        {/* FIELD: notes */}
+                        <FormControl mt={5}>
+                            <FormLabel fontFamily={"Input-SemiBold"}>{"Descripción o notas"}</FormLabel>
+                            <Textarea value={[newFlowcash.notes]} name="notes" onChange={HandleForm} />
+                            <FormHelperText>{"Aquí puedes explicar los detalles de esta caja, o dejar notas. Este campo es opcional."}</FormHelperText>
+                        </FormControl>
 
-                        </form>
-                    </ModalBody>
+                    </form>
+                </ModalBody>
 
-                    <ModalFooter>
-                        <Button 
-                            colorScheme='blue' 
-                            mr={3}
-                            isDisabled={(checkFormErrors.balance || checkFormErrors.name)}
-                            isLoading={isCreating}
-                            onClick={()=>{
-                                HandleCreate();
-                            }}
-                        >
-                            Save
-                        </Button>
-                        <Button onClick={onClose}>Cancel</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+                <ModalFooter>
+                    <Button 
+                        colorScheme='blue' 
+                        mr={3}
+                        isDisabled={(checkFormErrors.balance || checkFormErrors.name)}
+                        isLoading={isCreating}
+                        onClick={()=>{
+                            HandleCreate();
+                        }}
+                    >
+                        {"Guardar"}
+                    </Button>
+                    <Button onClick={onClose}>{"Cancelar"}</Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
         </>
     )
 }

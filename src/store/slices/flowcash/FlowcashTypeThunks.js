@@ -1,13 +1,8 @@
 
-import axios, { Axios } from "axios";
 import { flowcashApi } from "../../../api/flowcashApi";
 import { created, isError, setFlowcashTypes, startCreating, startLoading } from "./FlowcashType";
 
 export const FlowcashTypeThunks = {
-
-    global: {
-        errors: null
-    },
 
     getFlowcashTypes: ()=>{
         return async (dispatch, getState)=>{
@@ -31,14 +26,14 @@ export const FlowcashTypeThunks = {
                     NewFlowcash_type
                 });
 
-                dispatch(created);
+                dispatch(created());
 
-                this.getFlowcashTypes();
+                //Update the state:rows
+                dispatch(FlowcashTypeThunks.getFlowcashTypes());
 
 
             } catch (error) {
                 dispatch(created());
-                console.log("Este es el error: ", error.response.data)
                 dispatch(isError(error.response.data));
             }
 
