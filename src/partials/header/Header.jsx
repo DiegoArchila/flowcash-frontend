@@ -12,7 +12,7 @@ function Header() {
       minWidth='max-content'
       alignItems={"center"}
       justifyContent={"space-between"}
-      bgColor={"#3a86ff"}
+      bgColor={"#4B0082"}
       boxShadow={"lg"}
     >
 

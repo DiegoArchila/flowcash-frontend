@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { FaMoneyBills } from "react-icons/fa6";
 import { MdOutlineDeleteForever } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
+import { FaRegEdit, FaRegEye } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
@@ -36,7 +36,9 @@ function showFlowcash(data) {
       overflowX={"auto"}
       overflowY={"auto"}
     >
-      <Table size={"sm"}
+      <Table 
+        size={"sm"}
+        variant={"simple"}
 
       >
 
@@ -96,15 +98,18 @@ function showFlowcash(data) {
                   <Td>{String(element.name).toLocaleUpperCase()}</Td>
                   <Td textAlign={"right"}>{formatCurrencyCOP(element.balance)}</Td>
                   <Td textAlign={"right"}>{formatDate.getDateFormatedLarge(element.datetime)}</Td>
-                  <Td textAlign={"center"}>
-                    <HStack 
-                      alignContent={"space-between"}
-                      alignItems={"center"}
-                      gap={5}
-                    >
-                      <Box cursor={"pointer"}><MdOutlineDeleteForever size={26} color={"#FF0800"} /></Box>
-                      <Box cursor={"pointer"}><FaRegEdit size={22} color={"#7BA05B"} /></Box>
-                    </HStack>
+                  <Td textAlign={"center"}> 
+                    <Center>
+                      <HStack 
+                        alignContent={"space-between"}
+                        alignItems={"center"}
+                        gap={5}
+                      >
+                        <Box cursor={"pointer"}><FaRegEye size={22} color={"#007FFF"} /></Box>
+                        <Box cursor={"pointer"}><FaRegEdit size={22} color={"#7BA05B"} /></Box>
+                        <Box cursor={"pointer"}><MdOutlineDeleteForever size={26} color={"#E23D28"} /></Box>
+                      </HStack>
+                    </Center>
                   </Td>
                 </Tr>
               );
