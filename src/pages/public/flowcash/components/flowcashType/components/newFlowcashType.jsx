@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Button,
@@ -6,7 +6,6 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalCloseButton,
     ModalBody,
     ModalFooter,
     FormControl,
@@ -21,26 +20,41 @@ import {
     HStack
 } from "@chakra-ui/react";
 
-import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
-import { FlowcashTypeThunks } from "../../../../../store/slices/flowcash/FlowcashTypeThunks";
-import { errorsClear } from "../../../../../store/slices/flowcash/FlowcashType";
+import { formatCurrencyCOP } from "../../../../../../utils/formatCurrency";
+import { FlowcashTypeThunks } from "../../../../../../store/slices/flowcash/FlowcashTypeThunks";
+import { errorsClear, createClear } from "../../../../../../store/slices/flowcash/FlowcashType";
 
 export default function NewFlowcashType({ isOpen, onClose }) {
 
     // Redux
   const dispatch = useDispatch();
-  const { isCreating, errors } = useSelector(state => state.flowcashType);
+  const { isCreating, isCreated, errors } = useSelector(state => state.flowcashType);
 
-
+  
+  
+  
     /**
      * States Form
      */
     const [newFlowcash, setnewFlowcash] = useState({
-        name: "",
-        balance: 0,
-        notes: ""
+     name: "",
+     balance: 0,
+     notes: ""
     });
+    
+    useEffect(() => {
+    if (isCreated) {
+        dispatch(createClear());
+        onClose();
+        setnewFlowcash({
+            name: "",
+            balance: 0,
+            notes: ""
+        });
 
+    }
+
+    }, [isCreated, onClose, errors, dispatch]);
      /**
      * Checks the error in the state newFlowcash
      */
@@ -85,8 +99,10 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     const HandleCreate= () => {
         
         // is errors
-        if (errors) dispatch(errorsClear());
-
+        if (errors) {
+            dispatch(errorsClear());
+        }
+        
         dispatch(FlowcashTypeThunks.createFlowcashType(newFlowcash));
     }
 
@@ -94,10 +110,9 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     return (
         <>
         <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} >
-            <ModalOverlay bg={"blackAlpha.300"} backdropFilter="blur(10px) hue-rotate(90deg)"/>
+            <ModalOverlay bg={"blackAlpha.300"} />
             <ModalContent>
                 <ModalHeader bgColor={"#6c584c"} color={"white"}>Nueva Caja</ModalHeader>
-                <ModalCloseButton />
                 <ModalBody pb={6} mt={3}>
                     
                     {/* Error Message */}
@@ -163,11 +178,15 @@ export default function NewFlowcashType({ isOpen, onClose }) {
                         isLoading={isCreating}
                         onClick={()=>{
                             HandleCreate();
+
                         }}
                     >
                         {"Guardar"}
                     </Button>
-                    <Button onClick={onClose}>{"Cancelar"}</Button>
+                    <Button onClick={ () => {
+                        dispatch(errorsClear());
+                        onClose();   
+                    }}>{"Cancelar"}</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

@@ -23,11 +23,15 @@ import { IoIosAdd } from "react-icons/io";
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
 import { formatDate } from '../../../../../utils/formatDate';
-import NewFlowcashType from './newFlowcashType';
+import NewFlowcashType from './components/newFlowcashType';
 import { formatCurrencyCOP } from '../../../../../utils/formatCurrency';
+import DeleteFlowcash from "./components/DeleteFlowcash";
+import { setDelete } from "../../../../../store/slices/flowcash/FlowcashType";
 
 
-function showFlowcash(data) {
+function showFlowcash(data, onOpenDeleteFlowcashType, toDelete, dispatch ) {
+
+   
   return (
 
     <TableContainer
@@ -36,7 +40,7 @@ function showFlowcash(data) {
       overflowX={"auto"}
       overflowY={"auto"}
     >
-      <Table 
+      <Table
         size={"sm"}
         variant={"simple"}
 
@@ -98,16 +102,24 @@ function showFlowcash(data) {
                   <Td>{String(element.name).toLocaleUpperCase()}</Td>
                   <Td textAlign={"right"}>{formatCurrencyCOP(element.balance)}</Td>
                   <Td textAlign={"right"}>{formatDate.getDateFormatedLarge(element.datetime)}</Td>
-                  <Td textAlign={"center"}> 
+                  <Td textAlign={"center"}>
                     <Center>
-                      <HStack 
+                      <HStack
                         alignContent={"space-between"}
                         alignItems={"center"}
                         gap={5}
                       >
                         <Box cursor={"pointer"}><FaRegEye size={22} color={"#007FFF"} /></Box>
                         <Box cursor={"pointer"}><FaRegEdit size={22} color={"#7BA05B"} /></Box>
-                        <Box cursor={"pointer"}><MdOutlineDeleteForever size={26} color={"#E23D28"} /></Box>
+                        <Box cursor={"pointer"}
+                          onClick={ ()=> {
+                            onOpenDeleteFlowcashType();
+                            dispatch(setDelete(i));
+                          }}
+                        >
+                          <MdOutlineDeleteForever size={26} color={"#E23D28"} />
+                          
+                        </Box>
                       </HStack>
                     </Center>
                   </Td>
@@ -138,12 +150,18 @@ export default function FlowcashType() {
     isOpen: isOpenNewFlowcashType,
     onOpen: onOpenNewFlowcashType,
     onClose: onCloseNewFlowcashType
-  } = useDisclosure()
+  } = useDisclosure();
 
+  //AlertDialog
+  const {
+    isOpen: isOpenDeleteFlowcashType,
+    onOpen: onOpenDeleteFlowcashType,
+    onClose: onCloseDeleteFlowcashType
+  } = useDisclosure();
 
   // Redux
   const dispatch = useDispatch();
-  const { rows, isLoading } = useSelector(state => state.flowcashType);
+  const { rows, isLoading, toDelete } = useSelector(state => state.flowcashType);
 
 
   useEffect(() => {
@@ -215,7 +233,13 @@ export default function FlowcashType() {
 
           </>
           :
-          showFlowcash(rows)
+          <>
+            {/* 
+              toDelete is to set the ID in the store for delete in the DB
+            */}
+            {showFlowcash(rows, onOpenDeleteFlowcashType, toDelete, dispatch)}
+            <DeleteFlowcash isOpen={isOpenDeleteFlowcashType} onClose={onCloseDeleteFlowcashType} />
+          </>
 
       }
 
