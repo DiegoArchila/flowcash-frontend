@@ -45,12 +45,13 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     useEffect(() => {
     if (isCreated) {
         dispatch(createClear());
-        onClose();
+        setdisplaybalanceFormat("");
         setnewFlowcash({
             name: "",
             balance: 0,
             notes: ""
         });
+        onClose();
 
     }
 
@@ -121,7 +122,7 @@ export default function NewFlowcashType({ isOpen, onClose }) {
                             <AlertIcon />
                             <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
                         </HStack>
-                        <AlertDescription>{(errors) ? errors[0].message : ""}</AlertDescription>                            
+                        <AlertDescription>{(errors) ? errors[0]?.message : ""}</AlertDescription>                            
                     </Alert>
                     
                     <form>

@@ -16,12 +16,11 @@ import {
     AlertDescription,
     Button,
     Text,
+    useOutsideClick
 } from '@chakra-ui/react';
 
 import { FlowcashTypeThunks } from '../../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import { errorsClear, deleteClear } from '../../../../../../store/slices/flowcash/FlowcashType';
-
-
 
 
 export default function DeleteFlowcash({ onClose, isOpen }) {
@@ -39,10 +38,22 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
     } = useSelector(state => state.flowcashType);
 
     const cancelRef = useRef();
+    const alertDialogRef = useRef();
+
+    /**
+     * Use Hook for when it do clic outside
+     */
+    useOutsideClick({
+        ref: alertDialogRef,
+        handler: () => {
+            handleDeleteErrors();
+        }
+    });
 
     useEffect(() => {
       if(isDeleted){
         dispatch(deleteClear());
+        dispatch(errorsClear());
         onClose();
       }   
     }, [rows, isDeleting, toDelete, isDeleted, errors, onClose, setDelete, dispatch]);
@@ -59,6 +70,12 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
     
     }
 
+    function handleDeleteErrors(){
+        dispatch(deleteClear());
+        dispatch(errorsClear());
+        onClose();
+    }
+
 
     return (
         <>
@@ -67,9 +84,10 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                 isOpen={isOpen}
                 leastDestructiveRef={cancelRef}
                 onClose={onClose}
+                
             >
                 <AlertDialogOverlay>
-                    <AlertDialogContent>
+                    <AlertDialogContent ref={alertDialogRef}>
                         <AlertDialogHeader fontSize='lg' bgColor={"#6c584c"} color={"white"}>
                             {String("Borrar Caja")}
                         </AlertDialogHeader>
@@ -82,18 +100,21 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                                     <AlertIcon />
                                     <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
                                 </HStack>
-                                <AlertDescription>{(errors) ? errors[0].message : ""}</AlertDescription>
+                                <AlertDescription>{(errors) ? errors?.error : ""}</AlertDescription>
                             </Alert>
 
                             <Text>Estas seguro de eliminar la caja: </Text>{(!errors) ? 
-                            <Text fontFamily={"Input-SemiBold"}>{String(rows[toDelete]?.name).toLocaleUpperCase()}?</Text>:
-                            ""}<Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
+                            <Text fontFamily={"Input-SemiBold"}>{String(rows[toDelete]?.name).toLocaleUpperCase()}?</Text> :
+                            <Text fontFamily={"Input-SemiBold"}>{String(rows[toDelete]?.name).toLocaleUpperCase()}?</Text>}
+                            <Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
 
                         </AlertDialogBody>
                             
 
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>
+                            <Button ref={cancelRef} onClick={() => {
+                                handleDeleteErrors();
+                            }}>
                                 Cancelar
                             </Button>
                             <Button 
