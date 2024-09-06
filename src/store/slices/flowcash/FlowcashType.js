@@ -12,11 +12,13 @@ export const flowcashTypeSlice = createSlice({
     
     //DELETE
     isDeleting: false, // deleting in process
-    toDelete: null, //storage the ID to delete
     isDeleted: false, // confirm deleted successfull
 
     //ERRORS
-    errors: null
+    errors: null,
+
+    //Target
+    target:null //this is for set the id to edit or delete
   },
   reducers: {
     startLoading: (state) => {
@@ -32,7 +34,7 @@ export const flowcashTypeSlice = createSlice({
     startCreating: (state) => {
       state.isCreating = true
     },
-    isCreated: (state) => {
+    setCreated: (state) => {
       state.isCreating = false;
       state.isCreated = true;
     },
@@ -54,8 +56,8 @@ export const flowcashTypeSlice = createSlice({
       state.isDeleted=false;
     },
     //set the ID to deleted 
-    setDelete: (state, action) => { //sets the id to delete
-      state.toDelete = action.payload;
+    setTarget: (state, action) => { //sets the id to delete
+      state.target = action.payload;
     },
 
     //ERRORS
@@ -81,18 +83,20 @@ export const {
   isCreated,
   createClear,
 
+  setCreated,
+
   //DELETE
   isDeleting, // deleting in process
-  toDelete, //storage the ID to delete
+  target, //storage the ID to delete
   isDeleted, // confirm deleted successfull
 
   startDeleting, //Initialize the deleting
   setDeleted, //Set the done the delete
   deleteClear, //Clear all states in delete
-  setDelete, //sets the id to delete
+  setTarget, //sets the id to delete
 
   isError,
-  errorsClear
+  errorsClear,
 
 } = flowcashTypeSlice.actions
 

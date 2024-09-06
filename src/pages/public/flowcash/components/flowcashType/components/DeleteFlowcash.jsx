@@ -30,10 +30,9 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
 
     const {
         isDeleting, // deleting in process
-        toDelete, //storage the ID to delete
+        target, //storage the ID to delete
         isDeleted, // confirm deleted successfull
         errors,
-        setDelete,
         rows
     } = useSelector(state => state.flowcashType);
 
@@ -56,7 +55,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
         dispatch(errorsClear());
         onClose();
       }   
-    }, [rows, isDeleting, toDelete, isDeleted, errors, onClose, setDelete, dispatch]);
+    }, [rows, isDeleting, target, isDeleted, errors, onClose, dispatch]);
     
 
     function handleDelete(id) {
@@ -104,8 +103,8 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                             </Alert>
 
                             <Text>Estas seguro de eliminar la caja: </Text>{(!errors) ? 
-                            <Text fontFamily={"Input-SemiBold"}>{String(rows[toDelete]?.name).toLocaleUpperCase()}?</Text> :
-                            <Text fontFamily={"Input-SemiBold"}>{String(rows[toDelete]?.name).toLocaleUpperCase()}?</Text>}
+                            <Text fontFamily={"Input-SemiBold"}>{String(rows[target]?.name).toLocaleUpperCase()}?</Text> :
+                            <Text fontFamily={"Input-SemiBold"}>{String(rows[target]?.name).toLocaleUpperCase()}?</Text>}
                             <Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
 
                         </AlertDialogBody>
@@ -121,7 +120,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                                 colorScheme='red'
                                 isLoading={isDeleting} 
                                 onClick={()=>{
-                                    handleDelete(rows[toDelete]?.id);
+                                    handleDelete(rows[target]?.id);
                                 }} 
                                 ml={3}>
                                 Eliminar

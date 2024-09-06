@@ -1,20 +1,16 @@
 
 import { flowcashApi } from "../../../api/flowcashApi";
 import { 
-    isCreated, 
+    setCreated, 
     isError, 
     setFlowcashTypes, 
     startCreating, 
     startLoading, 
     createClear,
-    isDeleting, // deleting in process
-    toDelete, //storage the ID to delete
-    isDeleted, // confirm deleted successfull
 
     startDeleting, //Initialize the deleting
     setDeleted, //Set the done the delete
     deleteClear, //Clear all states in delete
-    setDelete, //sets the id to delete
 
 } from "./FlowcashType";
 
@@ -29,7 +25,10 @@ export const FlowcashTypeThunks = {
             // Request HTTP
             const resp = await flowcashApi.get("/flowcash/flowcashtype");
 
-            dispatch(setFlowcashTypes({ rows: resp.data.data.rows }));
+            let data= resp.data.data.rows;
+            data = data.sort((a, b) => a.name - b.name);
+
+            dispatch(setFlowcashTypes({ rows: data }));
         }
     },
 
@@ -45,7 +44,36 @@ export const FlowcashTypeThunks = {
                     NewFlowcash_type
                 });
 
-                dispatch(isCreated());
+                dispatch(setCreated());
+
+                //Update the state:rows
+                dispatch(FlowcashTypeThunks.getFlowcashTypes());
+
+
+            } catch (error) {
+                dispatch(createClear());
+                dispatch(isError(error.response.data));
+            }
+
+        }
+    },
+
+    updateFlowcashType: (updateFlowcash_type, id) => {
+        return async (dispatch, getState) => {
+
+            const { isCreated } = getState().flowcashType;
+
+            try {
+                dispatch(startCreating());
+
+
+                await flowcashApi.post(`/flowcash/flowcashtype/${id}/update`, {
+                    updateFlowcash_type
+                });
+
+                dispatch(setCreated());
+
+                console.log("Acá en el thunks isCreated", isCreated)
 
                 //Update the state:rows
                 dispatch(FlowcashTypeThunks.getFlowcashTypes());

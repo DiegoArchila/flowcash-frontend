@@ -32,7 +32,6 @@ export default function NewFlowcashType({ isOpen, onClose }) {
 
   
   
-  
     /**
      * States Form
      */
@@ -56,10 +55,11 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     }
 
     }, [isCreated, onClose, errors, dispatch]);
-     /**
+    
+    /**
      * Checks the error in the state newFlowcash
      */
-     const checkFormErrors = {
+    const checkFormErrors = {
         name: newFlowcash.name === "" || newFlowcash.name === null,
         balance: newFlowcash.balance === "" || newFlowcash.balance === null
     }

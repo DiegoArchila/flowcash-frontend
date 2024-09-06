@@ -78,3 +78,11 @@ main{
   font-weight: normal;
   font-style: normal;
 }
+
+/* Parrafs */
+@font-face {
+  font-family: "Parrafs-light";
+  src: url('./src/assets/fonts/Poppins/Poppins-Light.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
