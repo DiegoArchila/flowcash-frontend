@@ -114,8 +114,8 @@ function showFlowcash(
                         {/* Open Detail Flowcash */}
                         <Box cursor={"pointer"}
                           onClick={()=>{
-                            onOpenDetail();
                             dispatch(setTarget(i));
+                            onOpenDetail();
                           }}
                         >
                           <FaRegEye size={22} color={"#007FFF"}/>
@@ -124,8 +124,8 @@ function showFlowcash(
                         {/* COLUMN: Edit */}
                         <Box cursor={"pointer"}
                           onClick={()=>{
-                            onOpenEdit();
                             dispatch(setTarget(i));
+                            onOpenEdit();
                           }}
                         >
                           <FaRegEdit size={22} color={"#7BA05B"} />
@@ -134,8 +134,8 @@ function showFlowcash(
                         {/* COLUMN: Delete */}
                         <Box cursor={"pointer"}
                           onClick={ ()=> {
-                            onOpenDelete();
                             dispatch(setTarget(i));
+                            onOpenDelete();
                           }}
                         >
                           <MdOutlineDeleteForever size={26} color={"#E23D28"} />
@@ -193,8 +193,7 @@ export default function FlowcashType() {
 
   // Redux
   const dispatch = useDispatch();
-  const { rows, isLoading, target } = useSelector(state => state.flowcashType);
-
+  const { rows=[], isLoading, target } = useSelector(state => state.flowcashType);
 
   useEffect(() => {
     dispatch(FlowcashTypeThunks.getFlowcashTypes());

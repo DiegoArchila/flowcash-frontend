@@ -29,8 +29,6 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
     const dispatch = useDispatch();
     const { isCreated, isCreating, errors, rows, target } = useSelector(state => state.flowcashType);
 
-
-
     /**
      * States Form
     */
@@ -46,6 +44,7 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
 
         if (isCreated) {
             onCloseEdit();
+            dispatch(setTarget(null));
             setEditFlowcash({
                 name: undefined,
                 notes: undefined
@@ -68,7 +67,7 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
         console.log("RENDERIZACION");
 
 
-    }, [isCreated, onCloseEdit, dispatch, rows, target, initialized]);
+    }, [isCreated, rows, onCloseEdit, dispatch, target, initialized]);
 
     /**
      * Checks the error in the state newFlowcash
@@ -98,6 +97,8 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
         }
 
         dispatch(FlowcashTypeThunks.updateFlowcashType(editFlowcash, rows[target]?.id));
+
+        console.log("estoy dentro de HandleCreate, y el estado actual de isCreated es: ", isCreated);
         
 
     }
@@ -164,6 +165,7 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
                             });
                             setInitialized(false);
                             dispatch(createClear());
+                            dispatch(setTarget(null));
                             onCloseEdit();
                         }}>{"Cancelar"}</Button>
                     </ModalFooter>

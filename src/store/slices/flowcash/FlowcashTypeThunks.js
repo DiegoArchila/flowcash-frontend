@@ -25,8 +25,7 @@ export const FlowcashTypeThunks = {
             // Request HTTP
             const resp = await flowcashApi.get("/flowcash/flowcashtype");
 
-            let data= resp.data.data.rows;
-            data = data.sort((a, b) => a.name - b.name);
+            const data= resp.data.data.rows.sort((a, b) => a.name.localeCompare(b.name));
 
             dispatch(setFlowcashTypes({ rows: data }));
         }
@@ -61,27 +60,28 @@ export const FlowcashTypeThunks = {
     updateFlowcashType: (updateFlowcash_type, id) => {
         return async (dispatch, getState) => {
 
-            const { isCreated } = getState().flowcashType;
-
+            
             try {
                 dispatch(startCreating());
-
-
+                
+                
                 await flowcashApi.post(`/flowcash/flowcashtype/${id}/update`, {
                     updateFlowcash_type
                 });
-
-                dispatch(setCreated());
-
-                console.log("Acá en el thunks isCreated", isCreated)
-
-                //Update the state:rows
-                dispatch(FlowcashTypeThunks.getFlowcashTypes());
-
+                
+                
+                dispatch(setCreated()); //establece isCreated=true
+                
+                // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
+                setTimeout(() => {
+                    dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
+                }, 50);
+               
+                
 
             } catch (error) {
                 dispatch(createClear());
-                dispatch(isError(error.response.data));
+                dispatch(isError(error.response?.data));
             }
 
         }
