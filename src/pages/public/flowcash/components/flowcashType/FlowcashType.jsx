@@ -21,10 +21,9 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { FaRegEdit, FaRegEye } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
-import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
-import NewFlowcashType from './components/newFlowcashType';
+import NewFlowcashType from './components/Create';
 import { formatCurrencyCOP } from '../../../../../utils/formatCurrency';
-import DeleteFlowcash from "./components/DeleteFlowcash";
+import DeleteFlowcash from "./components/Delete";
 import { setTarget } from "../../../../../store/slices/flowcash/FlowcashType";
 import Detail from "./components/Detail";
 import Edit from "./components/Edit";
@@ -197,7 +196,6 @@ export default function FlowcashType() {
 
   useEffect(() => {
     dispatch(FlowcashTypeThunks.getFlowcashTypes());
-    dispatch(OperationThunks.getOperations());
   }, [dispatch]);
 
 

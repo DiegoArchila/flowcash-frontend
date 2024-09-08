@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const operationSlice = createSlice({
-  name: 'operation',
+export const operationTypeSlice = createSlice({
+  name: 'operationType',
   initialState: {
     data:[], // Storage the data
     isLoading: false,
@@ -19,7 +19,7 @@ export const operationSlice = createSlice({
     startLoadingData: (state) =>{
         state.isLoading= true;
     },
-    setOperationData: (state, action) => {
+    setOperationTypeData: (state, action) => {
       state.isLoading = false;
       state.data = action.payload.data
     },
@@ -83,7 +83,7 @@ export const {
 
   //load Data
   startLoadingData, 
-  setOperationData,
+  setOperationTypeData,
   
   //start States
   startCreating,
@@ -106,6 +106,6 @@ export const {
   //reset states
   resetStates
 
-} = operationSlice.actions
+} = operationTypeSlice.actions
 
-export default operationSlice.reducer
+export default operationTypeSlice.reducer

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const flowcashTypeSlice = createSlice({
-  name: 'flowcashs',
+  name: 'flowcashType',
   initialState: {
     rows: [],
     isLoading: false,

@@ -46,7 +46,10 @@ export const FlowcashTypeThunks = {
                 dispatch(setCreated());
 
                 //Update the state:rows
-                dispatch(FlowcashTypeThunks.getFlowcashTypes());
+                // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
+                setTimeout(() => {
+                    dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
+                }, 50);
 
 
             } catch (error) {
@@ -58,7 +61,7 @@ export const FlowcashTypeThunks = {
     },
 
     updateFlowcashType: (updateFlowcash_type, id) => {
-        return async (dispatch, getState) => {
+        return async (dispatch) => {
 
             
             try {
@@ -99,7 +102,10 @@ export const FlowcashTypeThunks = {
                 dispatch(setDeleted());
 
                 //Update the state:rows
-                dispatch(FlowcashTypeThunks.getFlowcashTypes());
+                // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
+                setTimeout(() => {
+                    dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
+                }, 50);
                 
             } catch (error) {
                 dispatch(deleteClear());
