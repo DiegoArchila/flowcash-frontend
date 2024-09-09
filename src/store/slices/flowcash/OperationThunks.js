@@ -83,8 +83,10 @@ export const OperationThunks = {
                 
                 dispatch(setDeleted());
 
-                //Update the state:rows
-                dispatch(OperationThunks.getOperations());
+                // ass a small delay of 100ms before to continue with other operations
+                setTimeout(() => {
+                    dispatch(OperationThunks.getOperations());
+                }, 50);
                 
             } catch (error) {
                 dispatch(setErrors(error.response.data));

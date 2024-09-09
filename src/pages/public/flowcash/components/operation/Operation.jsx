@@ -18,7 +18,6 @@ import {
     Tag,
     TagLabel,
     TagLeftIcon,
-    TagRightIcon,
 } from '@chakra-ui/react'
 
 //ICONS
@@ -31,7 +30,7 @@ import { FaTurnDown, FaTurnUp } from "react-icons/fa6";
 import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
 import NewFlowcashType from './components/Create';
 import DeleteFlowcash from "./components/Delete";
-import { setTarget } from "../../../../../store/slices/flowcash/FlowcashType";
+import { setTarget } from "../../../../../store/slices/flowcash/Operation";
 import Detail from "./components/Detail";
 import Edit from "./components/Edit";
 
@@ -40,7 +39,7 @@ function showFlowcash(
     data, //Rows in the state
     onOpenDelete,//Reference to windows delete flowcashtype
     onOpenDetail, //Reference to show details flowcashtype
-    target, // Target to any event: delete, detail or delete,
+    //target, // Target to any event: delete, detail or delete,
     onOpenEdit, //Reference to windows Edit flowcashtype
     dispatch,
     dataOperationType //Array of data's OperationType
@@ -122,8 +121,7 @@ function showFlowcash(
                                                             <TagLeftIcon as={(e.is_sum) ? FaTurnDown : FaTurnUp} />
                                                             <TagLabel fontSize={11} >{String(e.type).toLocaleUpperCase()}</TagLabel>
                                                         </Tag>
-                                                    </Td>);
-                                            
+                                            </Td>);                                            
                                         }
                                     })}                                    
 
@@ -219,7 +217,7 @@ export default function Operation() {
 
     // Redux
     const dispatch = useDispatch();
-    const { data = [], isLoading, target } = useSelector(state => state.operation);
+    const { data = [], isLoading} = useSelector(state => state.operation);
     const { data: dataOperationType } = useSelector(state => state.operationType);
 
     useEffect(() => {
@@ -299,7 +297,7 @@ export default function Operation() {
                             data,
                             onOpenDelete,
                             onOpenDetail,
-                            target,
+                            //target,
                             onOpenEdit,
                             dispatch,
                             dataOperationType

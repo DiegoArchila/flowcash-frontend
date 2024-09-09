@@ -19,7 +19,7 @@ import {
     useOutsideClick
 } from '@chakra-ui/react';
 
-import { FlowcashTypeThunks } from '../../../../../../store/slices/flowcash/FlowcashTypeThunks';
+import { OperationThunks } from '../../../../../../store/slices/flowcash/OperationThunks';
 import { errorsClear, deleteClear } from '../../../../../../store/slices/flowcash/FlowcashType';
 
 
@@ -29,12 +29,12 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
     const dispatch = useDispatch();
 
     const {
-        isDeleting, // deleting in process
+        inProcess, // deleting in process
         target, //storage the ID to delete
-        isDeleted, // confirm deleted successfull
+        isDone, // confirm deleted successfull
         errors,
-        rows
-    } = useSelector(state => state.flowcashType);
+        data=[]
+    } = useSelector(state => state.operation);
 
     const cancelRef = useRef();
     const alertDialogRef = useRef();
@@ -49,13 +49,14 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
         }
     });
 
-    useEffect(() => {
-      if(isDeleted){
+    useEffect( () => {
+      if(isDone){
         dispatch(deleteClear());
         dispatch(errorsClear());
         onClose();
-      }   
-    }, [rows, isDeleting, target, isDeleted, errors, onClose, dispatch]);
+      }
+
+    }, [errors, onClose, dispatch, inProcess, isDone, data, target]);
     
 
     function handleDelete(id) {
@@ -65,7 +66,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
             dispatch(errorsClear());
         }
     
-        dispatch(FlowcashTypeThunks.deleteFlowcashType(id));
+        dispatch(OperationThunks.deleteOperation(id));
     
     }
 
@@ -88,7 +89,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                 <AlertDialogOverlay>
                     <AlertDialogContent ref={alertDialogRef}>
                         <AlertDialogHeader fontSize='lg' bgColor={"#6c584c"} color={"white"}>
-                            {String("Borrar Caja")}
+                            {String("Borrar operación")}
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
@@ -102,9 +103,9 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                                 <AlertDescription>{(errors) ? errors?.error : ""}</AlertDescription>
                             </Alert>
 
-                            <Text>Estas seguro de eliminar la caja: </Text>{(!errors) ? 
-                            <Text fontFamily={"Input-SemiBold"}>{String(rows[target]?.name).toLocaleUpperCase()}?</Text> :
-                            <Text fontFamily={"Input-SemiBold"}>{String(rows[target]?.name).toLocaleUpperCase()}?</Text>}
+                            <Text>Estas seguro de eliminar la operación: </Text>{(!errors) ? 
+                            <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text> :
+                            <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text>}
                             <Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
 
                         </AlertDialogBody>
@@ -118,9 +119,9 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                             </Button>
                             <Button 
                                 colorScheme='red'
-                                isLoading={isDeleting} 
+                                isLoading={inProcess} 
                                 onClick={()=>{
-                                    handleDelete(rows[target]?.id);
+                                    handleDelete(data[target]?.id);
                                 }} 
                                 ml={3}>
                                 Eliminar
