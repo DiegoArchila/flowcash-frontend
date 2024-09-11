@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -5,187 +6,21 @@ import {
     Heading,
     HStack,
     Button,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableContainer,
     Spinner,
     useDisclosure,
     Center,
-    Tag,
-    TagLabel,
-    TagLeftIcon,
 } from '@chakra-ui/react'
 
 //ICONS
 import { PiMathOperationsFill } from "react-icons/pi";
-import { MdOutlineDeleteForever } from "react-icons/md";
-import { FaRegEdit, FaRegEye } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
-import { FaTurnDown, FaTurnUp } from "react-icons/fa6";
-
-import { OperationThunks } from '../../../../../store/slices/flowcash/OperationThunks';
-import NewFlowcashType from './components/Create';
+import Create from './components/Create';
 import DeleteFlowcash from "./components/Delete";
-import { setTarget } from "../../../../../store/slices/flowcash/Operation";
 import Detail from "./components/Detail";
 import Edit from "./components/Edit";
-
-
-function showFlowcash(
-    data, //Rows in the state
-    onOpenDelete,//Reference to windows delete flowcashtype
-    onOpenDetail, //Reference to show details flowcashtype
-    //target, // Target to any event: delete, detail or delete,
-    onOpenEdit, //Reference to windows Edit flowcashtype
-    dispatch,
-    dataOperationType //Array of data's OperationType
-    ) {
-
-
-    return (
-
-        <TableContainer
-            maxHeight={"246px"}
-            paddingBottom={3}
-            overflowX={"auto"}
-            overflowY={"auto"}
-        >
-            <Table
-                size={"sm"}
-                variant={"simple"}
-
-            >
-
-                {/* TABLE HEADER */}
-                <Thead>
-                    <Tr>
-                        <Th>
-                            <Heading
-                                as={"h5"}
-                                size={"sx"}
-                                textAlign={'center'}
-                            >
-                                {"nombre"}
-                            </Heading>
-                        </Th>
-
-                        <Th isNumeric>
-                            <Heading
-                                as={"h5"}
-                                size={"sx"}
-                                textAlign={'center'}
-                            >
-                                {"tipo"}
-                            </Heading>
-                        </Th>
-                        <Th>
-                            <Heading
-                                as={"h5"}
-                                size={"sx"}
-                                textAlign={'center'}
-                            >
-                                {"acciones"}
-                            </Heading>
-                        </Th>
-
-                    </Tr>
-                </Thead>
-
-                {/* TABLE BODY */}
-
-                <Tbody>
-                    {
-                        data.map((element, i) => {
-                            return (
-                                <Tr key={i}>
-
-                                    {/* COLUMN: name */}
-                                    <Td fontFamily={"Parrafs-light"}>{String(element.type).toLocaleUpperCase()}</Td>
-
-                                    {/* COLUMN: type */}
-                                    {dataOperationType.map((e,i)=>{
-                                        if (e.id==element.operation_type_id) {
-                                            let color="#BF4F51CC";
-                                            let fontColor="#FFFFFF";
-                                            
-                                            if (e.is_sum) {
-                                                color="#7BA05B";
-                                            }
-
-                                            return (<Td key={e.type+i} textAlign={"center"}>
-                                                        <Tag size={"sm"} bgColor={color} variant={"outline"} color={fontColor}>
-                                                            <TagLeftIcon as={(e.is_sum) ? FaTurnDown : FaTurnUp} />
-                                                            <TagLabel fontSize={11} >{String(e.type).toLocaleUpperCase()}</TagLabel>
-                                                        </Tag>
-                                            </Td>);                                            
-                                        }
-                                    })}                                    
-
-
-                                    {/* COLUMN: Actions */}
-                                    <Td textAlign={"center"}>
-                                        <Center>
-                                            <HStack
-                                                alignContent={"space-between"}
-                                                alignItems={"center"}
-                                                gap={5}
-                                            >
-
-                                                {/* Open Detail Flowcash */}
-                                                <Box cursor={"pointer"}
-                                                    onClick={() => {
-                                                        dispatch(setTarget(i));
-                                                        onOpenDetail();
-                                                    }}
-                                                >
-                                                    <FaRegEye size={22} color={"#007FFF"} />
-                                                </Box>
-
-                                                {/* COLUMN: Edit */}
-                                                <Box cursor={"pointer"}
-                                                    onClick={() => {
-                                                        dispatch(setTarget(i));
-                                                        onOpenEdit();
-                                                    }}
-                                                >
-                                                    <FaRegEdit size={22} color={"#7BA05B"} />
-                                                </Box>
-
-                                                {/* COLUMN: Delete */}
-                                                <Box cursor={"pointer"}
-                                                    onClick={() => {
-                                                        dispatch(setTarget(i));
-                                                        onOpenDelete();
-                                                    }}
-                                                >
-                                                    <MdOutlineDeleteForever size={26} color={"#E23D28"} />
-                                                </Box>
-                                            </HStack>
-                                        </Center>
-                                    </Td>
-                                </Tr>
-                            );
-                        })
-                    }
-                </Tbody>
-
-            </Table>
-        </TableContainer>
-    );
-}
-
-function loading() {
-    return (
-        <Center mt={3} mb={3}>
-            <Spinner size={"xl"} />
-        </Center>
-    );
-}
-
+import TableOperation from "./components/Table";
+import { OperationThunks } from "../../../../../store/slices/flowcash/OperationThunks";
+import { clearTarget } from "../../../../../store/slices/flowcash/Operation";
 
 export default function Operation() {
 
@@ -216,19 +51,26 @@ export default function Operation() {
     } = useDisclosure();
 
     // Redux
+    const { isLoading, isDone } = useSelector(state => state.operation);
+    // Redux
     const dispatch = useDispatch();
-    const { data = [], isLoading} = useSelector(state => state.operation);
-    const { data: dataOperationType } = useSelector(state => state.operationType);
 
     useEffect(() => {
         dispatch(OperationThunks.getOperations());
-    }, [dispatch]);
 
+        if (isDone) {
+            onCloseDetail();
+            onCloseDelete();
+            onCloseEdit();
+            dispatch(clearTarget());
+        }
+
+    }, [dispatch, isDone]);
 
     return (
         <Box
             width={"95%"}
-            bgColor={'#EDF2F7'}
+            bgColor={'#FFFFFF'}
             borderTopRadius="md"
             mt={3} pb={3}
             border={"1px"}
@@ -274,7 +116,7 @@ export default function Operation() {
                     <IoIosAdd size={24} />
                 </Button>
 
-                <NewFlowcashType isOpen={isOpenNew} onClose={onCloseNew} />
+                <Create isOpen={isOpenNew} onClose={onCloseNew} />
 
             </HStack>
 
@@ -283,26 +125,15 @@ export default function Operation() {
             {
                 isLoading ?
                     <>
-                        <Center>
-                            {loading()}
+                        <Center mt={3} mb={3}>
+                            <Spinner size={"xl"} />
                         </Center>
-
                     </>
                     :
                     <>
-                        {/* 
-              target is to set the ID in the store for delete in the DB
-            */}
-                        {showFlowcash(
-                            data,
-                            onOpenDelete,
-                            onOpenDetail,
-                            //target,
-                            onOpenEdit,
-                            dispatch,
-                            dataOperationType
-                        )
-                        }
+                        {/*target is to set the ID in the store for delete in the DB*/}
+                        
+                        <TableOperation onOpenDelete={onOpenDelete} onOpenDetail={onOpenDetail} onOpenEdit={onOpenEdit} />
 
                         {/* Windows to show when the action id dispatch or deploy */}
                         <DeleteFlowcash isOpen={isOpenDelete} onClose={onCloseDelete} />

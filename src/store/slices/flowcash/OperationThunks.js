@@ -5,14 +5,23 @@ export const OperationThunks = {
 
     getOperations: () => {
         return async (dispatch) => {
-            dispatch(startLoadingData());
 
-            // Request HTTP
-            const resp = await flowcashApi.get("/flowcash/operation");
+            try {
+                dispatch(startLoadingData());
+    
+                // Request HTTP
+                const resp = await flowcashApi.get("/flowcash/operation");
+    
+                const data= resp.data.data.rows.sort((a, b) => a.type.localeCompare(b.type));
+    
+                dispatch(setOperationData({ data: data }));
+                
+            } catch (error) {
+                dispatch(setErrors(error.response.data));
+                dispatch(resetStates());
+            }
 
-            const data= resp.data.data.rows.sort((a, b) => a.type.localeCompare(b.type));
 
-            dispatch(setOperationData({ data: data }));
         }
     },
 
@@ -30,8 +39,16 @@ export const OperationThunks = {
 
                 dispatch(setCreated());
 
+                
                 //Update the state:rows
-                dispatch(OperationThunks.getOperations());
+                dispatch(startLoadingData());
+                
+                // Request HTTP
+                const resp = await flowcashApi.get("/flowcash/operation");
+
+                const data= resp.data.data.rows.sort((a, b) => a.type.localeCompare(b.type));
+
+                dispatch(setOperationData({ data: data }));
 
 
             } catch (error) {
@@ -43,7 +60,7 @@ export const OperationThunks = {
     },
 
     updateOperation: (updateOperation, id) => {
-        return async (dispatch) => {
+        return async (dispatch, getState) => {
 
             
             try {
@@ -57,13 +74,12 @@ export const OperationThunks = {
                 
                 dispatch(setUpdated()); //set the operation as done
                 
-                // ass a small delay of 100ms before to continue with other operations
-                setTimeout(() => {
+                const { isDone } = getState().operation;
+                if (isDone) {
                     dispatch(OperationThunks.getOperations());
-                }, 50);
-               
-                
+                }                
 
+               
             } catch (error) {
                 dispatch(setErrors(error.response.data));
                 dispatch(resetStates());
@@ -81,12 +97,10 @@ export const OperationThunks = {
                 // Request HTTP
                 await flowcashApi.delete(`/flowcash/operation/${id}/delete`);
                 
-                dispatch(setDeleted());
+                await dispatch(setDeleted());
 
                 // ass a small delay of 100ms before to continue with other operations
-                setTimeout(() => {
-                    dispatch(OperationThunks.getOperations());
-                }, 50);
+                await dispatch(OperationThunks.getOperations());
                 
             } catch (error) {
                 dispatch(setErrors(error.response.data));

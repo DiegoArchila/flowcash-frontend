@@ -4,7 +4,7 @@ export const operationSlice = createSlice({
   name: 'operation',
   initialState: {
     data:[], // Storage the data
-    isLoading: false,
+    isLoading: false, // loading data
 
     inProcess:false,
     isDone:false,

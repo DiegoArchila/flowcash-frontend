@@ -35,6 +35,14 @@ main{
   font-style: normal;
 }
 
+/* Label */
+@font-face {
+  font-family: "Label-Light";
+  src: url('./src/assets/fonts/Ubuntu/Ubuntu-Light.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @font-face {
   font-family: "Label-Medium";
   src: url('./src/assets/fonts/Ubuntu/Ubuntu-Medium.ttf');
@@ -71,6 +79,13 @@ main{
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Input-Light";
+  src: url('./src/assets/fonts/Montserrat/static/Montserrat-Light.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Parrafs */
 @font-face {
   font-family: "Parrafs-regular";
@@ -83,6 +98,14 @@ main{
 @font-face {
   font-family: "Parrafs-light";
   src: url('./src/assets/fonts/Poppins/Poppins-Light.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Parrafs */
+@font-face {
+  font-family: "Parrafs-Prices";
+  src: url('./src/assets/fonts/PT_Sans/PTSans-Regular.ttf');
   font-weight: normal;
   font-style: normal;
 }

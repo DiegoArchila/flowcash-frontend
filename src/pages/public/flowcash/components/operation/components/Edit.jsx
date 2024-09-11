@@ -17,64 +17,71 @@ import {
     AlertIcon,
     AlertTitle,
     AlertDescription,
-    HStack
+    HStack,
+    Select
 } from "@chakra-ui/react";
 
-import { FlowcashTypeThunks } from "../../../../../../store/slices/flowcash/FlowcashTypeThunks";
-import { errorsClear, createClear, setTarget } from "../../../../../../store/slices/flowcash/FlowcashType";
+import { OperationThunks } from "../../../../../../store/slices/flowcash/OperationThunks";
+import { errorsClear, resetStates, clearTarget } from "../../../../../../store/slices/flowcash/Operation";
 
 export default function Edit({ isOpenEdit, onCloseEdit }) {
 
     // Redux
     const dispatch = useDispatch();
-    const { isCreated, isCreating, errors, rows, target } = useSelector(state => state.flowcashType);
+    const {
+        inProcess, // deleting in process
+        target, //storage the ID to delete
+        isDone, // confirm deleted successfull
+        errors,
+        data = []
+    } = useSelector(state => state.operation);
+
+    const { data: dataOperationType } = useSelector(state => state.operationType);
 
     /**
      * States Form
     */
-    const [editFlowcash, setEditFlowcash] = useState({
-        name: rows[target]?.name,
-        notes: rows[target]?.notes
-    });
+    const [editOperation, setEditOperation] = useState({
+        type: data[target]?.type,
+        operation_type_id: data[target]?.operation_type_id,
+        notes: data[target]?.notes
+    });;
 
-    const [initialized, setInitialized] = useState(false);
-
+    
+    function CloseComponent() {
+        onCloseEdit();
+        dispatch(clearTarget());
+        dispatch(resetStates());
+        setEditOperation({
+            type: undefined,
+            operation_type_id: undefined,
+            notes: undefined
+        });
+        
+    }
+    
     useEffect(() => {
-        console.log("ESta Actualizado ya?: ", isCreated);
+      if(target!= null){
+        setEditOperation({
+            type: data[target]?.type,
+            operation_type_id: data[target]?.operation_type_id,
+            notes: data[target]?.notes
+      });
 
-        if (isCreated) {
-            onCloseEdit();
-            dispatch(setTarget(null));
-            setEditFlowcash({
-                name: undefined,
-                notes: undefined
-            });
-            console.log("Se supone que ya debi haberme cerrado");
-            dispatch(createClear());
-            setInitialized(false);
-            
-        }
-
-
-        if (target != undefined && !initialized) {
-            setEditFlowcash({
-                name: rows[target]?.name,
-                notes: rows[target]?.notes
-            });
-            setInitialized(true);
-        }
-
-        console.log("RENDERIZACION");
-
-
-    }, [isCreated, rows, onCloseEdit, dispatch, target, initialized]);
-
+      if (isDone) {
+        CloseComponent();
+      }
+      }
+    }, [target, isDone])
+    
     /**
-     * Checks the error in the state newFlowcash
+     * Checks the error in the state newOperation
      */
     const checkFormErrors = {
-        name: editFlowcash.name === "" || editFlowcash.name === null,
+        name: editOperation.type === "" || editOperation.name === null,
+        balance: editOperation.operation_type_id === "" || editOperation.operation_type_id === null
     }
+
 
     /**
      * Handle form methods
@@ -82,11 +89,12 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
     const HandleForm = (e) => {
         const { name, value } = e.target;
 
-        setEditFlowcash({
-            ...editFlowcash,
+        setEditOperation({
+            ...editOperation,
             [name]: value
         });
 
+        console.log("HandleForm editOperation: ", editOperation);
     }
 
     const HandleCreate = () => {
@@ -96,11 +104,11 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
             dispatch(errorsClear());
         }
 
-        dispatch(FlowcashTypeThunks.updateFlowcashType(editFlowcash, rows[target]?.id));
+        dispatch(OperationThunks.updateOperation(editOperation, data[target]?.id));
 
-        console.log("estoy dentro de HandleCreate, y el estado actual de isCreated es: ", isCreated);
-        
-
+        if (isDone) {
+            CloseComponent();
+        }
     }
 
 
@@ -126,21 +134,55 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
                             {/* FIELD: name */}
                             <FormControl isRequired isInvalid={checkFormErrors.name} >
                                 <FormLabel fontFamily={"Input-SemiBold"}>{"Nombre"}</FormLabel>
-                                <Input type="text" value={[editFlowcash.name]} name="name" onChange={HandleForm} maxLength={64} />
+                                <Input type="text" value={[editOperation.type]} name="type" onChange={HandleForm} maxLength={64} />
                                 {
                                     (checkFormErrors.name) ?
-                                        <FormHelperText>{"Por favor ingresa el nombre de caja."}</FormHelperText>
+                                        <FormHelperText>{"Por favor ingresa el nombre de la operación a registrar."}</FormHelperText>
                                         :
                                         undefined
                                 }
                             </FormControl>
 
+                            {/* FIELD: Operation Type */}
+                            <FormControl isRequired mt={5} isInvalid={checkFormErrors.balance}>
+                                <FormLabel fontFamily={"Input-SemiBold"}>{"Tipo"}</FormLabel>
+
+                                <Select
+                                    placeholder="Selecciona..."
+                                    onChange={HandleForm}
+                                    disabled
+                                    required
+                                    onBlur={HandleForm}
+                                    name="operation_type_id"
+                                    multiple={false}
+                                    value={[editOperation.operation_type_id]}
+                                >
+                                    {dataOperationType.map((e, i) => {
+
+                                        return (
+                                            <option key={i} value={e.id}
+                                            >
+                                                {String(e.type).toLocaleUpperCase()}
+                                            </option>);
+
+                                    })
+                                    }
+                                </Select>
+
+                                {
+                                    (checkFormErrors.balance) ?
+                                        <FormHelperText>{"El tipo de operación determinará la operación; sí es un INGRESO(entrada) sumará a la caja seleccionada(dentro de los eventos de caja), sí es EGRESO(salida) descontará o realizará una resta."}</FormHelperText>
+                                        :
+                                        undefined
+                                }
+
+                            </FormControl>
 
                             {/* FIELD: notes */}
                             <FormControl mt={5}>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Descripción o notas:"}</FormLabel>
-                                <Textarea value={[editFlowcash.notes]} name="notes" onChange={HandleForm} />
-                                <FormHelperText>{"Aquí puedes explicar los detalles de esta caja, o dejar notas. Este campo es opcional."}</FormHelperText>
+                                <FormLabel fontFamily={"Input-SemiBold"}>{"Descripción o notas"}</FormLabel>
+                                <Textarea value={[editOperation.notes]} name="notes" onChange={HandleForm} />
+                                <FormHelperText>{"Aquí puedes explicar los detalles de esta operación, o dejar notas. Este campo es opcional."}</FormHelperText>
                             </FormControl>
 
                         </form>
@@ -150,24 +192,16 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
                         <Button
                             colorScheme='blue'
                             mr={3}
-                            isDisabled={checkFormErrors.name}
-                            isLoading={isCreating}
+                            isDisabled={(checkFormErrors.balance || checkFormErrors.name)}
+                            isLoading={inProcess}
                             onClick={() => {
                                 HandleCreate();
+
                             }}
                         >
                             {"Guardar"}
                         </Button>
-                        <Button onClick={() => {
-                            setEditFlowcash({
-                                name: undefined,
-                                notes: undefined
-                            });
-                            setInitialized(false);
-                            dispatch(createClear());
-                            dispatch(setTarget(null));
-                            onCloseEdit();
-                        }}>{"Cancelar"}</Button>
+                        <Button onClick={CloseComponent}>{"Salir"}</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

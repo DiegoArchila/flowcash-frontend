@@ -24,7 +24,7 @@ import {
 import { OperationThunks } from "../../../../../../store/slices/flowcash/OperationThunks";
 import { errorsClear, resetStates } from "../../../../../../store/slices/flowcash/Operation";
 
-export default function NewFlowcashType({ isOpen, onClose }) {
+export default function Create({ isOpen, onClose }) {
 
     // Redux
     const dispatch = useDispatch();
@@ -53,7 +53,7 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDone, inProcess, errors, dispatch, data]);
+    }, [isDone, inProcess, dispatch, onClose]);
     
     /**
      * Checks the error in the state newOperation

@@ -25,7 +25,7 @@ import { errorsClear, createClear, setTarget } from "../../../../../../store/sli
 
 export default function Edit({ isOpenEdit, onCloseEdit }) {
 
-    // Redux
+// Redux
     const dispatch = useDispatch();
     const { isCreated, isCreating, errors, rows, target } = useSelector(state => state.flowcashType);
 
@@ -37,37 +37,30 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
         notes: rows[target]?.notes
     });
 
-    const [initialized, setInitialized] = useState(false);
+    function CloseComponent() {
+        setEditFlowcash({
+            name: undefined,
+            notes: undefined
+        });
+        dispatch(setTarget(null));        
+    }
 
     useEffect(() => {
-        console.log("ESta Actualizado ya?: ", isCreated);
 
         if (isCreated) {
-            onCloseEdit();
-            dispatch(setTarget(null));
-            setEditFlowcash({
-                name: undefined,
-                notes: undefined
-            });
-            console.log("Se supone que ya debi haberme cerrado");
-            dispatch(createClear());
-            setInitialized(false);
-            
+            CloseComponent();
         }
 
 
-        if (target != undefined && !initialized) {
+        if (target != null) {
             setEditFlowcash({
                 name: rows[target]?.name,
                 notes: rows[target]?.notes
             });
-            setInitialized(true);
         }
 
-        console.log("RENDERIZACION");
 
-
-    }, [isCreated, rows, onCloseEdit, dispatch, target, initialized]);
+    }, [isCreated, dispatch, target]);
 
     /**
      * Checks the error in the state newFlowcash
@@ -97,8 +90,6 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
         }
 
         dispatch(FlowcashTypeThunks.updateFlowcashType(editFlowcash, rows[target]?.id));
-
-        console.log("estoy dentro de HandleCreate, y el estado actual de isCreated es: ", isCreated);
         
 
     }
@@ -109,7 +100,7 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
             <Modal closeOnOverlayClick={false} isOpen={isOpenEdit} onClose={onCloseEdit} >
                 <ModalOverlay bg={"blackAlpha.300"} />
                 <ModalContent>
-                    <ModalHeader bgColor={"#6c584c"} color={"white"}>Editar</ModalHeader>
+                    <ModalHeader bgColor={"#6c584c"} color={"white"}>Editar caja</ModalHeader>
                     <ModalBody pb={6} mt={3}>
 
                         {/* Error Message */}
@@ -159,13 +150,6 @@ export default function Edit({ isOpenEdit, onCloseEdit }) {
                             {"Guardar"}
                         </Button>
                         <Button onClick={() => {
-                            setEditFlowcash({
-                                name: undefined,
-                                notes: undefined
-                            });
-                            setInitialized(false);
-                            dispatch(createClear());
-                            dispatch(setTarget(null));
                             onCloseEdit();
                         }}>{"Cancelar"}</Button>
                     </ModalFooter>

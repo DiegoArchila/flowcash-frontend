@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
     Button,
@@ -8,27 +9,44 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
-    Text
-
+    Text,
+    Tag,
+    TagLabel,
+    TagLeftIcon
 } from "@chakra-ui/react";
 
-import { formatCurrencyCOP } from "../../../../../../utils/formatCurrency";
-import { formatDate } from "../../../../../../utils/formatDate";
+import { setTarget } from "../../../../../../store/slices/flowcash/Operation";
+
+
+import { RiAddLargeLine } from "react-icons/ri";
+import { IoMdRemove } from "react-icons/io";
+
 
 function Detail({ isOpen, onClose }) {
+    
 
     // Redux
-    const { rows, target } = useSelector(state => state.flowcashType);
+    const dispatch = useDispatch();
+    const { data, target } = useSelector(state => state.operation);
+    const { data: dataOperationType } = useSelector(state => state.operationType);
+    const [isClosed, setClosed] = useState(null);
+
+    useEffect( () => {
+        if (isClosed) {
+            dispatch(setTarget(null));
+        }
+  
+      }, [ dispatch,isClosed]);
 
     return (
         <>
             <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay bg={"blackAlpha.300"} />
                 <ModalContent>
-                    <ModalHeader bgColor={"#276749"} color={"white"}>{String(rows[target]?.name).toUpperCase()}</ModalHeader>
+                    <ModalHeader bgColor={"#276749"} color={"white"}>{String(data[target]?.type).toUpperCase()}</ModalHeader>
                     <ModalBody pb={6} mt={3}>
 
-                        {(rows[target]?.notes) ?
+                        {(data[target]?.notes) ?
 
                             <>
                                 <Text fontFamily={"Input-SemiBold"}>
@@ -36,39 +54,45 @@ function Detail({ isOpen, onClose }) {
                                 </Text>
 
                                 <Text fontFamily={"Parrafs-light"} pb={2}>
-                                    {rows[target]?.notes}
+                                    {data[target]?.notes}
                                 </Text>
                             </> :
                             ""
                         }
 
-                        {(rows[target]?.balance) ?
+                        {(data[target]?.operation_type_id) ?
 
                             <>
                                 <Text fontFamily={"Input-SemiBold"}>
-                                    Última Actualización:
+                                    Tipo de operación: 
                                 </Text>
 
                                 <Text fontFamily={"Parrafs-light"} pb={2}>
-                                    {formatDate.getDateFormatedLarge(rows[target]?.datetime)}
+                                    {dataOperationType.map((e,i)=>{
+                                        if (e.id===data[target].operation_type_id) {
+
+                                            let color = "#BF4F51CC";
+                                            let fontColor = "#FFFFFF";
+
+                                            if (e.is_sum) {
+                                                color = "#7BA05B";
+                                            }
+                                            // String(e.type).toLocaleUpperCase()
+
+                                            return (
+                                                    <Tag key={e.type+i} size={"lg"} bgColor={color} variant={"outline"} color={fontColor}>
+                                                        <TagLeftIcon as={(e.is_sum) ? RiAddLargeLine : IoMdRemove} />
+                                                        <TagLabel fontSize={16} >{String(e.type).toLocaleUpperCase()}</TagLabel>
+                                                    </Tag>
+                                                );
+
+                                        }})
+                                    }
                                 </Text>
                             </> :
                             ""
                         }
 
-                        {(rows[target]?.balance) ?
-
-                            <>
-                                <Text fontFamily={"Input-SemiBold"}>
-                                    Balance:
-                                </Text>
-
-                                <Text fontFamily={"Parrafs-light"}>
-                                    {formatCurrencyCOP(rows[target]?.balance)}
-                                </Text>
-                            </> :
-                            ""
-                        }
 
 
                     </ModalBody>
@@ -78,6 +102,7 @@ function Detail({ isOpen, onClose }) {
                             colorScheme="blue"
                             onClick={() => {
                                 onClose();
+                                setClosed(true);
                             }}>{"Cerrar"}</Button>
                     </ModalFooter>
                 </ModalContent>

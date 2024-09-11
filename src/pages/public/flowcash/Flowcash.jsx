@@ -18,8 +18,8 @@ export default function Flowcash() {
 
   return (
     <VStack>
-      <FlowcashType />
-      <Operation />
+        <FlowcashType />
+        <Operation />
     </VStack>
   )
 }

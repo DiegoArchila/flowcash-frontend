@@ -56,7 +56,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
         onClose();
       }
 
-    }, [errors, onClose, dispatch, inProcess, isDone, data, target]);
+    }, [dispatch, isDone]);
     
 
     function handleDelete(id) {

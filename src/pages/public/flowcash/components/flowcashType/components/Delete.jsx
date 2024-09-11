@@ -55,7 +55,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
         dispatch(errorsClear());
         onClose();
       }   
-    }, [rows, isDeleting, target, isDeleted, errors, onClose, dispatch]);
+    }, [isDeleted, dispatch]);
     
 
     function handleDelete(id) {
@@ -70,7 +70,6 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
     }
 
     function handleDeleteErrors(){
-        dispatch(deleteClear());
         dispatch(errorsClear());
         onClose();
     }
@@ -88,7 +87,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                 <AlertDialogOverlay>
                     <AlertDialogContent ref={alertDialogRef}>
                         <AlertDialogHeader fontSize='lg' bgColor={"#6c584c"} color={"white"}>
-                            {String("Borrar Caja")}
+                            {String("Borrar caja")}
                         </AlertDialogHeader>
 
                         <AlertDialogBody>

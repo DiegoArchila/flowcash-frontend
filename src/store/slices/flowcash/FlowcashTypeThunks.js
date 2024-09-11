@@ -47,10 +47,7 @@ export const FlowcashTypeThunks = {
 
                 //Update the state:rows
                 // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
-                setTimeout(() => {
-                    dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
-                }, 50);
-
+                dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
 
             } catch (error) {
                 dispatch(createClear());
@@ -76,10 +73,7 @@ export const FlowcashTypeThunks = {
                 dispatch(setCreated()); //establece isCreated=true
                 
                 // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
-                setTimeout(() => {
-                    dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
-                }, 50);
-               
+                dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
                 
 
             } catch (error) {

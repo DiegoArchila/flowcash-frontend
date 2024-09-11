@@ -14,17 +14,21 @@ import {
   TableContainer,
   Spinner,
   useDisclosure,
-  Center
+  Center,
+  Text
 } from '@chakra-ui/react'
-import { FaMoneyBills } from "react-icons/fa6";
+
 import { MdOutlineDeleteForever } from "react-icons/md";
-import { FaRegEdit, FaRegEye } from "react-icons/fa";
+import { FaRegEdit } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
+import { LiaCashRegisterSolid } from "react-icons/lia";
+import { IoIosInformationCircleOutline } from "react-icons/io";
+
 import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
 import NewFlowcashType from './components/Create';
 import { formatCurrencyCOP } from '../../../../../utils/formatCurrency';
 import DeleteFlowcash from "./components/Delete";
-import { setTarget } from "../../../../../store/slices/flowcash/FlowcashType";
+import { setTarget, errorsClear, createClear, deleteClear } from "../../../../../store/slices/flowcash/FlowcashType";
 import Detail from "./components/Detail";
 import Edit from "./components/Edit";
 
@@ -35,9 +39,9 @@ function showFlowcash(
   onOpenDetail, //Reference to show details flowcashtype
   target, // Target to any event: delete, detail or delete,
   onOpenEdit, //Reference to windows Edit flowcashtype
-  dispatch ){
+  dispatch) {
 
-   
+
   return (
 
     <TableContainer
@@ -48,7 +52,8 @@ function showFlowcash(
     >
       <Table
         size={"sm"}
-        variant={"simple"}
+        variant={"striped"}
+        colorScheme={"cyan"}
 
       >
 
@@ -94,13 +99,21 @@ function showFlowcash(
             data.map((element, i) => {
               return (
                 <Tr key={i}>
-                  
+
                   {/* COLUMN: name */}
-                  <Td fontFamily={"Parrafs-light"}>{String(element.name).toLocaleUpperCase()}</Td>
-                  
+                  <Td textAlign={"left"}>
+                    <Text fontFamily={"Parrafs-light"} color={"#242124"} fontSize={14}>
+                      {String(element.name).toLocaleUpperCase()}
+                    </Text>
+                  </Td>
+
                   {/* COLUMN: Base */}
-                  <Td textAlign={"right"} fontFamily={"Parrafs-light"}>{formatCurrencyCOP(element.balance)}</Td>
-                  
+                  <Td textAlign={"right"}>
+                    <Text fontFamily={"Parrafs-Prices"} color={"#242124"} fontSize={16}>
+                      {formatCurrencyCOP(element.balance)}
+                    </Text>
+                  </Td>
+
                   {/* COLUMN: Actions */}
                   <Td textAlign={"center"}>
                     <Center>
@@ -109,30 +122,30 @@ function showFlowcash(
                         alignItems={"center"}
                         gap={5}
                       >
-                        
+
                         {/* Open Detail Flowcash */}
                         <Box cursor={"pointer"}
-                          onClick={()=>{
+                          onClick={() => {
                             dispatch(setTarget(i));
                             onOpenDetail();
                           }}
                         >
-                          <FaRegEye size={22} color={"#007FFF"}/>
+                          <IoIosInformationCircleOutline size={22} color={"#007FFF"} />
                         </Box>
-                        
+
                         {/* COLUMN: Edit */}
                         <Box cursor={"pointer"}
-                          onClick={()=>{
+                          onClick={() => {
                             dispatch(setTarget(i));
                             onOpenEdit();
                           }}
                         >
                           <FaRegEdit size={22} color={"#7BA05B"} />
                         </Box>
-                        
+
                         {/* COLUMN: Delete */}
                         <Box cursor={"pointer"}
-                          onClick={ ()=> {
+                          onClick={() => {
                             dispatch(setTarget(i));
                             onOpenDelete();
                           }}
@@ -192,17 +205,31 @@ export default function FlowcashType() {
 
   // Redux
   const dispatch = useDispatch();
-  const { rows=[], isLoading, target } = useSelector(state => state.flowcashType);
+  const { rows = [], isLoading, target, isCreated, isDeleted } = useSelector(state => state.flowcashType);
 
   useEffect(() => {
     dispatch(FlowcashTypeThunks.getFlowcashTypes());
-  }, [dispatch]);
+
+    /**
+     * Closes the component 
+     */
+    if (isCreated || isDeleted) {
+      dispatch(setTarget(null));
+      dispatch(errorsClear());
+      dispatch(createClear());
+      dispatch(deleteClear());
+      onCloseDelete();
+      onCloseEdit();
+      onCloseNew();
+    }
+
+  }, [dispatch, isCreated, isDeleted]);
 
 
   return (
     <Box
       width={"95%"}
-      bgColor={'#EDF2F7'}
+      bgColor={'#FFFFFF'}
       borderTopRadius="md"
       mt={3} pb={3}
       border={"1px"}
@@ -215,20 +242,20 @@ export default function FlowcashType() {
       <HStack
         pt={1} w={"100%"}
         justifyContent={"space-between"}
-        px={2} bgColor={"#41d3bd"}
+        px={2} bgColor={"#2F4F4F"}
         borderTopRadius="md"
       >
 
         <HStack pb={1}>
           <Box>
-            <FaMoneyBills size={32} color='#2F855A' />
+            <LiaCashRegisterSolid size={32} color='#FFFFFF' />
           </Box>
 
           <Box borderRadius={2}>
             <Heading
               textAlign={'center'}
               fontFamily={"Input-SemiBold"}
-              color={"#276749"}
+              color={"#FFFFFF"}
               as={"h3"}
               size={"md"}
             >
@@ -238,8 +265,9 @@ export default function FlowcashType() {
         </HStack>
 
         <Button
-          colorScheme='red'
+          colorScheme='whiteAlpha'
           size={"xs"}
+          color={"#FFFFFF"}
           variant={"ghost"}
           onClick={onOpenNew}
         >
@@ -267,11 +295,11 @@ export default function FlowcashType() {
               target is to set the ID in the store for delete in the DB
             */}
             {showFlowcash(
-              rows, 
-              onOpenDelete, 
+              rows,
+              onOpenDelete,
               onOpenDetail,
-              target, 
-              onOpenEdit, 
+              target,
+              onOpenEdit,
               dispatch)
             }
 

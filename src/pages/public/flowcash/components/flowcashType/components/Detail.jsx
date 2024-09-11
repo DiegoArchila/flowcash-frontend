@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
     Button,
@@ -14,10 +14,12 @@ import {
 
 import { formatCurrencyCOP } from "../../../../../../utils/formatCurrency";
 import { formatDate } from "../../../../../../utils/formatDate";
+import { setTarget } from "../../../../../../store/slices/flowcash/Operation";
 
 function Detail({ isOpen, onClose }) {
 
     // Redux
+    const dispatch = useDispatch();
     const { rows, target } = useSelector(state => state.flowcashType);
 
     return (
@@ -77,6 +79,7 @@ function Detail({ isOpen, onClose }) {
                         <Button
                             colorScheme="blue"
                             onClick={() => {
+                                dispatch(setTarget(null));
                                 onClose();
                             }}>{"Cerrar"}</Button>
                     </ModalFooter>

@@ -43,7 +43,6 @@ export default function NewFlowcashType({ isOpen, onClose }) {
     
     useEffect(() => {
     if (isCreated) {
-        dispatch(createClear());
         setdisplaybalanceFormat("");
         setnewFlowcash({
             name: "",
