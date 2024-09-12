@@ -74,7 +74,7 @@ export default function Operation() {
             borderTopRadius="md"
             mt={3} pb={3}
             border={"1px"}
-            borderColor={"#69DC9E"}
+            borderColor={"#E2E8F0"}
             maxHeight={"305px"}
         >
 
@@ -83,7 +83,7 @@ export default function Operation() {
             <HStack
                 pt={1} w={"100%"}
                 justifyContent={"space-between"}
-                px={2} bgColor={"#BA5A31"}
+                px={2} bgColor={"#0072BB"}
                 borderTopRadius="md"
             >
 

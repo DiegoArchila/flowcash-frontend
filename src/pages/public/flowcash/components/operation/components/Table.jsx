@@ -44,9 +44,6 @@ export default function TableOperation({onOpenDetail, onOpenEdit, onOpenDelete})
         >
             <Table
                 size={"sm"}
-                variant={"striped"}
-                colorScheme={"cyan"}
-
             >
 
                 {/* TABLE HEADER */}

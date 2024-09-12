@@ -52,8 +52,7 @@ function showFlowcash(
     >
       <Table
         size={"sm"}
-        variant={"striped"}
-        colorScheme={"cyan"}
+        variant={"simple"}
 
       >
 
@@ -242,7 +241,7 @@ export default function FlowcashType() {
       <HStack
         pt={1} w={"100%"}
         justifyContent={"space-between"}
-        px={2} bgColor={"#2F4F4F"}
+        px={2} bgColor={"#0072BB"}
         borderTopRadius="md"
       >
 
