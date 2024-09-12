@@ -17,7 +17,7 @@ export default function Flowcash() {
   }, [dispatch]);
 
   return (
-    <VStack>
+    <VStack bgColor={"#F0F8FF"}>
         <FlowcashType />
         <Operation />
     </VStack>
