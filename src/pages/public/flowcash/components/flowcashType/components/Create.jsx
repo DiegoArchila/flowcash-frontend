@@ -21,8 +21,8 @@ import {
 } from "@chakra-ui/react";
 
 import { formatCurrencyCOP } from "../../../../../../utils/formatCurrency";
-import { FlowcashTypeThunks } from "../../../../../../store/slices/flowcash/FlowcashTypeThunks";
-import { errorsClear, createClear } from "../../../../../../store/slices/flowcash/FlowcashType";
+import { FlowcashTypeThunks } from "../../../../../../store/slices/flowcash/flowcashType/FlowcashTypeThunks";
+import { errorsClear, createClear } from "../../../../../../store/slices/flowcash/flowcashType/FlowcashType";
 
 export default function NewFlowcashType({ isOpen, onClose }) {
 

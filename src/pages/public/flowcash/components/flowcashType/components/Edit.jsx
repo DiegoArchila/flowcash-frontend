@@ -20,8 +20,8 @@ import {
     HStack
 } from "@chakra-ui/react";
 
-import { FlowcashTypeThunks } from "../../../../../../store/slices/flowcash/FlowcashTypeThunks";
-import { errorsClear, createClear, setTarget } from "../../../../../../store/slices/flowcash/FlowcashType";
+import { FlowcashTypeThunks } from "../../../../../../store/slices/flowcash/flowcashType/FlowcashTypeThunks";
+import { errorsClear, createClear, setTarget } from "../../../../../../store/slices/flowcash/flowcashType/FlowcashType";
 
 export default function Edit({ isOpenEdit, onCloseEdit }) {
 

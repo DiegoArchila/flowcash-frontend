@@ -1,5 +1,5 @@
 import { resetStates, setCreated, setDeleted, setErrors, setOperationData, setUpdated, startCreating, startDeleting, startLoadingData, startUpdating } from "./Operation";
-import { flowcashApi } from "../../../api/flowcashApi";
+import { flowcashApi } from "../../../../api/flowcashApi";
 
 export const OperationThunks = {
 

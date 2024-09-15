@@ -19,8 +19,8 @@ import {
     useOutsideClick
 } from '@chakra-ui/react';
 
-import { OperationThunks } from '../../../../../../store/slices/flowcash/OperationThunks';
-import { errorsClear, deleteClear } from '../../../../../../store/slices/flowcash/FlowcashType';
+import { OperationThunks } from '../../../../../../store/slices/flowcash/operation/OperationThunks';
+import { errorsClear, deleteClear } from '../../../../../../store/slices/flowcash/flowcashType/FlowcashType';
 
 
 export default function DeleteFlowcash({ onClose, isOpen }) {

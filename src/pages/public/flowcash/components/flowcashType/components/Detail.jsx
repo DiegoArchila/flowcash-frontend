@@ -14,7 +14,7 @@ import {
 
 import { formatCurrencyCOP } from "../../../../../../utils/formatCurrency";
 import { formatDate } from "../../../../../../utils/formatDate";
-import { setTarget } from "../../../../../../store/slices/flowcash/Operation";
+import { setTarget } from "../../../../../../store/slices/flowcash/operation/Operation";
 
 function Detail({ isOpen, onClose }) {
 

@@ -21,8 +21,8 @@ import {
     Select
 } from "@chakra-ui/react";
 
-import { OperationThunks } from "../../../../../../store/slices/flowcash/OperationThunks";
-import { errorsClear, resetStates } from "../../../../../../store/slices/flowcash/Operation";
+import { OperationThunks } from "../../../../../../store/slices/flowcash/operation/OperationThunks";
+import { errorsClear, resetStates } from "../../../../../../store/slices/flowcash/operation/Operation";
 
 export default function Create({ isOpen, onClose }) {
 

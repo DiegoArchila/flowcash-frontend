@@ -1,5 +1,5 @@
-import { setOperationTypeData,  startLoadingData } from "./operationType";
-import { flowcashApi } from "../../../api/flowcashApi";
+import { setOperationTypeData,  startLoadingData } from "./OperationType";
+import { flowcashApi } from "../../../../api/flowcashApi";
 
 export const OperationTypeThunks = {
 

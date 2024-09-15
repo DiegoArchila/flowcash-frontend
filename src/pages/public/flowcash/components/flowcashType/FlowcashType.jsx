@@ -24,11 +24,11 @@ import { IoIosAdd } from "react-icons/io";
 import { LiaCashRegisterSolid } from "react-icons/lia";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
-import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/FlowcashTypeThunks';
+import { FlowcashTypeThunks } from '../../../../../store/slices/flowcash/flowcashType/FlowcashTypeThunks';
 import NewFlowcashType from './components/Create';
 import { formatCurrencyCOP } from '../../../../../utils/formatCurrency';
 import DeleteFlowcash from "./components/Delete";
-import { setTarget, errorsClear, createClear, deleteClear } from "../../../../../store/slices/flowcash/FlowcashType";
+import { setTarget, errorsClear, createClear, deleteClear } from "../../../../../store/slices/flowcash/flowcashType/FlowcashType";
 import Detail from "./components/Detail";
 import Edit from "./components/Edit";
 

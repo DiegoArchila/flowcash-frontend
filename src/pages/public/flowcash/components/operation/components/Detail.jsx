@@ -15,7 +15,7 @@ import {
     TagLeftIcon
 } from "@chakra-ui/react";
 
-import { setTarget } from "../../../../../../store/slices/flowcash/Operation";
+import { setTarget } from "../../../../../../store/slices/flowcash/operation/Operation";
 
 
 import { RiAddLargeLine } from "react-icons/ri";

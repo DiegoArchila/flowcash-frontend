@@ -25,7 +25,7 @@ import { RiAddLargeLine } from "react-icons/ri";
 import { IoMdRemove } from "react-icons/io";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
-import { setTarget } from "../../../../../../store/slices/flowcash/Operation";
+import { setTarget } from "../../../../../../store/slices/flowcash/operation/Operation";
 
 
 export default function TableOperation({onOpenDetail, onOpenEdit, onOpenDelete}) {

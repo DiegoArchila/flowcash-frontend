@@ -19,8 +19,8 @@ import DeleteFlowcash from "./components/Delete";
 import Detail from "./components/Detail";
 import Edit from "./components/Edit";
 import TableOperation from "./components/Table";
-import { OperationThunks } from "../../../../../store/slices/flowcash/OperationThunks";
-import { clearTarget } from "../../../../../store/slices/flowcash/Operation";
+import { OperationThunks } from "../../../../../store/slices/flowcash/operation/OperationThunks";
+import { clearTarget } from "../../../../../store/slices/flowcash/operation/Operation";
 
 export default function Operation() {
 
