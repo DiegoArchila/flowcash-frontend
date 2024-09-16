@@ -2,12 +2,15 @@ import { Box, Center, Text } from "@chakra-ui/react";
 
 export default function Footer() {
   return (
-    <Center as="footer" h={"48px"}  b={"0px"} bgColor={"#100C08"}
-      boxShadow={"dark-lg"}>
-        <Box>
-          <Text display={"inline-block"} color={"white"} textAlign={"center"} fontFamily={"Input-Medium"} fontSize={"1.2rem"}>2024</Text>
-          <Text display={"inline-block"} color={"white"}>, Diego Archila</Text>
-        </Box>
+    <Center as="footer" h="48px" bgColor="#100C08" boxShadow="dark-lg">
+      <Box textAlign="center">
+        <Text as="span" color="white" fontFamily="Input-Medium" fontSize="lg">
+          2024
+        </Text>
+        <Text as="span" color="white">
+          , Diego Archila
+        </Text>
+      </Box>
     </Center>
   )
 }

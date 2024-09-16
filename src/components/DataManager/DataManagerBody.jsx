@@ -35,7 +35,7 @@ function DataManagerBody({headerTable=[], children}) {
 
                 <Thead>
                     <Tr>
-                        {
+                        {headerTable ?
                             headerTable.map((element, i) => {
                                 return (
                                     <Th key={i}>
@@ -44,11 +44,12 @@ function DataManagerBody({headerTable=[], children}) {
                                             size={"sx"}
                                             textAlign={'center'}
                                         >
-                                            {element.header}
+                                            {element}
                                         </Heading>
                                     </Th>
                                 );
                             })
+                            : null
                         }
 
                     </Tr>
