@@ -32,13 +32,12 @@ function DataManager({config = {
 
   return (
     <Box
-        width={"95%"}
+        width={"100%"}
         bgColor={'#FFFFFF'}
         borderTopRadius="md"
         mt={3} pb={3}
         border={"1px"}
         borderColor={"#E2E8F0"}
-        minW={"160px"}
     >
 
         {/* HEADER */}

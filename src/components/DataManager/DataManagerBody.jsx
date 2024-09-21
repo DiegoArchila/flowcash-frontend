@@ -22,7 +22,6 @@ function DataManagerBody({headerTable=[], children}) {
 
   return (
     <TableContainer
-            maxHeight={"246px"}
             paddingBottom={3}
             overflowX={"auto"}
             overflowY={"auto"}
@@ -68,7 +67,8 @@ function DataManagerBody({headerTable=[], children}) {
 
 DataManagerBody.propTypes = {
     headerTable: PropTypes.array.isRequired,
-    children: PropTypes.node
+    children: PropTypes.node,
+    create: PropTypes.func
 }
 
 export default DataManagerBody;

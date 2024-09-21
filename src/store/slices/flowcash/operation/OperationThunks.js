@@ -17,7 +17,7 @@ export const OperationThunks = {
                 dispatch(setOperationData({ data: data }));
                 
             } catch (error) {
-                dispatch(setErrors(error.response.data));
+                dispatch(setErrors(error.response.data || error.response));
                 dispatch(resetStates());
             }
 

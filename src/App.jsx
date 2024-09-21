@@ -8,7 +8,7 @@ import { PublicRoutes } from "./routes/PublicRoutes";
 function App() {
 
   return (
-    <Fragment>
+    <Fragment >
      
       <Header />
       
@@ -18,7 +18,7 @@ function App() {
         <PublicRoutes />
       </main>
 
-      <Footer />
+      {/*<Footer />*/}
 
     </Fragment>
 

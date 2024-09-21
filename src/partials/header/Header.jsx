@@ -12,7 +12,7 @@ function Header() {
       minWidth='max-content'
       alignItems={"center"}
       justifyContent={"space-between"}
-      bgColor={"#282828"}
+      bgColor={"#003262"}
       boxShadow={"lg"}
     >
 
@@ -21,9 +21,9 @@ function Header() {
 
         {/* <Menu /> */}
 
-        <Text fontWeight={800} fontFamily={"brand"} fontSize={28} color={"white"}>
+        <Text fontWeight={800} fontFamily={"brand"} fontSize={28} color={"#FFFFFF"} fontStyle={"revert-layer"}>
           <Link to={"/"}>
-            Flowcash
+            {"Flowcash".toLocaleUpperCase()}
           </Link>
         </Text>
 
