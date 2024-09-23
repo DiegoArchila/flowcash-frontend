@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
+import { FlowcashThunks } from "../../../../../../store/slices/flowcash/FlowcashThunks";
+import { resetStates, errorsClear as errorsClearFlowcash, clearTarget as clearTargetFlowcash } from "../../../../../../store/slices/flowcash/Flowcash";
 
 //Chakra UI
 import {
@@ -40,8 +42,6 @@ import { RiAddLargeLine } from "react-icons/ri";
 
 //Utils
 import { formatCurrencyCOP } from "../../../../../../utils/formatCurrency";
-import { FlowcashThunks } from "../../../../../../store/slices/flowcash/FlowcashThunks";
-import { resetStates, errorsClear as errorsClearFlowcash, clearTarget as clearTargetFlowcash } from "../../../../../../store/slices/flowcash/Flowcash";
 import { formatDate } from "../../../../../../utils/formatDate";
 
 /**
@@ -287,7 +287,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                                     isDisabled={type==="DETAIL" ? true:false}
                                     required
                                     onBlur={HandleForm}
-                                    value={newFlowcash.flowcash_type_id}
+                                    value={newFlowcash.flowcash_type_id || ""}
                                     name="flowcash_type_id"
                                     multiple={false}
                                 >
@@ -344,7 +344,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                                     isDisabled={type==="DETAIL" ? true:false}
                                     required
                                     onBlur={HandleForm}
-                                    value={newFlowcash.operation_id}
+                                    value={newFlowcash.operation_id || ""}
                                     name="operation_id"
                                     multiple={false}
                                 >
@@ -440,7 +440,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
 }
 
 OperationMovement.propTypes = {
-    isOpen: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,

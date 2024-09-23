@@ -35,8 +35,9 @@ import { MdAddBox } from "react-icons/md";
 //Components
 import DataManager from "../../../../../components/DataManager/DataManager";
 import DataManagerBody from "../../../../../components/DataManager/DataManagerBody";
-import CreateFlowcash from "./components/OperationMovement";
-import EditFlowcash from "./components/OperationMovement";
+import MovementOperation from "./components/OperationMovement";
+import CreateOperation from "./components/OperationMovement";
+import DeleteMovement from "./components/DeleteOperation";
 
 //Utils
 import { formatDate } from "../../../../../utils/formatDate";
@@ -98,7 +99,7 @@ export default function Movements() {
         <DataManager config={configDataManager} isLoadingData={isLoadingFlowcash} createFunction={OnOpenCreateTransaction} >
 
             {/* COMPONENT TO CREATE A NEW MOVEMENT */}
-            <CreateFlowcash
+            <MovementOperation
                 isOpen={isOpenCreateTransaction}
                 onClose={onCloseCreateTransaction}
                 title={"Nuevo movimiento"}
@@ -107,7 +108,7 @@ export default function Movements() {
             />
 
             {/* COMPONENT TO EDIT THE MOVEMENT */}
-            <EditFlowcash
+            <MovementOperation
                 isOpen={isOpenEditTransaction}
                 onClose={onCloseEditTransaction}
                 title={"Editar movimiento"}
@@ -116,7 +117,7 @@ export default function Movements() {
             />
 
             {/* COMPONENT TO VIEW DETAIL */}
-            <EditFlowcash
+            <MovementOperation
                 isOpen={isOpenDetailTransaction}
                 onClose={onCloseDetailTransaction}
                 title={"Detalle movimiento"}
@@ -125,12 +126,9 @@ export default function Movements() {
             />
 
             {/* COMPONENT TO VIEW DETAIL */}
-            <EditFlowcash
-                isOpen={isOpenDetailTransaction}
-                onClose={onCloseDetailTransaction}
-                title={"Detalle movimiento"}
-                icon={<IoIosInformationCircleOutline size={32} color='#FFFFFF' />}
-                type={"DETAIL"}
+            <DeleteMovement
+                isOpen={isOpenDeleteTransaction}
+                onClose={onCloseDeleteTransaction}
             />
 
 
@@ -240,7 +238,8 @@ export default function Movements() {
                                         {/* COLUMN: Delete */}
                                         <Box cursor={"pointer"}
                                             onClick={() => {
-                                                
+                                                dispatch(setTarget(elementFlowcash.id));
+                                                OnOpenDeleteTransaction();
                                             }}
                                         >
                                             <MdOutlineDeleteForever size={26} color={"#E23D28"} />

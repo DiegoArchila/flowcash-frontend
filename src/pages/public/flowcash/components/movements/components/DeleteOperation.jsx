@@ -1,8 +1,10 @@
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
+import { errorsClear, clearTarget  } from "../../../../../../store/slices/flowcash/Flowcash";
+import { FlowcashThunks } from "../../../../../../store/slices/flowcash/FlowcashThunks";
 
 //CHAKRA UI
 import {
@@ -18,21 +20,45 @@ import {
     AlertTitle,
     AlertDescription,
     Button,
-    Text
+    Text,
+    Box
 } from '@chakra-ui/react';
 
-function DeleteOperation({ onClose, isOpen, toDelete }) {
+//ICONS
+import { MdOutlineDeleteForever } from "react-icons/md";
+
+function DeleteOperation({ onClose, isOpen }) {
     
     // Redux
     const dispatch = useDispatch();
 
-    const { errors, inProcess, isDone } = useSelector(state => state.flowcash);
+    const { errors, inProcess, target, isDone, data } = useSelector(state => state.flowcash);
+    const [toDelete, setToDelete] = useState(null);
 
+    useEffect( () => {
+        if(isDone){
+            closeDeleteOperation();
+        }
+        if (target!=null) {
+            setToDelete(data.find(e => e.id === target));
+        }
+  
+    }, [dispatch, isDone, target]);
 
+    const cancelRef = useRef();
 
+    //FUNCTIONS
     function handleDeleteErrors() {
-        dispatch(deleteClear());
         dispatch(errorsClear());
+    }
+
+    function handleDelete(id) {
+        dispatch(FlowcashThunks.deleteFlowcash(id));
+    }
+
+    function closeDeleteOperation() {
+        handleDeleteErrors();
+        dispatch(clearTarget());
         onClose();
     }
 
@@ -43,13 +69,15 @@ function DeleteOperation({ onClose, isOpen, toDelete }) {
                 isOpen={isOpen}
                 leastDestructiveRef={cancelRef}
                 onClose={onClose}
-                onOverlayClick={handleDeleteErrors}
-
+                onOverlayClick={closeDeleteOperation}
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
-                        <AlertDialogHeader fontSize='lg' bgColor={"#6c584c"} color={"white"}>
-                            {String("Borrar operación")}
+                        <AlertDialogHeader fontSize='lg' bgColor={"#E23D28"} color={"white"}>
+                            <Box display={"flex"} gap={3}>
+                                <MdOutlineDeleteForever size={28} color={"#FFFFFF"} />
+                                {String("Borrar movimiento").toLocaleUpperCase()}
+                            </Box>
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
@@ -63,9 +91,12 @@ function DeleteOperation({ onClose, isOpen, toDelete }) {
                                 <AlertDescription>{(errors) ? errors?.error : ""}</AlertDescription>
                             </Alert>
 
-                            <Text>Estas seguro de eliminar el movimiento: </Text>{(!errors) ?
-                                <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text> :
-                                <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text>}
+                            <Text>Estas seguro de eliminar el movimiento: </Text>
+                                {
+                                    toDelete ?
+                                    <Text fontFamily={"Input-SemiBold"}>{String(toDelete.description).toLocaleUpperCase()}?</Text>:
+                                    <Text fontFamily={"Input-SemiBold"}>{String("HA OCURRIDO UN ERROR").toLocaleUpperCase()}</Text>
+                                }
                             <Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
 
                         </AlertDialogBody>
@@ -73,7 +104,8 @@ function DeleteOperation({ onClose, isOpen, toDelete }) {
 
                         <AlertDialogFooter>
                             <Button ref={cancelRef} onClick={() => {
-                                handleDeleteErrors();
+                                closeDeleteOperation();
+                                
                             }}>
                                 Cancelar
                             </Button>
@@ -81,7 +113,7 @@ function DeleteOperation({ onClose, isOpen, toDelete }) {
                                 colorScheme='red'
                                 isLoading={inProcess}
                                 onClick={() => {
-                                    handleDelete(data[target]?.id);
+                                    handleDelete(toDelete.id);
                                 }}
                                 ml={3}>
                                 Eliminar
