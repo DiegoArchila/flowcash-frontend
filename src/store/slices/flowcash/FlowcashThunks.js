@@ -56,6 +56,8 @@ export const FlowcashThunks = {
     updateFlowcash: (updateFlowcash, id) => {
         return async (dispatch) => {
 
+            console.log("updateFlowcash: ", updateFlowcash);
+
             try {
                 dispatch(startUpdating());
                 

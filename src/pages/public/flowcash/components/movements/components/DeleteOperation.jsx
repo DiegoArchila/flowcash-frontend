@@ -1,7 +1,10 @@
-import { useRef, useEffect } from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
+//Redux
 import { useDispatch, useSelector } from "react-redux";
 
+//CHAKRA UI
 import {
     AlertDialog,
     AlertDialogBody,
@@ -15,55 +18,23 @@ import {
     AlertTitle,
     AlertDescription,
     Button,
-    Text,
+    Text
 } from '@chakra-ui/react';
 
-import { OperationThunks } from '../../../../../../store/slices/flowcash/operation/OperationThunks';
-import { errorsClear, deleteClear } from '../../../../../../store/slices/flowcash/flowcashType/FlowcashType';
-
-
-export default function DeleteFlowcash({ onClose, isOpen }) {
-
+function DeleteOperation({ onClose, isOpen, toDelete }) {
+    
     // Redux
     const dispatch = useDispatch();
 
-    const {
-        inProcess, // deleting in process
-        target, //storage the ID to delete
-        isDone, // confirm deleted successfull
-        errors,
-        data=[]
-    } = useSelector(state => state.operation);
+    const { errors, inProcess, isDone } = useSelector(state => state.flowcash);
 
-    const cancelRef = useRef();
 
-    useEffect( () => {
-      if(isDone){
-        dispatch(deleteClear());
-        dispatch(errorsClear());
-        onClose();
-      }
 
-    }, [dispatch, isDone]);
-    
-
-    function handleDelete(id) {
-
-        // is errors
-        if (errors) {
-            dispatch(errorsClear());
-        }
-    
-        dispatch(OperationThunks.deleteOperation(id));
-    
-    }
-
-    function handleDeleteErrors(){
+    function handleDeleteErrors() {
         dispatch(deleteClear());
         dispatch(errorsClear());
         onClose();
     }
-
 
     return (
         <>
@@ -73,7 +44,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                 leastDestructiveRef={cancelRef}
                 onClose={onClose}
                 onOverlayClick={handleDeleteErrors}
-                
+
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
@@ -92,13 +63,13 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                                 <AlertDescription>{(errors) ? errors?.error : ""}</AlertDescription>
                             </Alert>
 
-                            <Text>Estas seguro de eliminar la operación: </Text>{(!errors) ? 
-                            <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text> :
-                            <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text>}
+                            <Text>Estas seguro de eliminar el movimiento: </Text>{(!errors) ?
+                                <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text> :
+                                <Text fontFamily={"Input-SemiBold"}>{String(data[target]?.type).toLocaleUpperCase()}?</Text>}
                             <Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
 
                         </AlertDialogBody>
-                            
+
 
                         <AlertDialogFooter>
                             <Button ref={cancelRef} onClick={() => {
@@ -106,12 +77,12 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
                             }}>
                                 Cancelar
                             </Button>
-                            <Button 
+                            <Button
                                 colorScheme='red'
-                                isLoading={inProcess} 
-                                onClick={()=>{
+                                isLoading={inProcess}
+                                onClick={() => {
                                     handleDelete(data[target]?.id);
-                                }} 
+                                }}
                                 ml={3}>
                                 Eliminar
                             </Button>
@@ -122,3 +93,7 @@ export default function DeleteFlowcash({ onClose, isOpen }) {
         </>
     )
 }
+
+DeleteOperation.propTypes = {}
+
+export default DeleteOperation

@@ -3,8 +3,9 @@ import { useEffect } from "react";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { FlowcashThunks } from "../../../../../store/slices/flowcash/FlowcashThunks" 
+import { FlowcashThunks } from "../../../../../store/slices/flowcash/FlowcashThunks"
 import { OperationTypeThunks } from "../../../../../store/slices/flowcash/operationType/OperationTypeThunks";
+import { setTarget } from "../../../../../store/slices/flowcash/Flowcash";
 
 
 //Chakra UI
@@ -34,11 +35,12 @@ import { MdAddBox } from "react-icons/md";
 //Components
 import DataManager from "../../../../../components/DataManager/DataManager";
 import DataManagerBody from "../../../../../components/DataManager/DataManagerBody";
+import CreateFlowcash from "./components/OperationMovement";
+import EditFlowcash from "./components/OperationMovement";
 
 //Utils
 import { formatDate } from "../../../../../utils/formatDate";
 import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
-import CreateFlowcash from "./components/CreateFlowcash";
 
 export default function Movements() {
 
@@ -47,7 +49,7 @@ export default function Movements() {
 
     const { data: dataFlowcash = [], isLoading: isLoadingFlowcash } = useSelector(state => state.flowcash);
     const { rows: dataFlowcashType = [] } = useSelector(state => state.flowcashType);
-    const { data: dataOperation = [], isLoading: isLoadingOperation } = useSelector(state => state.operation);
+    const { data: dataOperation = [] } = useSelector(state => state.operation);
     const { data: dataOperationType = [] } = useSelector(state => state.operationType);
 
     useEffect(() => {
@@ -56,33 +58,87 @@ export default function Movements() {
         dispatch(FlowcashThunks.getFlowcash());
 
     }, [dispatch]);
- 
-     // Functions
-    const { 
-        isOpen: isOpenCreateTransaction, 
-        onOpen : OnOpenCreateTransaction, 
-        onClose: onCloseCreateTransaction 
+
+    // Functions to displays operations over movements
+    const {
+        isOpen: isOpenCreateTransaction,
+        onOpen: OnOpenCreateTransaction,
+        onClose: onCloseCreateTransaction
+    } = useDisclosure();
+
+    const {
+        isOpen: isOpenEditTransaction,
+        onOpen: OnOpenEditTransaction,
+        onClose: onCloseEditTransaction
+    } = useDisclosure();
+
+    const {
+        isOpen: isOpenDetailTransaction,
+        onOpen: OnOpenDetailTransaction,
+        onClose: onCloseDetailTransaction
+    } = useDisclosure();
+
+    const {
+        isOpen: isOpenDeleteTransaction,
+        onOpen: OnOpenDeleteTransaction,
+        onClose: onCloseDeleteTransaction
     } = useDisclosure();
 
     //DataManager
     const configDataManager = {
         title: "Movimientos",
         icon: <PiArrowsDownUpBold size={24} color='#FFFFFF' />,
-        buttonTitle:"Crear nuevo",
+        buttonTitle: "Crear nuevo",
         buttonIcon: <MdAddBox size={24} color='#FFFFFF' />,
     }
-    const HeadersDataManager = ["hora","caja","operación","Descripción","valor", "acciones"];
 
-return (
-    <DataManager config={configDataManager} isLoadingData={isLoadingFlowcash} createFunction={OnOpenCreateTransaction} >
-        <CreateFlowcash isOpen={isOpenCreateTransaction} onClose={onCloseCreateTransaction}/>
-        
-        <DataManagerBody headerTable={(dataFlowcash.length > 0) ? HeadersDataManager : []}>
+    const HeadersDataManager = ["hora", "caja", "operación", "Descripción", "valor", "acciones"];
 
-            {/* TABLE BODY */}
+    return (
+        <DataManager config={configDataManager} isLoadingData={isLoadingFlowcash} createFunction={OnOpenCreateTransaction} >
 
-            {dataFlowcash.length > 0 ?
-                dataFlowcash.map((elementFlowcash, i) => {
+            {/* COMPONENT TO CREATE A NEW MOVEMENT */}
+            <CreateFlowcash
+                isOpen={isOpenCreateTransaction}
+                onClose={onCloseCreateTransaction}
+                title={"Nuevo movimiento"}
+                icon={<MdAddBox size={32} color='#FFFFFF' />}
+                type={"CREATE"}
+            />
+
+            {/* COMPONENT TO EDIT THE MOVEMENT */}
+            <EditFlowcash
+                isOpen={isOpenEditTransaction}
+                onClose={onCloseEditTransaction}
+                title={"Editar movimiento"}
+                icon={<FaRegEdit size={32} color='#FFFFFF' />}
+                type={"EDIT"}
+            />
+
+            {/* COMPONENT TO VIEW DETAIL */}
+            <EditFlowcash
+                isOpen={isOpenDetailTransaction}
+                onClose={onCloseDetailTransaction}
+                title={"Detalle movimiento"}
+                icon={<IoIosInformationCircleOutline size={32} color='#FFFFFF' />}
+                type={"DETAIL"}
+            />
+
+            {/* COMPONENT TO VIEW DETAIL */}
+            <EditFlowcash
+                isOpen={isOpenDetailTransaction}
+                onClose={onCloseDetailTransaction}
+                title={"Detalle movimiento"}
+                icon={<IoIosInformationCircleOutline size={32} color='#FFFFFF' />}
+                type={"DETAIL"}
+            />
+
+
+            <DataManagerBody headerTable={(dataFlowcash.length > 0) ? HeadersDataManager : []}>
+
+                {/* TABLE BODY */}
+
+                {dataFlowcash.map((elementFlowcash, i) => {
 
                     return (
                         <Tr key={i}>
@@ -113,21 +169,21 @@ return (
                                 <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={13}>
                                     {
                                         dataOperation.map(elementOperation => {
-                                            
+
                                             if (elementFlowcash.operation_id === elementOperation.id) {
 
-                                                const res = dataOperationType.length === 0 ? null : dataOperationType.find(elementOperationType => 
+                                                const res = dataOperationType.length === 0 ? null : dataOperationType.find(elementOperationType =>
                                                     elementOperation.operation_type_id === elementOperationType.id);
 
-                                                if (res===null) {
+                                                if (res === null) {
                                                     return null;
                                                 }
 
                                                 const color = res.is_sum ? "#7BA05B" : "#BF4F51CC";
                                                 const fontColor = "#FFFFFF";
-                                                
+
                                                 return (
-                                                    <Tag key={elementFlowcash+i+elementOperation} size={"sm"} bgColor={color} variant={"outline"} color={fontColor}>
+                                                    <Tag key={elementFlowcash + i + elementOperation} size={"sm"} bgColor={color} variant={"outline"} color={fontColor}>
                                                         <TagLeftIcon as={(res.is_sum) ? RiAddLargeLine : IoMdRemove} />
                                                         <TagLabel fontSize={11} >{String(elementOperation.type).toLocaleUpperCase()}</TagLabel>
                                                     </Tag>
@@ -164,7 +220,8 @@ return (
                                         {/* Open Detail Flowcash */}
                                         <Box cursor={"pointer"}
                                             onClick={() => {
-                                                
+                                                dispatch(setTarget(elementFlowcash.id));
+                                                OnOpenDetailTransaction();
                                             }}
                                         >
                                             <IoIosInformationCircleOutline size={22} color={"#007FFF"} />
@@ -173,7 +230,8 @@ return (
                                         {/* COLUMN: Edit */}
                                         <Box cursor={"pointer"}
                                             onClick={() => {
-                                                
+                                                dispatch(setTarget(elementFlowcash.id));
+                                                OnOpenEditTransaction();
                                             }}
                                         >
                                             <FaRegEdit size={22} color={"#7BA05B"} />
@@ -193,13 +251,17 @@ return (
 
                         </Tr>)
                 })
-                :
-                <Center my={5} gap={3}>
-                    <BsFillInfoSquareFill size={32} color={"#00BFFF"} /> Sin datos.
-                </Center>
-            }
+                }
+            </DataManagerBody>
+            {
+                dataFlowcash.length === 0 ?
 
-        </DataManagerBody>
-    </DataManager>
-)
+                    <Center my={5} gap={3}>
+                        <BsFillInfoSquareFill size={32} color={"#00BFFF"} /> Sin datos.
+                    </Center>
+                    :
+                    null
+            }
+        </DataManager>
+    )
 }
