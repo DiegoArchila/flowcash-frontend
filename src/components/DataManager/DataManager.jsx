@@ -33,6 +33,8 @@ function DataManager({config = {
   return (
     <Box
         width={"100%"}
+        h={"100%"}
+        minHeight={"100%"}
         bgColor={'#FFFFFF'}
         borderTopRadius="md"
         mt={3} pb={3}

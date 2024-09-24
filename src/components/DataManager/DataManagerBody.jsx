@@ -25,6 +25,8 @@ function DataManagerBody({headerTable=[], children}) {
             paddingBottom={3}
             overflowX={"auto"}
             overflowY={"auto"}
+            w={"100%"}
+            h={"100%"}
         >
             <Table
                 size={"sm"}

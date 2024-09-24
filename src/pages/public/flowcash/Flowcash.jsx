@@ -9,7 +9,6 @@ import { OperationTypeThunks } from "../../../store/slices/flowcash/operationTyp
 
 //Chakra UI
 import {
-    Stack,
     VStack
 } from "@chakra-ui/react";
 
@@ -17,11 +16,12 @@ import {
 
 
 //Components
-import Operation from "./components/operation/Operation";
-import FlowcashType from "./components/flowcashType/FlowcashType";
+//import Operation from "./components/operation/Operation";
+//import FlowcashType from "./components/flowcashType/FlowcashType";
 
 //Utils
 import Movements from "./components/movements/Movements";
+import FlowcashType from "./components/flowcashType/FlowcashType";
 
 function Flowcash() {
 
@@ -41,11 +41,8 @@ function Flowcash() {
         <Fragment>
             <VStack bgColor={"#F0F8FF"}>
                 <Movements />
-            </VStack>
-            <Stack direction={"column"} bgColor={"#F0F8FF"}>
                 <FlowcashType />
-                <Operation />
-            </Stack>
+            </VStack>
         </Fragment>
     )
 }

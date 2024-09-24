@@ -1,109 +1,104 @@
-
+import { resetStates, setCreated, setDeleted, setErrors, setFlowcashTypeData, setUpdated, startCreating, startDeleting, startLoadingData, startUpdating } from "./FlowcashType";
 import { flowcashApi } from "../../../../api/flowcashApi";
-import { 
-    setCreated, 
-    isError, 
-    setFlowcashTypes, 
-    startCreating, 
-    startLoading, 
-    createClear,
-
-    startDeleting, //Initialize the deleting
-    setDeleted, //Set the done the delete
-    deleteClear, //Clear all states in delete
-
-} from "./FlowcashType";
-
 
 
 export const FlowcashTypeThunks = {
 
-    getFlowcashTypes: () => {
+    getFlowcashType: () => {
         return async (dispatch) => {
-            dispatch(startLoading());
 
-            // Request HTTP
-            const resp = await flowcashApi.get("/flowcash/flowcashtype");
+            try {
+                dispatch(startLoadingData());
+    
+                // Request HTTP
+                const resp = await flowcashApi.get("/flowcash/flowcashtype");
+    
+                const dataFlowcashType= resp.data.data.rows.sort((a, b) => a.name.localeCompare(b.name));
 
-            const data= resp.data.data.rows.sort((a, b) => a.name.localeCompare(b.name));
+                console.log("Datos recibidos FlowcashType", dataFlowcashType);
+    
+                dispatch(setFlowcashTypeData({ data: dataFlowcashType }));
+                
+            } catch (error) {
+                dispatch(setErrors(error.response.data));
+                dispatch(resetStates());
+            }
 
-            dispatch(setFlowcashTypes({ rows: data }));
+
         }
     },
 
 
-    createFlowcashType: (NewFlowcash_type) => {
+    createFlowcashType: (NewFlowcashType) => {
         return async (dispatch) => {
 
             try {
                 dispatch(startCreating());
 
 
-                await flowcashApi.post("/flowcash/flowcashtype/create", {
-                    NewFlowcash_type
+                await flowcashApi.post("/flowcash/flowcashType/create", {
+                    NewFlowcashType
                 });
 
                 dispatch(setCreated());
 
-                //Update the state:rows
-                // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
-                dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
+                //Reload the state of data
+                dispatch(FlowcashTypeThunks.getFlowcashType());
+
 
             } catch (error) {
-                dispatch(createClear());
-                dispatch(isError(error.response.data));
+                dispatch(setErrors(error.response.data));
+                dispatch(resetStates());
             }
 
         }
     },
 
-    updateFlowcashType: (updateFlowcash_type, id) => {
+    updateFlowcash: (updateFlowcash, id) => {
         return async (dispatch) => {
 
-            
+            console.log("updateFlowcash: ", updateFlowcash);
+
             try {
-                dispatch(startCreating());
+                dispatch(startUpdating());
                 
                 
-                await flowcashApi.post(`/flowcash/flowcashtype/${id}/update`, {
-                    updateFlowcash_type
+                await flowcashApi.post(`/flowcash/${id}/update`, {
+                    updateFlowcash
                 });
                 
                 
-                dispatch(setCreated()); //establece isCreated=true
+                dispatch(setUpdated()); //set the operation as done
                 
-                // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
-                dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
-                
-
+                //Reload the state of data
+                dispatch(FlowcashThunks.getFlowcash());
+                     
+               
             } catch (error) {
-                dispatch(createClear());
-                dispatch(isError(error.response?.data));
+                dispatch(setErrors(error.response.data));
+                dispatch(resetStates());
             }
 
         }
     },
 
-    deleteFlowcashType: (id) => {
+    deleteFlowcash: (id) => {
         return async (dispatch) => {
 
             try {
                 dispatch(startDeleting());
             
                 // Request HTTP
-                await flowcashApi.delete(`/flowcash/flowcashtype/${id}/delete`);
+                await flowcashApi.delete(`/flowcash/${id}/delete`);
                 
-                dispatch(setDeleted());
+                await dispatch(setDeleted());
 
-                //Update the state:rows
-                // Agregar un pequeño retraso de 100ms antes de continuar con las otras acciones
-                setTimeout(() => {
-                    dispatch(FlowcashTypeThunks.getFlowcashTypes()); // Actualiza el estado: rows
-                }, 50);
+                //Reload the state of data
+                dispatch(FlowcashThunks.getFlowcash());
                 
             } catch (error) {
-                dispatch(deleteClear());
-                dispatch(isError(error.response.data));
+                dispatch(setErrors(error.response.data));
+                dispatch(resetStates());
             }
         }
     }

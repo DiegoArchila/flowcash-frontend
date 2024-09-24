@@ -3,100 +3,108 @@ import { createSlice } from '@reduxjs/toolkit'
 export const flowcashTypeSlice = createSlice({
   name: 'flowcashType',
   initialState: {
-    rows: [],
-    isLoading: false,
-    
-    //CREATE
-    isCreating: false,
-    isCreated: false,
-    
-    //DELETE
-    isDeleting: false, // deleting in process
-    isDeleted: false, // confirm deleted successfull
+    data:[], // Storage the data
+    isLoading: false, // loading data
 
-    //ERRORS
+    inProcess:false,
+    isDone:false,
+
     errors: null,
+    target: null //this is for set the id to edit or delete
 
-    //Target
-    target:null //this is for set the id to edit or delete
   },
   reducers: {
-    startLoading: (state) => {
-      state.isLoading = true;
+    
+    //Function's load data
+    startLoadingData: (state) =>{
+        state.isLoading= true;
     },
-    setFlowcashTypes: (state, action) => {
+    setFlowcashTypeData: (state, action) => {
       state.isLoading = false;
-      state.rows = action.payload.rows
+      state.data = action.payload.data
     },
 
-
-    //CREATE
+    //Function's create 
     startCreating: (state) => {
-      state.isCreating = true
+      state.inProcess=true
     },
     setCreated: (state) => {
-      state.isCreating = false;
-      state.isCreated = true;
-    },
-    createClear: (state) => {
-      state.isCreating = false;
-      state.isCreated = false;
-    },
-    
-    //DELETE
-    startDeleting: (state) =>{ //Initialize the deleting
-      state.isDeleting=true;
-    },
-    setDeleted: (state) =>{ //Set the done the delete
-      state.isDeleted=true;
-      state.isDeleting=false;
-    },
-    deleteClear:(state) =>{ //Clear all states in delete
-      state.isDeleting=false;
-      state.isDeleted=false;
-    },
-    //set the ID to deleted 
-    setTarget: (state, action) => { //sets the id to delete
-      state.target = action.payload;
+      state.inProcess=false,
+      state.isDone=true
     },
 
-    //ERRORS
-    isError: (state, action) => {
-      state.isCreating = false
-      state.errors = action.payload
+    //Function's update 
+    startUpdating: (state) => {
+      state.inProcess=true
+    },
+    setUpdated: (state) => {
+      state.inProcess=false,
+      state.isDone=true
+    },
+
+    //Function's delete 
+    startDeleting: (state) => {
+      state.inProcess=true
+    },
+    setDeleted: (state) => {
+      state.inProcess=false,
+      state.isDone=true
+    },
+
+    //Function's target 
+    setTarget: (state, action) => {
+      state.target = action.payload
+    },
+    clearTarget: (state) => {
+      state.target=null
+    },
+
+    
+    //Function's errors 
+    setErrors: (state, action) => {
+      state.errors=action.payload
     },
     errorsClear: (state) => {
-      state.errors = null;
-    }
+      state.errors=null
+    },
+    
+    
+    //Function's reset states
+    //Deploy this function after some process is done
+    resetStates: (state) => {
+      state.inProcess=false,
+      state.isDone=false
+    },
   }
 })
 
 // Action creators are generated for each case reducer function
-export const {
+export const { 
 
-  //LOADING
-  startLoading,
-  setFlowcashTypes,
-
-  //CREATE
+  //load Data
+  startLoadingData, 
+  setFlowcashTypeData,
+  
+  //start States
   startCreating,
-  isCreated,
-  createClear,
+  startUpdating,
+  startDeleting,
 
+  //set states
   setCreated,
+  setUpdated,
+  setDeleted,
+  
+  //Target
+  setTarget,
+  clearTarget,
 
-  //DELETE
-  isDeleting, // deleting in process
-  target, //storage the ID to delete
-  isDeleted, // confirm deleted successfull
-
-  startDeleting, //Initialize the deleting
-  setDeleted, //Set the done the delete
-  deleteClear, //Clear all states in delete
-  setTarget, //sets the id to delete
-
-  isError,
+  //errors
+  setErrors,
   errorsClear,
+
+  //reset states
+  resetStates
 
 } = flowcashTypeSlice.actions
 

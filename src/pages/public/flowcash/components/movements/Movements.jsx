@@ -36,7 +36,6 @@ import { MdAddBox } from "react-icons/md";
 import DataManager from "../../../../../components/DataManager/DataManager";
 import DataManagerBody from "../../../../../components/DataManager/DataManagerBody";
 import MovementOperation from "./components/OperationMovement";
-import CreateOperation from "./components/OperationMovement";
 import DeleteMovement from "./components/DeleteOperation";
 
 //Utils
