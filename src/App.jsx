@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Divider } from "@chakra-ui/react";
+import { Divider, Flex } from "@chakra-ui/react";
 
 import Header from "./partials/header/Header";
 import Footer from "./partials/footer/Footer";
@@ -8,9 +8,9 @@ import { PublicRoutes } from "./routes/PublicRoutes";
 function App() {
 
   return (
-    <Fragment >
+    <div className="containerAPP">
      
-      <Header />
+      <Header/>
       
       <Divider />
       
@@ -20,7 +20,7 @@ function App() {
 
       {/*<Footer />*/}
 
-    </Fragment>
+    </div>
 
   );
 }

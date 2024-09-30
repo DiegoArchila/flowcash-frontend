@@ -48,7 +48,7 @@ export default function Movements() {
     const dispatch = useDispatch();
 
     const { data: dataFlowcash = [], isLoading: isLoadingFlowcash } = useSelector(state => state.flowcash);
-    const { rows: dataFlowcashType = [] } = useSelector(state => state.flowcashType);
+    const { data: dataFlowcashType = [] } = useSelector(state => state.flowcashType);
     const { data: dataOperation = [] } = useSelector(state => state.operation);
     const { data: dataOperationType = [] } = useSelector(state => state.operationType);
 
@@ -124,7 +124,7 @@ export default function Movements() {
                 type={"DETAIL"}
             />
 
-            {/* COMPONENT TO VIEW DETAIL */}
+            {/* COMPONENT TO DELETE MOVEMENT */}
             <DeleteMovement
                 isOpen={isOpenDeleteTransaction}
                 onClose={onCloseDeleteTransaction}

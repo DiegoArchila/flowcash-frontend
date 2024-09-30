@@ -66,7 +66,9 @@ export const OperationThunks = {
             try {
                 dispatch(startUpdating());
                 
-                
+
+                console.log("Object operation to edit: ", updateOperation);
+
                 await flowcashApi.post(`/flowcash/operation/${id}/update`, {
                     updateOperation
                 });
@@ -97,10 +99,9 @@ export const OperationThunks = {
                 // Request HTTP
                 await flowcashApi.delete(`/flowcash/operation/${id}/delete`);
                 
-                await dispatch(setDeleted());
-
-                // ass a small delay of 100ms before to continue with other operations
-                await dispatch(OperationThunks.getOperations());
+                dispatch(setDeleted());
+                
+                dispatch(OperationThunks.getOperations());
                 
             } catch (error) {
                 dispatch(setErrors(error.response.data));

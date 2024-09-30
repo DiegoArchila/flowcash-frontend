@@ -2,18 +2,16 @@
   font-family: "Parrafs-regular";
 }
 
-body{
-  height: 100vh;
-}
-
 #root{
   display: flex;
   flex-direction: column;
-  height: 100vh;
+
 }
 
 main{
   height: 100%;
+  margin-top: 38px;
+  margin-bottom: 44px;
 }
 
 

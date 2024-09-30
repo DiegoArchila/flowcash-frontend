@@ -14,6 +14,7 @@ import {
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
+    DrawerCloseButton,
     Button,
     FormControl,
     FormLabel,
@@ -32,7 +33,6 @@ import {
     TagLabel,
     Flex,
     Box,
-    useOutsideClick
 } from '@chakra-ui/react'
 
 //Icons
@@ -64,7 +64,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
     // Redux
     const dispatch = useDispatch();
     const { isDone: isDoneFlowcash, inProcess, errors, data: dataFlowcash, target: targetFlowcash } = useSelector(state => state.flowcash);
-    const { rows: dataFlowcashType } = useSelector(state => state.flowcashType);
+    const { data: dataFlowcashType } = useSelector(state => state.flowcashType);
     const { data: dataOperation } = useSelector(state => state.operation);
     const { data: dataOperationType } = useSelector(state => state.operationType);
 
@@ -108,7 +108,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                 if (flowcashUpdate.value && flowcashUpdate.value !== 0) {
                     setdisplaybalanceFormat(formatCurrencyCOP(flowcashUpdate.value));
                 } else {
-                    setdisplaybalanceFormat(""); // No mostrar "0" formateado
+                    setdisplaybalanceFormat("");
                 }
                 
             } else {
@@ -243,7 +243,11 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                         {String(title).toLocaleUpperCase()}
 
                     </DrawerHeader>
+
+
+                    <DrawerCloseButton color={"#FFFFFF"} onClick={closeCreateFlowcash}/>
                     <Divider orientation="horizontal" />
+
 
                     <DrawerBody>
 

@@ -14,8 +14,6 @@ export const FlowcashTypeThunks = {
                 const resp = await flowcashApi.get("/flowcash/flowcashtype");
     
                 const dataFlowcashType= resp.data.data.rows.sort((a, b) => a.name.localeCompare(b.name));
-
-                console.log("Datos recibidos FlowcashType", dataFlowcashType);
     
                 dispatch(setFlowcashTypeData({ data: dataFlowcashType }));
                 
@@ -29,7 +27,7 @@ export const FlowcashTypeThunks = {
     },
 
 
-    createFlowcashType: (NewFlowcashType) => {
+    createFlowcashType: (NewFlowcash_type) => {
         return async (dispatch) => {
 
             try {
@@ -37,7 +35,7 @@ export const FlowcashTypeThunks = {
 
 
                 await flowcashApi.post("/flowcash/flowcashType/create", {
-                    NewFlowcashType
+                    NewFlowcash_type
                 });
 
                 dispatch(setCreated());
@@ -54,24 +52,22 @@ export const FlowcashTypeThunks = {
         }
     },
 
-    updateFlowcash: (updateFlowcash, id) => {
+    updateFlowcashType: (updateFlowcash_type, id) => {
         return async (dispatch) => {
-
-            console.log("updateFlowcash: ", updateFlowcash);
 
             try {
                 dispatch(startUpdating());
                 
                 
-                await flowcashApi.post(`/flowcash/${id}/update`, {
-                    updateFlowcash
+                await flowcashApi.post(`/flowcash/flowcashtype/${id}/update`, {
+                    updateFlowcash_type
                 });
                 
                 
                 dispatch(setUpdated()); //set the operation as done
                 
                 //Reload the state of data
-                dispatch(FlowcashThunks.getFlowcash());
+                dispatch(FlowcashTypeThunks.getFlowcashType());
                      
                
             } catch (error) {
@@ -89,12 +85,12 @@ export const FlowcashTypeThunks = {
                 dispatch(startDeleting());
             
                 // Request HTTP
-                await flowcashApi.delete(`/flowcash/${id}/delete`);
+                await flowcashApi.delete(`/flowcash/flowcashType/${id}/delete`);
                 
                 await dispatch(setDeleted());
 
                 //Reload the state of data
-                dispatch(FlowcashThunks.getFlowcash());
+                dispatch(FlowcashTypeThunks.getFlowcashType());
                 
             } catch (error) {
                 dispatch(setErrors(error.response.data));
