@@ -1,5 +1,5 @@
 //React
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 
 //Redux
 import { useDispatch  } from "react-redux";
@@ -11,8 +11,6 @@ import { OperationThunks } from "../../../store/slices/flowcash/operation/Operat
 //Chakra UI
 import {
     Box,
-    Flex,
-    HStack,
     Stack
 } from "@chakra-ui/react";
 
