@@ -1,5 +1,6 @@
 import { resetStates, setCreated, setDeleted, setErrors, setFlowcashData, setUpdated, startCreating, startDeleting, startLoadingData, startUpdating } from "./Flowcash";
 import { flowcashApi } from "../../../api/flowcashApi";
+import { reportsThunks } from "./reports/reportsThunks";
 
 
 
@@ -13,8 +14,8 @@ export const FlowcashThunks = {
     
                 // Request HTTP
                 const resp = await flowcashApi.get("/flowcash");
-    
-                const data= resp.data.data.rows.sort((a, b) => a.datetime.localeCompare(b.datetime));
+
+                const data= resp.data.data.rows;
     
                 dispatch(setFlowcashData({ data: data }));
                 
@@ -43,6 +44,9 @@ export const FlowcashThunks = {
 
                 //Reload the state of data
                 dispatch(FlowcashThunks.getFlowcash());
+                 
+                //On every update from the state Flowcash, the we update the Report's state
+                dispatch(reportsThunks.getReportsFlowcash());
 
 
             } catch (error) {
@@ -71,6 +75,9 @@ export const FlowcashThunks = {
                 
                 //Reload the state of data
                 dispatch(FlowcashThunks.getFlowcash());
+
+                //On every update from the state Flowcash, the we update the Report's state
+                dispatch(reportsThunks.getReportsFlowcash());
                      
                
             } catch (error) {
@@ -94,6 +101,9 @@ export const FlowcashThunks = {
 
                 //Reload the state of data
                 dispatch(FlowcashThunks.getFlowcash());
+
+                //On every update from the state Flowcash, the we update the Report's state
+                dispatch(reportsThunks.getReportsFlowcash());
                 
             } catch (error) {
                 dispatch(setErrors(error.response.data));

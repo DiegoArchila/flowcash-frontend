@@ -1,5 +1,6 @@
 import { resetStates, setCreated, setDeleted, setErrors, setFlowcashTypeData, setUpdated, startCreating, startDeleting, startLoadingData, startUpdating } from "./FlowcashType";
 import { flowcashApi } from "../../../../api/flowcashApi";
+import { reportsThunks } from "../reports/reportsThunks";
 
 
 export const FlowcashTypeThunks = {
@@ -43,6 +44,9 @@ export const FlowcashTypeThunks = {
                 //Reload the state of data
                 dispatch(FlowcashTypeThunks.getFlowcashType());
 
+                //On every update from the state Flowcash, the we update the Report's state
+                dispatch(reportsThunks.getReportsFlowcash());
+
 
             } catch (error) {
                 dispatch(setErrors(error.response.data));
@@ -68,6 +72,9 @@ export const FlowcashTypeThunks = {
                 
                 //Reload the state of data
                 dispatch(FlowcashTypeThunks.getFlowcashType());
+
+                //On every update from the state Flowcash, the we update the Report's state
+                dispatch(reportsThunks.getReportsFlowcash());
                      
                
             } catch (error) {
@@ -91,6 +98,9 @@ export const FlowcashTypeThunks = {
 
                 //Reload the state of data
                 dispatch(FlowcashTypeThunks.getFlowcashType());
+
+                //On every update from the state Flowcash, the we update the Report's state
+                dispatch(reportsThunks.getReportsFlowcash());
                 
             } catch (error) {
                 dispatch(setErrors(error.response.data));

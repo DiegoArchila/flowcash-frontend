@@ -22,20 +22,9 @@ import Movements from "./components/movements/Movements";
 import FlowcashType from "./components/flowcashType/FlowcashType";
 import Operation from "./components/operations/Operations";
 import ToolbarFlowcash from "./pages/components/ToolbarFlowcash";
+import Reports from "./components/reports/Reports";
 
 function Flowcash() {
-
-    // Redux
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-
-        dispatch(OperationTypeThunks.getOperationsType());
-        dispatch( OperationThunks.getOperations() );
-        dispatch(FlowcashThunks.getFlowcash());
-
-    }, [dispatch]);
-
 
 
     return (
@@ -44,7 +33,7 @@ function Flowcash() {
            { /*Container Movements*/}
             <Stack 
                 direction={{
-                    base:"column",
+                    base:"column-reverse",
                     lg:"row"
                 }}
                 >
@@ -68,11 +57,16 @@ function Flowcash() {
                     }}
                     h={"100%"}
                 >
-                    <Box mH={"50%"}>
+
+                    <Box minH={"33.3%"}>
                         <FlowcashType />
                     </Box>
+                    
+                    <Box  minH={"33.3%"}>
+                        <Reports />
+                    </Box>
 
-                    <Box  mH={"50%"}>
+                    <Box  minH={"33.3%"}>
                         <Operation />
                     </Box>
 

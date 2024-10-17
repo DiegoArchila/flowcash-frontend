@@ -79,27 +79,34 @@ function DataManager({config = {
                 </Box>
             </HStack>
 
-            <Button
-                colorScheme='whiteAlpha'
-                size={"xs"}
-                color={"#FFFFFF"}
-                variant={"ghost"}
-                gap={3}
-                onClick={createFunction}
-            >
-                {config.buttonTitle ?
-                    config.buttonTitle
-                    :
-                    String("Crear nueva")
-                
-                }
+            {
+                config.buttonTitle!= null || undefined ?
+                    <Button
+                        colorScheme='whiteAlpha'
+                        size={"xs"}
+                        color={"#FFFFFF"}
+                        variant={"ghost"}
+                        gap={3}
+                        onClick={createFunction}
+                    >
+                        {config.buttonTitle ?
+                            config.buttonTitle
+                            :
+                            String("Crear nueva")
+                        
+                        }
 
-                {config.buttonIcon ?
-                    config.buttonIcon
-                    :
-                    <BsDatabaseFillAdd size={24} color='#FFFFFF' />
-                }
-            </Button>
+                        {config.buttonIcon ?
+                            config.buttonIcon
+                            :
+                            <BsDatabaseFillAdd size={24} color='#FFFFFF' />
+                        }
+                    </Button>
+                :
+                null
+
+            }
+
 
         </HStack>
 

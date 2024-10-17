@@ -9,6 +9,8 @@ import { setTarget } from "../../../../../store/slices/flowcash/flowcashType/Flo
 //Components
 import DataManager from '../../../../../components/DataManager/DataManager'
 import DataManagerBody from '../../../../../components/DataManager/DataManagerBody'
+import OperationsFlowcashType from "./components/OperationsFlowcashType";
+import DeleteFlowcashType from "./components/DeleteFlowcashType";
 
 //Chakra UI
 import {
@@ -30,21 +32,22 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteForever } from "react-icons/md";
 
 
-//UTILSA
+//UTILS
 import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
-import OperationsFlowcashType from "./components/OperationsFlowcashType";
-import DeleteFlowcashType from "./components/DeleteFlowcashType";
 
 function FlowcashType() {
 
     // Redux
     const dispatch = useDispatch();
 
-    const { 
-        data: dataFlowcashType = [], 
-        isLoading: isLoadingFlowcashType,
-        target
+    const {
+        data: dataFlowcashType = [],
+        isLoading: isLoadingFlowcashType
     } = useSelector(state => state.flowcashType);
+
+    const {
+        data: dataReportsFlowcash = []
+    } = useSelector(state => state.reportsFlowcash);
 
     useEffect(() => {
 
@@ -85,36 +88,36 @@ function FlowcashType() {
         buttonIcon: <MdAddBox size={24} color='#FFFFFF' />,
     }
 
-    const HeadersDataManager = ["caja", "saldo", "acciones"];
+    const HeadersDataManager = ["caja", "saldo actual", "acciones"];
 
     return (
         <DataManager config={configDataManager} isLoadingData={isLoadingFlowcashType} createFunction={OnOpenCreateFlowcashType}>
 
-            <OperationsFlowcashType 
-                isOpen={isOpenCreateFlowcashType} 
+            <OperationsFlowcashType
+                isOpen={isOpenCreateFlowcashType}
                 onClose={onCloseCreateFlowcashType}
                 title={"Nueva caja"}
                 icon={<MdAddBox size={32} color='#FFFFFF' />}
                 type={"CREATE"}
             />
 
-            <OperationsFlowcashType 
-                isOpen={isOpenDetailFlowcashType} 
+            <OperationsFlowcashType
+                isOpen={isOpenDetailFlowcashType}
                 onClose={onCloseDetailFlowcashType}
                 title={"Detalle caja"}
                 icon={<IoIosInformationCircleOutline size={32} color='#FFFFFF' />}
                 type={"DETAIL"}
             />
 
-            <OperationsFlowcashType 
-                isOpen={isOpenEditFlowcashType} 
+            <OperationsFlowcashType
+                isOpen={isOpenEditFlowcashType}
                 onClose={onCloseEditFlowcashType}
                 title={"Editar caja"}
                 icon={<FaRegEdit size={32} color='#FFFFFF' />}
                 type={"EDIT"}
             />
 
-            <DeleteFlowcashType 
+            <DeleteFlowcashType
                 isOpen={isOpenDeleteFlowcashType}
                 onClose={onCloseDeleteFlowcashType}
             />
@@ -133,10 +136,20 @@ function FlowcashType() {
                                     </Text>
                                 </Td>
 
-                                 {/* COLUMN: balance */}
-                                 <Td textAlign={"left"}>
+                                {/* COLUMN: balance */}
+                                <Td textAlign={"left"}>
                                     <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16} align={"right"}>
-                                        {formatCurrencyCOP(elementFlowcashType.balance)}
+                                    {
+                                        formatCurrencyCOP(
+                                            dataReportsFlowcash
+                                            .filter(report => report.flowcashtypeid === elementFlowcashType.id)
+                                            .reduce((Total, report) => {
+                                                return report.is_sum
+                                                ? Total + Number(report.total)
+                                                : Total - Number(report.total);
+                                            }, 0) // Valor inicial
+                                        )
+                                    }
                                     </Text>
                                 </Td>
 
@@ -182,8 +195,8 @@ function FlowcashType() {
                                     </Center>
                                 </Td>
                             </Tr>
-                        )             
-                    }) 
+                        )
+                    })
                 }
 
             </DataManagerBody>

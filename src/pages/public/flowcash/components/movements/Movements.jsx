@@ -193,7 +193,11 @@ export default function Movements() {
 
                             {/* COLUMN: Description */}
                             <Td textAlign={"left"}>
-                                <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                                <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16} isTruncated maxWidth={{
+                                    base:"100px",
+                                    md: "250px",
+                                    lg: "330px"
+                                }}>
                                     {elementFlowcash.description}
                                 </Text>
                             </Td>

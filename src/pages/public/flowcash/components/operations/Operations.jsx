@@ -45,8 +45,7 @@ export default function Operation() {
 
     const { 
         data= [], 
-        isLoading,
-        target
+        isLoading
     } = useSelector(state => state.operation);
 
     const { 
