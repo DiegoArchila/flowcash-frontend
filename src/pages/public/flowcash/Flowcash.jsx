@@ -1,12 +1,6 @@
 //React
-import { useEffect } from "react";
 
 //Redux
-import { useDispatch  } from "react-redux";
-import { FlowcashThunks } from "../../../store/slices/flowcash/FlowcashThunks";
-import { OperationTypeThunks } from "../../../store/slices/flowcash/operationType/OperationTypeThunks";
-import { OperationThunks } from "../../../store/slices/flowcash/operation/OperationThunks";
-
 
 //Chakra UI
 import {
@@ -56,17 +50,18 @@ function Flowcash() {
                         lg: "30%"
                     }}
                     h={"100%"}
+                    gap={0}
                 >
+
+                    <Box  minH={"33.3%"}>
+                        <Reports />
+                    </Box>
 
                     <Box minH={"33.3%"}>
                         <FlowcashType />
                     </Box>
                     
-                    <Box  minH={"33.3%"}>
-                        <Reports />
-                    </Box>
-
-                    <Box  minH={"33.3%"}>
+                    <Box minH={"33.3%"}>
                         <Operation />
                     </Box>
 

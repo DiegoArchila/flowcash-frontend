@@ -63,7 +63,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
 
     // Redux
     const dispatch = useDispatch();
-    const { isDone: isDoneFlowcash, inProcess, errors, data: dataFlowcash, target: targetFlowcash } = useSelector(state => state.flowcash);
+    const { isDone: isDoneFlowcash, inProcess, errors, data: {data: dataFlowcash}, target: targetFlowcash } = useSelector(state => state.flowcash);
     const { data: dataFlowcashType } = useSelector(state => state.flowcashType);
     const { data: dataOperation } = useSelector(state => state.operation);
     const { data: dataOperationType } = useSelector(state => state.operationType);

@@ -1,0 +1,14 @@
+.icon {
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon:hover {
+    background-color: #003262;
+    color: #FFFFFF;
+}
+
+.icon:active {
+    background-color: #FFFFFF;
+    color: #2D3748;
+}

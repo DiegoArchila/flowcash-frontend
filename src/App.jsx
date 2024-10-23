@@ -7,6 +7,8 @@ import { PublicRoutes } from "./routes/PublicRoutes";
 
 function App() {
 
+  console.log("Me renderize")
+
   return (
     <div className="containerAPP">
      

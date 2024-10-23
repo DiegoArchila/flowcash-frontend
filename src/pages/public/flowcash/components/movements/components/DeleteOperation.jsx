@@ -32,7 +32,7 @@ function DeleteOperation({ onClose, isOpen }) {
     // Redux
     const dispatch = useDispatch();
 
-    const { errors, inProcess, target, isDone, data } = useSelector(state => state.flowcash);
+    const { errors, inProcess, target, isDone, data:{data} } = useSelector(state => state.flowcash);
     const [toDelete, setToDelete] = useState(null);
 
     useEffect( () => {

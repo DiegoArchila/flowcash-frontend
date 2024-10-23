@@ -6,16 +6,29 @@ import { reportsThunks } from "./reports/reportsThunks";
 
 export const FlowcashThunks = {
 
-    getFlowcash: () => {
+    /**
+     * Get Flowcash data
+     * @param {number} count count data for page 
+     * @param {number} page current page
+     * @returns 
+     */
+    getFlowcash: (count=20, page=1) => {
         return async (dispatch) => {
 
             try {
                 dispatch(startLoadingData());
     
                 // Request HTTP
-                const resp = await flowcashApi.get("/flowcash");
+                const resp = await flowcashApi.get('/flowcash', {
+                    params:{
+                        count: count,
+                        page: page
+                    }
+                });
 
-                const data= resp.data.data.rows;
+                console.log("Ejecutado...")
+
+                const data= resp.data;
     
                 dispatch(setFlowcashData({ data: data }));
                 
@@ -23,7 +36,6 @@ export const FlowcashThunks = {
                 dispatch(setErrors(error.response.data));
                 dispatch(resetStates());
             }
-
 
         }
     },

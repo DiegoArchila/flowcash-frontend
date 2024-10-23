@@ -13,21 +13,11 @@ import {
     Td,
     Text,
     Center,
-    Tag,
-    TagLeftIcon,
-    TagLabel,
-    HStack,
-    Box,
-    Stack,
 } from "@chakra-ui/react";
 
 //Icons
 import { BsFillInfoSquareFill } from "react-icons/bs";
 import { TbReportAnalytics } from "react-icons/tb";
-import { IoMdRemove } from "react-icons/io";
-import { RiAddLargeLine } from "react-icons/ri";
-
-
 
 //Components
 import DataManager from "../../../../../components/DataManager/DataManager";
@@ -68,7 +58,7 @@ export default function Reports() {
     const reportArray = Object.values(groupedData);
 
     const configDataManager = {
-        title: "Reporte",
+        title: "Reporte actual",
         icon: <TbReportAnalytics size={24} color='#FFFFFF' />,
     }
 
@@ -89,38 +79,16 @@ export default function Reports() {
                         </Td>
 
                         {/* COLUMN: Ingresos*/}
-                        <Td textAlign={"center"}>
-                            <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={14}>
-                                <Tag
-                                    key={i}
-                                    size={"sm"}
-                                    bgColor={"#7BA05B"}
-                                    variant={"outline"}
-                                    color={"#FFFFFF"}
-                                >
-                                    <TagLeftIcon as={RiAddLargeLine} />
-                                    <TagLabel fontSize={16}>
-                                        {formatCurrencyCOP(elementReportFlowcash.ingresos)}
-                                    </TagLabel>
-                                </Tag>
+                        <Td textAlign={"right"}>
+                            <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                                {formatCurrencyCOP(elementReportFlowcash.ingresos)}
                             </Text>
                         </Td>
 
                         {/* COLUMN: Egresos*/}
-                        <Td textAlign={"center"}>
-                            <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={14}>
-                                <Tag
-                                    key={i}
-                                    size={"sm"}
-                                    bgColor={"#BF4F51CC"}
-                                    variant={"outline"}
-                                    color={"#FFFFFF"}
-                                >
-                                    <TagLeftIcon as={IoMdRemove} />
-                                    <TagLabel fontSize={16}>
-                                        {formatCurrencyCOP(elementReportFlowcash.egresos)}
-                                    </TagLabel>
-                                </Tag>
+                        <Td textAlign={"right"}>
+                            <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                                {formatCurrencyCOP(elementReportFlowcash.egresos)}
                             </Text>
                         </Td>
 

@@ -1,3 +1,4 @@
+
 import PropTypes from 'prop-types';
 
 //Chakara UI
@@ -25,10 +26,10 @@ import { BsDatabaseFillAdd } from "react-icons/bs";
  * @param {boolean} isLoadingData Flag to indicate if the data is loading
  * @returns {JSX.Element} the component DataManager rendered
  */
-function DataManager({config = {
+const DataManager = ({config = {
     title: "Administrador de datos",
     icon: <FaDatabase size={32} color='#FFFFFF' />,
-},children,isLoadingData=true,createFunction}) {
+},children,isLoadingData=true,createFunction}) => {
 
   return (
     <Box
