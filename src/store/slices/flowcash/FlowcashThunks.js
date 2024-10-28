@@ -26,8 +26,6 @@ export const FlowcashThunks = {
                     }
                 });
 
-                console.log("Ejecutado...")
-
                 const data= resp.data;
     
                 dispatch(setFlowcashData({ data: data }));

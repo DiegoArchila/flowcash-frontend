@@ -272,7 +272,6 @@ export default function Movements() {
                 }
 
             </DataManager>
-
             {
                 totalRow!=0 ?
                     <Pagination 
@@ -285,6 +284,7 @@ export default function Movements() {
                     null
 
             }
+
         
         </Fragment>
     )

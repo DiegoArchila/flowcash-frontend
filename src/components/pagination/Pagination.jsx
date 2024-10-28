@@ -1,6 +1,6 @@
 //React
-import { Fragment } from "react";
 import PropTypes from 'prop-types'
+import { useEffect, useState, Fragment } from 'react';
 import './Pagination.css'
 
 //Redux
@@ -16,7 +16,7 @@ import {
     MdOutlineLastPage,
     MdOutlineFirstPage
 } from "react-icons/md";
-import { useEffect, useState } from 'react';
+
 
 /**
  * Pagination Component
@@ -50,14 +50,51 @@ function Pagination({ length, queryFunction, currentPage }) {
     const dispatch = useDispatch();
 
     const [indexPage, setIndexPage] = useState(1);
-    const [count, setCount] = useState(20);
+    const [ItemsPerPage, setItemsPerPage] = useState(20);
+    const [pagesPerWindows, setPagesPerWindows] = useState([]);
+
     const [flag, setFlag] = useState(false);
+
+    //Sets the total amount pages for width screen
+    const MAXCOUNTVISIBLE_FULL = 21;
+    const MAXCOUNTVISIBLE_MD = 11;
+    const MAXCOUNTVISIBLE_SD = 5;
+    const MAXCOUNTVISIBLE_BASE = 3;
+
+    const breakPointsForCountVisible = useBreakpointValue({
+        base: MAXCOUNTVISIBLE_BASE,
+        sm: MAXCOUNTVISIBLE_SD,
+        md: MAXCOUNTVISIBLE_MD,
+        lg: MAXCOUNTVISIBLE_FULL
+    });
 
     useEffect(() => {
 
+        // We obtain the total pages
+        const totalPages = Math.ceil(length / ItemsPerPage);
+
+        // We find the middle from total page for width window  and  we set the variable startPage
+        const middlePoint = Math.ceil(breakPointsForCountVisible / 2);
+        let startPage;
+
+        if (currentPage > middlePoint) {
+
+            startPage = Math.min(currentPage - middlePoint + 1, totalPages - breakPointsForCountVisible + 1);
+            if (startPage<1){
+                startPage=1;
+            }
+
+        } else {
+            startPage = 1;
+        }
+
+        // We ensure that the visible pages do not exceed the total number of pages and update `pagesPerWindows`.
+        const endPage = Math.min(startPage + breakPointsForCountVisible - 1, totalPages);
+        setPagesPerWindows(Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i));
+
         if (flag) {
 
-            dispatch(queryFunction(count, indexPage));
+            dispatch(queryFunction(ItemsPerPage, indexPage));
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
         } else {
@@ -67,18 +104,7 @@ function Pagination({ length, queryFunction, currentPage }) {
         setFlag(false);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [flag, indexPage]);
-
-
-    const MAXCOUNTVISIBLE_FULL = 21;
-    const MAXCOUNTVISIBLE_MD = 11;
-    const MAXCOUNTVISIBLE_SD = 6;
-
-    const breakPointsForCountVisible = useBreakpointValue({
-        sm: MAXCOUNTVISIBLE_SD,
-        md: MAXCOUNTVISIBLE_MD,
-        lg: MAXCOUNTVISIBLE_FULL
-    });
+    }, [flag, indexPage, breakPointsForCountVisible]);
 
 
     return (
@@ -96,128 +122,142 @@ function Pagination({ length, queryFunction, currentPage }) {
             alignContent={"center"}
             justifyContent={"center"}
             gap={0}
+            overflow={"hidden"}
+
         >
 
-            <Box 
-                gap={2} 
-                display={((currentPage -1) <= 0 ) ? "none" : "flex"} 
-                alignContent={"flex-start"}
+            {/**Create the count pages index */}
+
+            {
+                pagesPerWindows.map((page, i) => {
+
+                    return (
+                        <Fragment key={"index-" + i} >
+
+                            {(i === 0) ?
+                                <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} key={"divider-" + i} />
+                                : null}
+
+                            <Box
+                                m={0}
+                                key={i}
+                                cursor={"pointer"}
+                                h={"100%"}
+                                w={"100%"}
+                                maxW={"36px"}
+                                alignContent={"center"}
+                                justifyContent={"center"}
+                                fontWeight={"bold"}
+                                textAlign={"center"}
+                                color={page===currentPage ? "#003262" : "#FFFFFF"}
+                                bgColor={page===currentPage ? "#FFFFFF" : "#0072BB"}
+                                onClick={() => {
+
+                                    setIndexPage(page);
+                                    setFlag(true);
+
+                                }}
+
+                                _hover={{
+                                    bgColor: "#003262",
+                                    color: "#FFFFFF"
+                                }}
+
+                                _active={{
+                                    bgColor: "#FFFFFF",
+                                    color: "#2D3748"
+                                }}
+                            >
+                                {page}
+                            </Box>
+
+                            <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} key={"divider2-" + i} />
+
+                        </Fragment>
+                    )
+                })
+            }
+
+
+            <Box
+                id='controls'
+                display={"flex"}
+                ml={"auto"}
+                mr={3}
             >
 
-                <MdOutlineFirstPage
-                    color='#FFFFFF'
-                    size={"28px"}
-                    cursor={"pointer"}
-                    className='icon'
-                    onClick={() => {
-                        setIndexPage(1)
-                        setFlag(true);
-                    }}
-                />
 
-                <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
+                <Box
+                    gap={2}
+                    display={((currentPage - 1) <= 0) ? "none" : "flex"}
+                    alignContent={"flex-start"}
+                >
+                    <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
 
-                <MdOutlineKeyboardArrowLeft
-                    color='#FFFFFF'
-                    size={"28px"}
-                    cursor={"pointer"}
-                    className='icon'
-                    onClick={() => {
-
-                        if ((currentPage-1)>0) {
-                            setIndexPage(currentPage-1)
-                            setFlag(true);
-                        }
-                    }}
-                />
-                <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
-
-            </Box>
-
-
-            {/**Create the count pages index */}
-            {Array.from({ length: Math.ceil(length / count) }, (_, i) => (
-
-
-                <Fragment key={"index-" + i}>
-
-                    {(i === 0) ?
-                        <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} key={"divider-" + i} />
-                        : null}
-
-                    <Box
-                        m={0}
-                        key={i}
+                    <MdOutlineFirstPage
+                        color='#FFFFFF'
+                        size={"28px"}
                         cursor={"pointer"}
-                        h={"100%"}
-                        w={"100%"}
-                        maxW={"36px"}
-                        alignContent={"center"}
-                        justifyContent={"center"}
-                        fontWeight={"bold"}
-                        textAlign={"center"}
-                        color={currentPage===(i+1) ? "#003262": "#FFFFFF"}
-                        bgColor={currentPage===(i+1) ? "#FFFFFF": "0072BB"}
-                        onClick={async () => {
-
-                            //Set the new value for indexPage
-                            setIndexPage(i + 1);
+                        className='icon'
+                        onClick={() => {
+                            setIndexPage(1)
                             setFlag(true);
-
-
                         }}
+                    />
 
-                        _hover={{
-                            bgColor: "#003262",
-                            color: "#FFFFFF"
+                    <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
+
+                    <MdOutlineKeyboardArrowLeft
+                        color='#FFFFFF'
+                        size={"28px"}
+                        cursor={"pointer"}
+                        className='icon'
+                        onClick={() => {
+
+                            if ((currentPage - 1) > 0) {
+                                setIndexPage(currentPage - 1)
+                                setFlag(true);
+                            }
                         }}
+                    />
 
-                        _active={{
-                            bgColor: "#FFFFFF",
-                            color: "#2D3748"
+                    {/* <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} /> */}
+
+                </Box>
+
+                {/** Controls next right page and to last page */}
+                <Box
+                    gap={2}
+                    display={(currentPage === Math.ceil(length / ItemsPerPage)) ? "none" : "flex"}
+                    flexDirection={"row-reverse"}>
+
+                    <MdOutlineLastPage
+                        color='#FFFFFF'
+                        size={"28px"}
+                        cursor={"pointer"}
+                        className='icon'
+                        onClick={() => {
+                            setIndexPage(Math.ceil(length / ItemsPerPage));
+                            setFlag(true);
                         }}
-                    >
-                        {i + 1}
-                    </Box>
+                    />
 
-                    <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} key={"divider2-" + i} />
+                    <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
 
-                </Fragment>
+                    <MdOutlineKeyboardArrowRight
+                        color='#FFFFFF'
+                        size={"28px"}
+                        cursor={"pointer"}
+                        className='icon'
+                        onClick={() => {
+                            setIndexPage(currentPage + 1);
+                            setFlag(true);
+                        }}
+                    />
 
-            ))}
+                    <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
 
-            {/** Controls next right page and to last page */}
-            <Box 
-                gap={3} 
-                display={(currentPage === Math.ceil(length / count)) ? "none" : "flex"} 
-                flexDirection={"row-reverse"}>
-
-                <MdOutlineLastPage
-                    color='#FFFFFF'
-                    size={"28px"}
-                    cursor={"pointer"}
-                    className='icon'
-                    onClick={() => {
-                        setIndexPage(Math.ceil(length / count));
-                        setFlag(true);
-                    }}
-                />
-
-                <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
-
-                <MdOutlineKeyboardArrowRight
-                    color='#FFFFFF'
-                    size={"28px"}
-                    cursor={"pointer"}
-                    className='icon'
-                    onClick={() => {
-                        setIndexPage(currentPage+1);
-                        setFlag(true);
-                    }}
-                />
-
-                <Divider orientation='vertical' color={"#FFFFFF"} h={"100%"} />
-
+                </Box>
             </Box>
 
         </HStack>
