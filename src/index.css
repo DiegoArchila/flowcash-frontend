@@ -20,7 +20,7 @@ main{
 /* Brand */
 @font-face {
   font-family: "brand";
-  src: url('./src/assets/fonts/Anta/Anta/Anta-Regular.ttf');
+  src: url('../public/fonts/Anta/Anta/Anta-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -28,7 +28,7 @@ main{
 /* Label */
 @font-face {
   font-family: "Label-Regular";
-  src: url('./src/assets/fonts/Ubuntu/Ubuntu-Regular.ttf');
+  src: url('../public/fonts/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -36,7 +36,7 @@ main{
 /* Label */
 @font-face {
   font-family: "Label-Light";
-  src: url('./src/assets/fonts/Ubuntu/Ubuntu-Light.ttf');
+  src: url('../public/fonts/Ubuntu/Ubuntu-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -44,7 +44,7 @@ main{
 
 @font-face {
   font-family: "Label-Medium";
-  src: url('./src/assets/fonts/Ubuntu/Ubuntu-Medium.ttf');
+  src: url('../public/fonts/Ubuntu/Ubuntu-Medium.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -52,35 +52,35 @@ main{
 /* Input */
 @font-face {
   font-family: "Input-Regular";
-  src: url('./src/assets/fonts/Montserrat/static/Montserrat-Regular.ttf');
+  src: url('../public/fonts/Montserrat/static/Montserrat-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Input-Medium";
-  src: url('./src/assets/fonts/Montserrat/static/Montserrat-Medium.ttf');
+  src: url('../public/fonts/Montserrat/static/Montserrat-Medium.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Input-SemiBold";
-  src: url('./src/assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf');
+  src: url('../public/fonts/Montserrat/static/Montserrat-SemiBold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Input-SemiBold";
-  src: url('./src/assets/fonts/Montserrat/static/Montserrat-Bold.ttf');
+  src: url('../public/fonts/Montserrat/static/Montserrat-Bold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Input-Light";
-  src: url('./src/assets/fonts/Montserrat/static/Montserrat-Light.ttf');
+  src: url('../public/fonts/Montserrat/static/Montserrat-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -88,7 +88,7 @@ main{
 /* Parrafs */
 @font-face {
   font-family: "Parrafs-regular";
-  src: url('./src/assets/fonts/Poppins/Poppins-Regular.ttf');
+  src: url('../public/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -96,7 +96,7 @@ main{
 /* Parrafs */
 @font-face {
   font-family: "Parrafs-light";
-  src: url('./src/assets/fonts/Poppins/Poppins-Light.ttf');
+  src: url('../public/fonts/Poppins/Poppins-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -104,7 +104,7 @@ main{
 /* Parrafs */
 @font-face {
   font-family: "Parrafs-Prices";
-  src: url('./src/assets/fonts/PT_Sans/PTSans-Regular.ttf');
+  src: url('../public/fonts/PT_Sans/PTSans-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
