@@ -4,6 +4,7 @@ import { Divider, Flex } from "@chakra-ui/react";
 import Header from "./partials/header/Header";
 import Footer from "./partials/footer/Footer";
 import { PublicRoutes } from "./routes/PublicRoutes";
+import { PrivateRoutes } from "./routes/PrivateRoutes";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
       
       <main>
         <PublicRoutes />
+        <PrivateRoutes />
       </main>
 
       {/*<Footer />*/}
