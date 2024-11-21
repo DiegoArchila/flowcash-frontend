@@ -141,13 +141,13 @@ function FlowcashType() {
                                     <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16} align={"right"}>
                                     {
                                         formatCurrencyCOP(
-                                            dataReportsFlowcash
+                                            Number.parseFloat(dataReportsFlowcash
                                             .filter(report => report.flowcashtypeid === elementFlowcashType.id)
                                             .reduce((Total, report) => {
                                                 return report.is_sum
                                                 ? Total + Number(report.total)
                                                 : Total - Number(report.total);
-                                            }, 0) // Valor inicial
+                                            }, 0)) + (Number.parseFloat(elementFlowcashType.balance) || 0 )
                                         )
                                     }
                                     </Text>
