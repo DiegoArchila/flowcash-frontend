@@ -15,7 +15,7 @@ import {
 import Movements from "./components/movements/Movements";
 import FlowcashType from "./components/flowcashType/FlowcashType";
 import Operation from "./components/operations/Operations";
-import ToolbarFlowcash from "./pages/components/ToolbarFlowcash";
+import ToolbarFlowcash from "./layouts/components/ToolbarFlowcash";
 import Reports from "./components/reports/Reports";
 
 function Flowcash() {

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { HStack } from '@chakra-ui/react'
 
-function Toolbar({children}) {
+function Toolbar({children, justifyContent}) {
   return (
     <HStack 
         w={"100%"} 
@@ -15,7 +15,7 @@ function Toolbar({children}) {
         borderTopStyle={"solid"}
         borderTopColor={"#F0F8FF"}
         alignContent={"center"}
-        justifyContent={"center"}
+        justifyContent={justifyContent}
         gap={5}
     >
 
