@@ -1,21 +1,21 @@
-import { Box, Stack, HStack } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom'
 import ToolbarPrivate from './components/toolbar/ToolbarPrivate';
 
 function PrivateLayout() {
   return (
 
-    <HStack>
-        
-        <Box>
-          <ToolbarPrivate />
-        </Box>
+    <Flex flexDir={"row"}>
 
-        <Box>
-          <Outlet />
-        </Box>
+      <Box>
+        <ToolbarPrivate />
+      </Box>
 
-    </HStack>
+      <Box>
+        <Outlet />
+      </Box>
+
+    </Flex>
   );
 }
 

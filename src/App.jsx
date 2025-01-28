@@ -9,12 +9,12 @@ function App() {
   return (
     <div className="containerAPP">
      
-      <Header/>
+      {/* <Header/>
       
-      <Divider />
+      <Divider /> */}
       
       <main>
-        <PublicRoutes />
+        {/* <PublicRoutes /> */}
         <PrivateRoutes />
       </main>
 

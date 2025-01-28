@@ -1,5 +1,4 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import Flowcash from "../pages/private/flowcash/Flowcash";
 import Home from "../pages/private/home/Home";
 import Products from "../pages/private/products/Products";
 import Suppliers from "../pages/private/suppliers/Suppliers";
@@ -10,6 +9,7 @@ import PrivateLayout from "../layouts/private/PrivateLayout";
 
 export const PrivateRoutes= () => {
 
+  /**See almost ToolbarPrivate.jsx */
   const SUB_ROUTE="/private";
 
   return (
@@ -20,10 +20,10 @@ export const PrivateRoutes= () => {
 
           <Route index element={<Home />} />
           <Route path={`products`} element={<Products />} />
-          <Route path={`suppliers`} element={<Suppliers />} />
+          <Route path={`supplies`} element={<Suppliers />} />
           <Route path={`costumers`} element={<Costumers />} />
           <Route path={`invoices`}element={<Invoices />} />
-          <Route path={`*`} element={<Navigate to={`/${SUB_ROUTE}`}/>} />
+          <Route path={`*`} element={<Navigate to={`${SUB_ROUTE}`}/>} />
           
         </Route>
 

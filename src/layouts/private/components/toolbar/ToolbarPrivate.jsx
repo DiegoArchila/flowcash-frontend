@@ -1,13 +1,13 @@
 //REACT
+import { Link } from "react-router-dom";
 
 //COMPONENTS
 import Toolbar from "../../../../components/toolbar/Toolbar.jsx";
 
 //CHAKRA UI
-import { Box, Divider } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 
 //ICONS
-import { TbReportAnalytics} from "react-icons/tb";
 import { FaCashRegister } from "react-icons/fa";
 import { MdOutlineHomeWork, MdFactory } from "react-icons/md";
 import { FaBoxes } from "react-icons/fa";
@@ -15,47 +15,79 @@ import { FaFileInvoiceDollar, FaPeopleGroup } from "react-icons/fa6";
 
 
 function ToolbarPrivate() {
+
+  const SUB_ROUTE = "/private";
+
   return (
-    <Toolbar justifyContent={"flex-start"} pl={"10px"}>
-      
+    <Toolbar>
+
       {/** Home */}
       <Box cursor={"pointer"}>
-        <MdOutlineHomeWork size={30} color='#FFF0F5' />
+        <Link to={`${SUB_ROUTE}`}>
+          <Flex gap={3}>
+            <MdOutlineHomeWork size={24} color='#FFF0F5' />
+            <Text color='#FFF0F5'>Inicio</Text>
+          </Flex>
+        </Link>
       </Box>
 
-      <Divider orientation='vertical' color={"FFF0F5"} h={"28px"}/>
 
       {/** Products */}
       <Box cursor={"pointer"} >
-        <FaBoxes size={30} color='#FFF0F5' />
+        <Link to={`${SUB_ROUTE}/products`}>
+          <Flex gap={3}>
+            <FaBoxes size={24} color='#FFF0F5' />
+            <Text color='#FFF0F5'>Productos</Text>
+          </Flex>
+        </Link>
       </Box>
 
-      <Divider orientation='vertical' color={"FFF0F5"} h={"28px"}/>
+
 
       {/** Flowcash */}
       <Box cursor={"pointer"} >
-        <FaCashRegister size={30} color='#FFF0F5' />
+        <Link to={`${SUB_ROUTE}/flowcash`}>
+          <Flex gap={3}>
+            <FaCashRegister size={22} color='#FFF0F5' />
+            <Text color='#FFF0F5'>Caja</Text>
+          </Flex>
+        </Link>
       </Box>
 
-      <Divider orientation='vertical' color={"FFF0F5"} h={"28px"}/>
+
 
       {/** Invoices */}
       <Box cursor={"pointer"} >
-        <FaFileInvoiceDollar size={30} color='#FFF0F5' />
+        <Link to={`${SUB_ROUTE}/invoices`}>
+          <Flex gap={3}>
+            <FaFileInvoiceDollar size={24} color='#FFF0F5' />
+            <Text color='#FFF0F5'>Facturas</Text>
+          </Flex>
+        </Link>
       </Box>
 
-      <Divider orientation='vertical' color={"FFF0F5"} h={"28px"}/>
+
 
       {/** Costumers */}
       <Box cursor={"pointer"} >
-        <FaPeopleGroup size={30} color='#FFF0F5' />
+        <Link to={`${SUB_ROUTE}/costumers`}>
+          <Flex gap={3}>
+            <FaPeopleGroup size={24} color='#FFF0F5' />
+            <Text color='#FFF0F5'>Clientes</Text>
+          </Flex>
+        </Link>
       </Box>
 
-      <Divider orientation='vertical' color={"FFF0F5"} h={"28px"}/>
+
 
       {/** Supplies */}
-      <Box cursor={"pointer"} >
-        <MdFactory size={30} color='#FFF0F5' />
+      <Box cursor={"pointer"}>
+        <Link to={`${SUB_ROUTE}/supplies`}>
+          <Flex gap={3}>
+            <MdFactory size={24} color='#FFF0F5' />
+            <Text color='#FFF0F5'>Proveedores</Text>
+          </Flex>
+        </Link>
       </Box>
 
     </Toolbar>

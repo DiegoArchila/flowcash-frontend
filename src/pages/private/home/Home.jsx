@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Box } from '@chakra-ui/react'
 
 function Home(props) {
   return (
-    <div>Home</div>
+    <Box height={"100%"} width={"100%"} bgColor={"green"}>Home</Box>
   )
 }
 
