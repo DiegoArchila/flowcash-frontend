@@ -8,11 +8,40 @@
 
 }
 
-/* main{
-  height: 100%;
-  margin-top: 42px;
-  margin-bottom: 44px;
-} */
+.scroll-container {
+  overflow: auto;
+  scrollbar-width: thin; /* Firefox: delgado */
+  scrollbar-color: #888 #f1f1f1; /* Firefox: color del thumb y track */
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+.scroll-container::-webkit-scrollbar {
+  width: 5px; /* Más delgado */
+  height: 5px; /* Para scroll horizontal */
+  opacity: 0; /* Inicialmente invisible */
+  transition: opacity 0.3s;
+}
+
+.scroll-container:hover::-webkit-scrollbar {
+  opacity: 1; /* Aparece en hover */
+}
+
+/* Track */
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Thumb */
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Hover del thumb */
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 
 /* --- FONTS --- */

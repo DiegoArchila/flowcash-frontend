@@ -5,15 +5,19 @@ import ToolbarPrivate from './components/toolbar/ToolbarPrivate';
 function PrivateLayout() {
   return (
 
-    <Flex flexDir={"row"}>
+    <Flex flexDir={{
+      base: 'column',
+      lg: 'row'
+    }}
+    >
 
-      <Box>
-        <ToolbarPrivate />
-      </Box>
 
-      <Box>
-        <Outlet />
-      </Box>
+      <ToolbarPrivate />
+
+
+
+      <Outlet />
+
 
     </Flex>
   );
