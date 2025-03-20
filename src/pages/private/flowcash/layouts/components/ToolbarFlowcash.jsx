@@ -6,29 +6,53 @@ import PropTypes from 'prop-types'
 import Toolbar from "../../../../../components/toolbar/Toolbar";
 
 //CHAKRA UI
-import { Box, Divider } from '@chakra-ui/react';
+import { Box, Divider, Flex } from '@chakra-ui/react';
 
 //ICONS
-import { TbReportAnalytics} from "react-icons/tb";
+import { TbReportAnalytics } from "react-icons/tb";
 import { FaCashRegister } from "react-icons/fa";
 
+function ToolbarFlowcash({ ...rest }) {
 
-
-function ToolbarFlowcash() {
   return (
-    <Toolbar>
-      
+
+    <Flex
+      h={{
+        base: '100%',
+        lg: '100%'
+      }}
+      zIndex={'1'}
+      marginBottom={{
+        base: '50px',
+        lg: '0px'
+      }}
+      width={'100%'}
+      bg={"#003262"}
+      py={3}
+      px={3}
+      justifyContent={"center"}
+      alignItems={"center"}
+      alignContent={"center"}
+      flexDir={'row'}
+      gap={10}
+      transition={"all 100ms ease"}
+      boxSizing='border-box'
+      boxShadow={'0px 6px 15px rgba(0, 0, 0, 0.2), 0px 2px 6px rgba(0, 50, 98, 0.4)'}
+      {...rest}
+    >
+
       <Box cursor={"pointer"}>
-        <FaCashRegister size={30} color='#FFF0F5' />
+        <FaCashRegister size={26} color='#FFFFFF' />
       </Box>
 
-      <Divider orientation='vertical' color={"FFF0F5"} h={"28px"}/>
+      <Divider orientation={'vertical'} color={"FFF0F5"} h={"28px"} />
 
       <Box cursor={"pointer"} >
-        <TbReportAnalytics size={36} color='#FFF0F5' />
+        <TbReportAnalytics size={26} color='#FFFFFF' />
       </Box>
 
-    </Toolbar>
+    </Flex>
+
   )
 }
 

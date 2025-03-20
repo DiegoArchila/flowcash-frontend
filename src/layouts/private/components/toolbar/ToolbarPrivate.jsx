@@ -71,6 +71,15 @@ function ToolbarPrivate() {
         lg: 'space-evenly'
       }}
 
+      position={{
+        base: 'fixed',
+        lg: 'static'
+      }}
+
+      top={{
+        base: '0px'
+      }}      
+
     >
 
       <Flex
@@ -149,7 +158,7 @@ function ToolbarPrivate() {
         }}
         pl={3}
         overflow={{
-          base: 'scroll',
+          base: 'auto',
           lg: 'unset'
         }}
 

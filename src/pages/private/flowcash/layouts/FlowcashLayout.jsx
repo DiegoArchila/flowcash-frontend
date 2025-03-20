@@ -1,21 +1,39 @@
-import { Box, Stack, HStack } from '@chakra-ui/react';
+import { Box, Stack } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom'
 import ToolbarFlowcash from './components/ToolbarFlowcash';
 
 function FlowcashLayout() {
   return (
 
-    <HStack direction={"row"}>
-        
-        <Box>
-          <ToolbarFlowcash />
-        </Box>
+    <Stack
+      direction={{
+        base: 'column-reverse'
+      }}
+      position={'relative'}
+    >
 
-        <Box>
-          <Outlet />
-        </Box>
+      <Box
+        position={'fixed'}
+        bottom={'0px'}
+        m={'0px'}
+        zIndex={'1'}
+        height={'48px'}
+        w={'100%'}
+      >
+        <ToolbarFlowcash />
+      </Box>
 
-    </HStack>
+      <Box
+        marginBottom={'48px'}
+        padding={'0px 5px'}
+        width={'100%'}
+        height={'100%'}
+        overflow={'auto'}
+      >
+        <Outlet />
+      </Box>
+
+    </Stack>
   );
 }
 

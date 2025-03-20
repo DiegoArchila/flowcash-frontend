@@ -9,15 +9,20 @@ function PrivateLayout() {
       base: 'column',
       lg: 'row'
     }}
+      w={'100%'}
+      h={'100%'}
+      position={'relative'}
     >
-
 
       <ToolbarPrivate />
 
-
-
-      <Outlet />
-
+      <Box
+        w={'100%'}
+        h={'100%'}
+        //padding={'0px 5px'}
+      >
+        <Outlet />
+      </Box>
 
     </Flex>
   );

@@ -5,6 +5,7 @@ import Suppliers from "../pages/private/suppliers/Suppliers";
 import Costumers from "../pages/private/costumers/Costumers";
 import Invoices from "../pages/private/invoices/Invoices";
 import PrivateLayout from "../layouts/private/PrivateLayout";
+import FlowcashRoutes from "../pages/private/flowcash/routes/FlowcashRoutes";
 
 
 export const PrivateRoutes= () => {
@@ -21,6 +22,9 @@ export const PrivateRoutes= () => {
           <Route index element={<Home />} />
           <Route path={`products`} element={<Products />} />
           <Route path={`supplies`} element={<Suppliers />} />
+          
+          <Route path={`flowcash/*`} element={<FlowcashRoutes/>}/>
+          
           <Route path={`costumers`} element={<Costumers />} />
           <Route path={`invoices`}element={<Invoices />} />
           <Route path={`*`} element={<Navigate to={`${SUB_ROUTE}`}/>} />

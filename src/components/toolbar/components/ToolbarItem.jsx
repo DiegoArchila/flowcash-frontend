@@ -26,7 +26,15 @@ function ToolbarItem({
   isFullSize,
 }) {
   return (
-    <Box cursor={"pointer"} _hover={{fontWeight:"Bold", transform: "scale(1.1)"}} className="ToolbarItem" draggable={false}>
+    <Box 
+      cursor={"pointer"} 
+      _hover={{
+        fontWeight:"Bold", 
+        transform: "scale(1.1)"
+      }} 
+      className="ToolbarItem" 
+      draggable={false}
+    >
       <Link to={`${ToolbarItemSubRoute}`}>
         <Flex gap={3} flexWrap={"nowrap"}>
           <ToolbarItemIcon size={ToolbarItemIconSize} color="#FFF0F5" />

@@ -15,14 +15,12 @@ import {
 import Movements from "./components/movements/Movements";
 import FlowcashType from "./components/flowcashType/FlowcashType";
 import Operation from "./components/operations/Operations";
-import ToolbarFlowcash from "./layouts/components/ToolbarFlowcash";
 import Reports from "./components/reports/Reports";
 
 function Flowcash() {
 
-
     return (
-        <Box minH="100vh" overflowY={"auto"}>
+        <Box minH="100%" overflowY={"auto"} overflow={'auto'}>
 
            { /*Container Movements*/}
             <Stack 
@@ -68,8 +66,6 @@ function Flowcash() {
                 </Stack>
 
             </Stack>
-            
-            <ToolbarFlowcash />
         </Box>
     )
 }
