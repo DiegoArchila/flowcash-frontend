@@ -1,19 +1,24 @@
-import { Box, Stack } from '@chakra-ui/react';
+import { GridItem, Grid } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom'
 import ToolbarFlowcash from './components/ToolbarFlowcash';
 
 function FlowcashLayout() {
   return (
 
-    <Stack
-      direction={{
-        base: 'column-reverse'
-      }}
-      position={'relative'}
+    <Grid
+    templateAreas={`"toolbarFlowcash" "outlet"`}
+      width={'100%'}
+      height={'100%'}
+      overflow={'hidden'}
+      boxSizing={'border-box'}
+      boxShadow={'0px 6px 15px rgba(0, 0, 0, 0.2), 0px 2px 6px rgba(0, 50, 98, 0.4)'}
+      backgroundColor={'#FFFFFF'}
+      alignContent={'baseline'}
     >
 
-      <Box
+      <GridItem
         position={'fixed'}
+        gridArea={'toolbarFlowcash'}
         bottom={'0px'}
         m={'0px'}
         zIndex={'1'}
@@ -21,19 +26,26 @@ function FlowcashLayout() {
         w={'100%'}
       >
         <ToolbarFlowcash />
-      </Box>
+      </GridItem>
 
-      <Box
-        marginBottom={'48px'}
-        padding={'0px 5px'}
+      <GridItem
+      gridArea={'outlet'}
+        marginTop={'0px'}
         width={'100%'}
         height={'100%'}
         overflow={'auto'}
+        padding={
+          {
+            base: '0px 5px',
+            lg: '0px 10px'
+          }
+        }
+
       >
         <Outlet />
-      </Box>
+      </GridItem>
 
-    </Stack>
+    </Grid>
   );
 }
 

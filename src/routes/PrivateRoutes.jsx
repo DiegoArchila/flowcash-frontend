@@ -10,7 +10,7 @@ import FlowcashRoutes from "../pages/private/flowcash/routes/FlowcashRoutes";
 
 export const PrivateRoutes= () => {
 
-  /**See almost ToolbarPrivate.jsx */
+  
   const SUB_ROUTE="/private";
 
   return (

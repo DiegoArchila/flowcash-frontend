@@ -1,30 +1,43 @@
-import { Box, Flex } from '@chakra-ui/react';
-import { Outlet } from 'react-router-dom'
+import { Box, Grid } from '@chakra-ui/react';
+import { Outlet } from 'react-router-dom';
 import ToolbarPrivate from './components/toolbar/ToolbarPrivate';
 
 function PrivateLayout() {
   return (
-
-    <Flex flexDir={{
-      base: 'column',
-      lg: 'row'
-    }}
+    <Grid
+      templateAreas={{
+        base: `"toolbar" "content"`,
+        lg: `"toolbar content"`,
+      }}
+      gridTemplateRows={{
+        base: 'auto 1fr',
+        lg: 'auto 1fr', 
+      }}
+      gridTemplateColumns={{
+        base: '1fr',
+        lg: 'auto 1fr',
+      }}
       w={'100%'}
-      h={'100%'}
-      position={'relative'}
+      h={'100vh'}
+      position={'fixed'}
+      overflow={'hidden'}
+      gap={0}
     >
-
-      <ToolbarPrivate />
-
+      <Box gridArea="toolbar" zIndex={10}>
+        <ToolbarPrivate />
+      </Box>
       <Box
-        w={'100%'}
+        gridArea="content"
+        overflowY={'auto'}
         h={'100%'}
-        //padding={'0px 5px'}
+        position={'relative'}
+        alignItems={'start'} 
+        display={'flex'} 
+        flexDirection={'column'} 
       >
         <Outlet />
       </Box>
-
-    </Flex>
+    </Grid>
   );
 }
 

@@ -11,6 +11,7 @@ import { Box, Divider, Flex } from '@chakra-ui/react';
 //ICONS
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaCashRegister } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 function ToolbarFlowcash({ ...rest }) {
 
@@ -28,28 +29,47 @@ function ToolbarFlowcash({ ...rest }) {
       }}
       width={'100%'}
       bg={"#003262"}
-      py={3}
-      px={3}
-      justifyContent={"center"}
+      justifyContent={
+        {
+          base: "center",
+          lg: "start"
+        }
+      }
       alignItems={"center"}
       alignContent={"center"}
       flexDir={'row'}
-      gap={10}
+      gap={8}
+      padding={
+        {
+          base: "0px",
+          lg: "0px 48px"
+        }
+      }
       transition={"all 100ms ease"}
       boxSizing='border-box'
-      boxShadow={'0px 6px 15px rgba(0, 0, 0, 0.2), 0px 2px 6px rgba(0, 50, 98, 0.4)'}
+      boxShadow={'3px -5px 5px rgba(0, 0, 0, 0.2), 6px -8px 12px rgba(0, 50, 98, 0.4)'}
       {...rest}
     >
 
-      <Box cursor={"pointer"}>
-        <FaCashRegister size={26} color='#FFFFFF' />
-      </Box>
 
-      <Divider orientation={'vertical'} color={"FFF0F5"} h={"28px"} />
+      <Link to={'/private/flowcash'}>
 
-      <Box cursor={"pointer"} >
-        <TbReportAnalytics size={26} color='#FFFFFF' />
-      </Box>
+        <FaCashRegister size={26} color='#FFFFFF' cursor={'pointer'} />
+
+      </Link>
+
+
+      <Link to={'/private/flowcash/reports'}>
+
+        <TbReportAnalytics size={26} color='#FFFFFF' cursor={'pointer'} />
+
+      </Link>
+
+
+
+
+
+
 
     </Flex>
 
