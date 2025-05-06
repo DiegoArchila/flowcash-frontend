@@ -5,6 +5,7 @@ import { flowcashTypeSlice } from "./slices/flowcash/flowcashType/FlowcashType";
 import { operationSlice } from "./slices/flowcash/operation/Operation";
 import { operationTypeSlice } from "./slices/flowcash/operationType/OperationType";
 import { reportsFlowcashSlice } from "./slices/flowcash/reports/Reports";
+import { UserSlice } from "./slices/user/User";
 
 export const Store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const Store = configureStore({
         flowcashType: flowcashTypeSlice.reducer,
         operation: operationSlice.reducer,
         operationType: operationTypeSlice.reducer,
-        reportsFlowcash: reportsFlowcashSlice.reducer
+        reportsFlowcash: reportsFlowcashSlice.reducer,
+        user: UserSlice.reducer
     }
 });

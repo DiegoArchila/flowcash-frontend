@@ -1,12 +1,41 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import { Button, Container, FormControl, FormLabel, Input, Spacer } from "@chakra-ui/react";
 
-function Login(props) {
+function Login() {
+
+    const HandleSudmit = (e) => {
+        e.preventDefault();
+    }
+
   return (
-    <div>Login</div>
+    <Container display={"flex"} justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+
+        <form onSubmit={HandleSudmit}>
+            <FormControl isRequired>
+                <FormLabel>
+                    Email
+                </FormLabel>
+                <Input type="email" placeholder="Email" />
+            </FormControl>
+
+            <Spacer height={5} />
+            
+            <FormControl isRequired>
+                <FormLabel>
+                    Contraseña
+                </FormLabel>
+                <Input type="password" placeholder="Password" />
+            </FormControl>
+
+            <Spacer height={5} />
+
+            <Button type="submit" colorScheme={"blue"} width={"100%"} variant={"solid"}>
+                Iniciar sesión
+            </Button>
+
+        </form>
+
+    </Container>
   )
 }
 
-Login.propTypes = {}
-
-export default Login
+export default Login;

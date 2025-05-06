@@ -1,8 +1,9 @@
+import DataManager from "../../../../../components/DataManager/DataManager";
 
 
 function FlowcashReports() {
   return (
-    <div>FlowcashReports</div>
+    <h1> Reportes </h1>
   )
 }
 

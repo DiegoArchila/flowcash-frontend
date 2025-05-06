@@ -1,14 +1,16 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/public/login/Login";
-import Home from "../pages/public/home/Home";
+import PublicLayout from "../layouts/public/PublicLayout";
 
 export const PublicRoutes= () => {
   return (
 
     <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/*" element={<Navigate to={"/home"}/>} /> */}
+        <Route path="/*" element={<PublicLayout />} >
+          <Route index element={<Login />} />
+          <Route path={`login`} element={<Login />} />
+          <Route path={`*`} element={<Navigate to={`/login`}/>} />
+        </Route>
     </Routes>
 
   )
