@@ -13,20 +13,25 @@ import {
 
 import { flowcashApi } from "../../../api/flowcashApi";
 
-
-export const FlowcashThunks = {
+export const UserThunks = {
 
 
     loginUser: (login) => {
         return async (dispatch) => {
 
             try {
+
                 dispatch(startLoading());
     
                 // Request HTTP
                 const resp = await flowcashApi.post('/login', { login });
 
-                const data= resp.data;
+                const { data } = resp.data;
+
+                const user = JSON.stringify(data);
+                localStorage.setItem('MablaUser', user); 
+
+                console.log("MablaUser", user);
     
                 dispatch(SetUser({ 
                     userId: data.id,
@@ -34,13 +39,23 @@ export const FlowcashThunks = {
                     role: data.role,
                     JWTToken: data.token
                 }));
-                
+
+                return;
+
             } catch (error) {
-                dispatch(setErrors(error.response.data));
+                dispatch(setErrors(error.response?.data));
             } finally {
                 dispatch(stopLoading());
             }   
 
+        }
+    },
+
+    logoutUser: () => {
+        return (dispatch) => {
+            localStorage.removeItem('MablaUser');
+            dispatch(logout());
+            dispatch(errorsClear());
         }
     }
 };

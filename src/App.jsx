@@ -1,27 +1,23 @@
-//Redux
-import { useSelector } from "react-redux";
+
+import { Routes } from "react-router-dom";
 
 import { PublicRoutes } from "./routes/PublicRoutes";
 import { PrivateRoutes } from "./routes/PrivateRoutes";
 
+
 function App() {
 
-  const { isAuthenticated } = useSelector((state) => state.user);
-
-  console.log('Esta autenticado?: ',isAuthenticated);
-
   return (
-    <div className="containerAPP">
-      
-    {
-      isAuthenticated ?
-      <PrivateRoutes /> :
-      <PublicRoutes />
+    <Routes>
+      {/* Public Routes */}
 
-    }
+      {PublicRoutes()}
 
-    </div>
 
+      {/* Private Routes */}
+      {PrivateRoutes()}
+     
+    </Routes>
   );
 }
 

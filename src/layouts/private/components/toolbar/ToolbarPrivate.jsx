@@ -1,6 +1,9 @@
 //REACT
 import { useState } from "react";
 
+//REDUX
+import { useSelector } from "react-redux";
+
 //COMPONENTS
 import Toolbar from "../../../../components/toolbar/Toolbar.jsx";
 import ToolbarItem from "../../../../components/toolbar/components/ToolbarItem.jsx";
@@ -16,11 +19,12 @@ import { FaFileInvoiceDollar, FaPeopleGroup } from "react-icons/fa6";
 import { RiAccountBoxLine } from "react-icons/ri";
 import { RiMenuUnfold3Fill, RiMenuUnfold4Fill } from "react-icons/ri";
 import { HiMiniBarsArrowDown, HiMiniBarsArrowUp } from "react-icons/hi2";
+import UserButtonToolbarPrivate from "./user/UserToolbarPrivate.jsx";
 
 
 function ToolbarPrivate() {
-
-  const SUB_ROUTE = "/private";
+  
+  const { userName } = useSelector(state => state.user);
 
   const [expandedMenu, setExpandedMenu] = useState(false);
 
@@ -78,7 +82,7 @@ function ToolbarPrivate() {
 
       top={{
         base: '0px'
-      }}      
+      }}
 
     >
 
@@ -101,9 +105,9 @@ function ToolbarPrivate() {
               fontFamily={"brand"}
               color='#FFF0F5'
               fontSize={"22px"}
-              w={'112px'}
               wordBreak={''}
               cursor={'pointer'}
+              w={!isViewMobile ? '122px' : 'fit-content'}
             >
               Mabla POS
             </Text>
@@ -128,10 +132,10 @@ function ToolbarPrivate() {
 
       </Flex>
 
-      <Divider 
+      <Divider
         orientation={currentViewDivider}
-        color={"#FFF0F5"} 
-        m={'0px'} 
+        color={"#FFF0F5"}
+        m={'0px'}
       />
 
 
@@ -170,6 +174,7 @@ function ToolbarPrivate() {
           ToolbarItemIcon={MdOutlineHomeWork}
           ToolbarItemSubRoute='/private/home'
           isFullSize={expandedMenu}
+          setFullSize={toggleExpandedMenu}
           key={'ToolbarItem-Home'}
         />
 
@@ -179,6 +184,7 @@ function ToolbarPrivate() {
           ToolbarItemIcon={FaBoxes}
           ToolbarItemSubRoute='/private/products'
           isFullSize={expandedMenu}
+          setFullSize={toggleExpandedMenu}
           key={'ToolbarItem-Products'}
         />
 
@@ -188,6 +194,7 @@ function ToolbarPrivate() {
           ToolbarItemIcon={FaCashRegister}
           ToolbarItemSubRoute='/private/flowcash'
           isFullSize={expandedMenu}
+          setFullSize={toggleExpandedMenu}
           key={'ToolbarItem-Flowcash'}
         />
 
@@ -197,6 +204,7 @@ function ToolbarPrivate() {
           ToolbarItemIcon={FaFileInvoiceDollar}
           ToolbarItemSubRoute='/private/invoices'
           isFullSize={expandedMenu}
+          setFullSize={toggleExpandedMenu}
           key={'ToolbarItem-Invoices'}
         />
 
@@ -206,6 +214,7 @@ function ToolbarPrivate() {
           ToolbarItemIcon={FaPeopleGroup}
           ToolbarItemSubRoute='/private/costumers'
           isFullSize={expandedMenu}
+          setFullSize={toggleExpandedMenu}
           key={'ToolbarItem-Costumers'}
         />
 
@@ -215,6 +224,7 @@ function ToolbarPrivate() {
           ToolbarItemIcon={MdFactory}
           ToolbarItemSubRoute='/private/supplies'
           isFullSize={expandedMenu}
+          setFullSize={toggleExpandedMenu}
           key={'ToolbarItem-Factory'}
         />
 
@@ -227,10 +237,10 @@ function ToolbarPrivate() {
       * FOOTER
       *******************************************************************/}
 
-      <Divider 
+      <Divider
         orientation={currentViewDivider}
-        color={"#FFF0F5"} 
-        m={'0px'} 
+        color={"#FFF0F5"}
+        m={'0px'}
       />
 
       <Flex
@@ -251,14 +261,19 @@ function ToolbarPrivate() {
 
 
         {/* ACCOUNT */}
+
         <ToolbarItem
-          ToolbarItemCaption='Cuenta'
+          ToolbarItemCaption={userName}
           ToolbarItemIcon={RiAccountBoxLine}
-          ToolbarItemSubRoute='/private/account'
           isFullSize={expandedMenu}
-          ToolbarItemIconSize={26}
+          setFullSize={toggleExpandedMenu}
+          hasMenu={true}
           key={'ToolbarItem-Account'}
-        />
+          scaleOnhover={false}
+        >
+          <UserButtonToolbarPrivate />
+        </ToolbarItem>
+
 
       </Flex>
 

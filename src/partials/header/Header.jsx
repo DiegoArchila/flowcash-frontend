@@ -38,11 +38,17 @@ function Header() {
 
         <FaAngleDoubleDown size={24} color='#FFFFFF' />
 
-        <Text fontWeight={800} fontFamily={"brand"} fontSize={28} color={"#FFFFFF"} fontStyle={"revert-layer"}>
-          <Link to={"/"}>
-            {"Flowcash".toLocaleUpperCase()}
-          </Link>
-        </Text>
+        <Link to={"/"}>
+          <Text
+            fontFamily={"brand"}
+            color='#FFF0F5'
+            fontSize={"28px"}
+            cursor={'pointer'}
+          >
+            {"Mabla POS"}
+          </Text>
+
+        </Link>
 
       </Box>
 

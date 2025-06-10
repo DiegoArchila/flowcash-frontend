@@ -1,17 +1,22 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import Login from "../pages/public/login/Login";
 import PublicLayout from "../layouts/public/PublicLayout";
+import { useSelector } from "react-redux";
 
-export const PublicRoutes= () => {
+export const PublicRoutes = () => {
+
+  const { isAuthenticated } = useSelector((state) => state.user);
+
   return (
+    <>
 
-    <Routes>
-        <Route path="/*" element={<PublicLayout />} >
-          <Route index element={<Login />} />
-          <Route path={`login`} element={<Login />} />
-          <Route path={`*`} element={<Navigate to={`/login`}/>} />
-        </Route>
-    </Routes>
+      <Route path="/" element={<PublicLayout />}>
+        <Route index element={<Navigate to={isAuthenticated ? "/private" : "/login"} />} />
+        <Route path="login" element={isAuthenticated ? <Navigate to="/private" /> : <Login />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Route>
+
+    </>
 
   )
 }
