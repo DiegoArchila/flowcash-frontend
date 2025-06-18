@@ -14,7 +14,7 @@ export const PrivateRoutes = () => {
   return (
 
     <>
-      <Route path="/private" element={isAuthenticated ? <PrivateLayout /> : <Navigate to="/login" />}>
+      <Route path="/private" element={ isAuthenticated!=undefined && isAuthenticated ? <PrivateLayout /> : <Navigate to="/login" />}>
         <Route index element={<Home />} />
         <Route path="products" element={<Products />} />
         <Route path="supplies" element={<Suppliers />} />

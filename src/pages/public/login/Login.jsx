@@ -23,13 +23,10 @@ import {
     AlertDescription
 } from "@chakra-ui/react";
 
-import { useNavigate } from 'react-router-dom';
-
 function Login() {
 
-    const { isLoading, errors, isAuthenticated } = useSelector((state) => state.user);
+    const { isLoading, errors } = useSelector((state) => state.user);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [login, setlogin] = useState({
         email: "",
@@ -54,9 +51,6 @@ function Login() {
         }
     }
 
-    const token = localStorage.getItem("MablaUser");
-
-    console.log("EStes es el token en el login", token)
 
     return (
         <Container display={"flex"} justifyContent={"center"} alignItems={"center"} height={"100vh"}>

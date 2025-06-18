@@ -30,8 +30,6 @@ export const UserThunks = {
 
                 const user = JSON.stringify(data);
                 localStorage.setItem('MablaUser', user); 
-
-                console.log("MablaUser", user);
     
                 dispatch(SetUser({ 
                     userId: data.id,
@@ -53,6 +51,7 @@ export const UserThunks = {
 
     logoutUser: () => {
         return (dispatch) => {
+            console.log('Deploying logoutUser thunk');
             localStorage.removeItem('MablaUser');
             dispatch(logout());
             dispatch(errorsClear());
