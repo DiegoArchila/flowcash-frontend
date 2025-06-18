@@ -1,5 +1,5 @@
 //React
-import { useEffect, Fragment, useCallback } from "react";
+import { useEffect, Fragment } from "react";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -42,13 +42,14 @@ import DeleteMovement from "./components/DeleteOperation";
 import { formatDate } from "../../../../../utils/formatDate";
 import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
 import Pagination from "../../../../../components/pagination/Pagination";
+import RoleFilter from "../../../../../components/RoleFilter/RoleFilter";
 
 export default function Movements() {
 
     // Redux
     const dispatch = useDispatch();
 
-    const { data:{data: dataFlowcash=[], totalRow, currentPage}, isLoading: isLoadingFlowcash } = useSelector(state => state.flowcash);
+    const { data: { data: dataFlowcash = [], totalRow, currentPage }, isLoading: isLoadingFlowcash } = useSelector(state => state.flowcash);
     const { data: dataFlowcashType = [] } = useSelector(state => state.flowcashType);
     const { data: dataOperation = [] } = useSelector(state => state.operation);
     const { data: dataOperationType = [] } = useSelector(state => state.operationType);
@@ -58,7 +59,7 @@ export default function Movements() {
         dispatch(OperationTypeThunks.getOperationsType());
         dispatch(FlowcashThunks.getFlowcash());
 
-    }, [dispatch]);    
+    }, [dispatch]);
 
     // Functions to displays operations over movements
     const {
@@ -98,9 +99,9 @@ export default function Movements() {
     return (
         <Fragment>
             <DataManager
-                config={configDataManager} 
-                isLoadingData={isLoadingFlowcash} 
-                createFunction={OnOpenCreateTransaction} 
+                config={configDataManager}
+                isLoadingData={isLoadingFlowcash}
+                createFunction={OnOpenCreateTransaction}
             >
 
                 {/* COMPONENT TO CREATE A NEW MOVEMENT */}
@@ -234,25 +235,29 @@ export default function Movements() {
                                                 <IoIosInformationCircleOutline size={22} color={"#007FFF"} />
                                             </Box>
 
-                                            {/* COLUMN: Edit */}
-                                            <Box cursor={"pointer"}
-                                                onClick={() => {
-                                                    dispatch(setTarget(elementFlowcash.id));
-                                                    OnOpenEditTransaction();
-                                                }}
-                                            >
-                                                <FaRegEdit size={22} color={"#7BA05B"} />
-                                            </Box>
+                                            {/* RoleFilter to show Edit button only for specific roles*/}
+                                            <RoleFilter roles={["admin"]}>
+                                                {/* COLUMN: Edit */}
+                                                <Box cursor={"pointer"}
+                                                    onClick={() => {
+                                                        dispatch(setTarget(elementFlowcash.id));
+                                                        OnOpenEditTransaction();
+                                                    }}
+                                                >
+                                                    <FaRegEdit size={22} color={"#7BA05B"} />
+                                                </Box>
 
-                                            {/* COLUMN: Delete */}
-                                            <Box cursor={"pointer"}
-                                                onClick={() => {
-                                                    dispatch(setTarget(elementFlowcash.id));
-                                                    OnOpenDeleteTransaction();
-                                                }}
-                                            >
-                                                <MdOutlineDeleteForever size={26} color={"#E23D28"} />
-                                            </Box>
+
+                                                {/* COLUMN: Delete */}
+                                                <Box cursor={"pointer"}
+                                                    onClick={() => {
+                                                        dispatch(setTarget(elementFlowcash.id));
+                                                        OnOpenDeleteTransaction();
+                                                    }}
+                                                >
+                                                    <MdOutlineDeleteForever size={26} color={"#E23D28"} />
+                                                </Box>
+                                            </RoleFilter>
                                         </HStack>
                                     </Center>
                                 </Td>
@@ -273,19 +278,19 @@ export default function Movements() {
 
             </DataManager>
             {
-                totalRow!=0 ?
-                    <Pagination 
-                        key={"PaginationMovement"+Date.now()}
-                        length={totalRow || 0} 
+                totalRow != 0 ?
+                    <Pagination
+                        key={"PaginationMovement" + Date.now()}
+                        length={totalRow || 0}
                         queryFunction={FlowcashThunks.getFlowcash}
                         currentPage={currentPage}
                     />
-                :
+                    :
                     null
 
             }
 
-        
+
         </Fragment>
     )
 }

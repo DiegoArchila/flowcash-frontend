@@ -37,30 +37,31 @@ import DataManager from "../../../../../components/DataManager/DataManager";
 import DataManagerBody from "../../../../../components/DataManager/DataManagerBody";
 import OperationOperations from "./components/OperationOperations";
 import OperationDelete from "./components/OperationDelete";
+import RoleFilter from "../../../../../components/RoleFilter/RoleFilter";
 
 export default function Operation() {
 
     // Redux
     const dispatch = useDispatch();
 
-    const { 
-        data= [], 
+    const {
+        data = [],
         isLoading
     } = useSelector(state => state.operation);
 
-    const { 
-        data: dataOperationType= [], 
+    const {
+        data: dataOperationType = [],
     } = useSelector(state => state.operationType);
 
 
     useEffect(() => {
 
-        dispatch( OperationThunks.getOperations() );
+        dispatch(OperationThunks.getOperations());
 
     }, [dispatch]);
 
-     // Functions to displays operations over movements
-     const {
+    // Functions to displays operations over movements
+    const {
         isOpen: isOpenCreateOperation,
         onOpen: OnOpenCreateOperation,
         onClose: onCloseCreateOperation
@@ -189,25 +190,28 @@ export default function Operation() {
                                             <IoIosInformationCircleOutline size={22} color={"#007FFF"} />
                                         </Box>
 
-                                        {/* COLUMN: Edit */}
-                                        <Box cursor={"pointer"}
-                                            onClick={() => {
-                                                dispatch(setTarget(elementOperation.id));
-                                                OnOpenEditOperation();
-                                            }}
-                                        >
-                                            <FaRegEdit size={22} color={"#7BA05B"} />
-                                        </Box>
+                                        <RoleFilter roles={["admin"]}>
 
-                                        {/* COLUMN: Delete */}
-                                        <Box cursor={"pointer"}
-                                            onClick={() => {
-                                                dispatch(setTarget(elementOperation.id));
-                                                OnOpenDeleteOperation();
-                                            }}
-                                        >
-                                            <MdOutlineDeleteForever size={26} color={"#E23D28"} />
-                                        </Box>
+                                            {/* COLUMN: Edit */}
+                                            <Box cursor={"pointer"}
+                                                onClick={() => {
+                                                    dispatch(setTarget(elementOperation.id));
+                                                    OnOpenEditOperation();
+                                                }}
+                                            >
+                                                <FaRegEdit size={22} color={"#7BA05B"} />
+                                            </Box>
+
+                                            {/* COLUMN: Delete */}
+                                            <Box cursor={"pointer"}
+                                                onClick={() => {
+                                                    dispatch(setTarget(elementOperation.id));
+                                                    OnOpenDeleteOperation();
+                                                }}
+                                            >
+                                                <MdOutlineDeleteForever size={26} color={"#E23D28"} />
+                                            </Box>
+                                        </RoleFilter>
                                     </HStack>
                                 </Center>
                             </Td>

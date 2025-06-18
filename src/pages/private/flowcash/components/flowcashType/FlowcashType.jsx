@@ -34,6 +34,7 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 
 //UTILS
 import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
+import RoleFilter from "../../../../../components/RoleFilter/RoleFilter";
 
 function FlowcashType() {
 
@@ -139,17 +140,17 @@ function FlowcashType() {
                                 {/* COLUMN: balance */}
                                 <Td textAlign={"left"}>
                                     <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16} align={"right"}>
-                                    {
-                                        formatCurrencyCOP(
-                                            Number.parseFloat(dataReportsFlowcash
-                                            .filter(report => report.flowcashtypeid === elementFlowcashType.id)
-                                            .reduce((Total, report) => {
-                                                return report.is_sum
-                                                ? Total + Number(report.total)
-                                                : Total - Number(report.total);
-                                            }, 0)) + (Number.parseFloat(elementFlowcashType.balance) || 0 )
-                                        )
-                                    }
+                                        {
+                                            formatCurrencyCOP(
+                                                Number.parseFloat(dataReportsFlowcash
+                                                    .filter(report => report.flowcashtypeid === elementFlowcashType.id)
+                                                    .reduce((Total, report) => {
+                                                        return report.is_sum
+                                                            ? Total + Number(report.total)
+                                                            : Total - Number(report.total);
+                                                    }, 0)) + (Number.parseFloat(elementFlowcashType.balance) || 0)
+                                            )
+                                        }
                                     </Text>
                                 </Td>
 
@@ -172,25 +173,27 @@ function FlowcashType() {
                                                 <IoIosInformationCircleOutline size={22} color={"#007FFF"} />
                                             </Box>
 
-                                            {/* COLUMN: Edit */}
-                                            <Box cursor={"pointer"}
-                                                onClick={() => {
-                                                    dispatch(setTarget(elementFlowcashType.id));
-                                                    OnOpenEditFlowcashType();
-                                                }}
-                                            >
-                                                <FaRegEdit size={22} color={"#7BA05B"} />
-                                            </Box>
+                                            <RoleFilter roles={["admin"]}>">
+                                                {/* COLUMN: Edit */}
+                                                <Box cursor={"pointer"}
+                                                    onClick={() => {
+                                                        dispatch(setTarget(elementFlowcashType.id));
+                                                        OnOpenEditFlowcashType();
+                                                    }}
+                                                >
+                                                    <FaRegEdit size={22} color={"#7BA05B"} />
+                                                </Box>
 
-                                            {/* COLUMN: Delete */}
-                                            <Box cursor={"pointer"}
-                                                onClick={() => {
-                                                    dispatch(setTarget(elementFlowcashType.id));
-                                                    OnOpenDeleteFlowcashType();
-                                                }}
-                                            >
-                                                <MdOutlineDeleteForever size={26} color={"#E23D28"} />
-                                            </Box>
+                                                {/* COLUMN: Delete */}
+                                                <Box cursor={"pointer"}
+                                                    onClick={() => {
+                                                        dispatch(setTarget(elementFlowcashType.id));
+                                                        OnOpenDeleteFlowcashType();
+                                                    }}
+                                                >
+                                                    <MdOutlineDeleteForever size={26} color={"#E23D28"} />
+                                                </Box>
+                                            </RoleFilter>
                                         </HStack>
                                     </Center>
                                 </Td>
