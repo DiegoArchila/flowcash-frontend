@@ -36,8 +36,7 @@ flowcashApi.interceptors.response.use(
     console.log("Error en la respuesta:", error.response.status);
     if (error.response.status === 401) {
 
-      //clear localStorage and remove user from store
-      UserThunks.logoutUser();
+      Location.removeItem("MablaUser");
       
       // Redirect to login page
       window.location.href = "/login";
