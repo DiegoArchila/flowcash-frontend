@@ -173,7 +173,7 @@ function FlowcashType() {
                                                 <IoIosInformationCircleOutline size={22} color={"#007FFF"} />
                                             </Box>
 
-                                            <RoleFilter roles={["admin"]}>">
+                                            <RoleFilter roles={["admin"]}>
                                                 {/* COLUMN: Edit */}
                                                 <Box cursor={"pointer"}
                                                     onClick={() => {
