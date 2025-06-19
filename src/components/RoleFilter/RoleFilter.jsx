@@ -15,7 +15,7 @@ function RoleFilter({ roles, children }) {
 
     const { role } = useSelector((state) => state.user);
 
-    if (!roles.includes(role)) {
+    if (!roles.includes(role.name)) {
         return null; // or you can return a message or redirect
     }
 
