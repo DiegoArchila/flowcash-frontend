@@ -24,6 +24,7 @@ function FlowcashLayout() {
         zIndex={'1'}
         height={'48px'}
         w={'100%'}
+        mt={'42px'}
       >
         <ToolbarFlowcash />
       </GridItem>
