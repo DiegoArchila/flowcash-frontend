@@ -47,7 +47,7 @@ function ToolbarFlowcash({ ...rest }) {
       }
       transition={"all 100ms ease"}
       boxSizing='border-box'
-      boxShadow={'3px -5px 5px rgba(0, 0, 0, 0.2), 6px -8px 12px rgba(0, 50, 98, 0.4)'}
+      boxShadow={'6px -8px 12px rgba(0, 50, 98, 0.4)'}
       {...rest}
     >
 

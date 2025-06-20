@@ -2,8 +2,8 @@ import axios from "axios";
 
 
 export const flowcashApi= axios.create({
-    baseURL: "https://api.mabla.app/api"
-    //baseURL: "http://localhost:3001/api"
+    //baseURL: "https://api.mabla.app/api"
+    baseURL: "http://localhost:3001/api"
 });
 
 // Interceptor de request

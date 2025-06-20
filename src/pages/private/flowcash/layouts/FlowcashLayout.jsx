@@ -11,7 +11,6 @@ function FlowcashLayout() {
       height={'100%'}
       overflow={'hidden'}
       boxSizing={'border-box'}
-      boxShadow={'0px 6px 15px rgba(0, 0, 0, 0.2), 0px 2px 6px rgba(0, 50, 98, 0.4)'}
       backgroundColor={'#FFFFFF'}
       alignContent={'baseline'}
       mb={'54px'}
