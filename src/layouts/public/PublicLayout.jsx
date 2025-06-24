@@ -11,9 +11,9 @@ function PublicLayout() {
         
     >
 
-        <GridItem gridArea={"header"}>
+        {/* <GridItem gridArea={"header"}>
             <Header />
-        </GridItem>
+        </GridItem> */}
         
         
         <GridItem gridArea={"body"}>
