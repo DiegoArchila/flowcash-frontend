@@ -60,7 +60,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
      */
     const [operation, setOperation] = useState({
         type: null,
-        operation_type_id: null,
+        operation_type_id: "",
         notes: null
     });
 
@@ -217,7 +217,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                         {errors && (
                             <Alerts
                                 status='error'
-                                title='Ha ocurrido un error al tratar de obtener los datos'
+                                title='Ha ocurrido un error.'
                                 description={(errors) ? (JSON.stringify(errors?.parent?.detail) || JSON.stringify(errors?.parent)) : ""}
                             />
                         )}
@@ -234,7 +234,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                                     color={"text.paragraphs"}
                                     type="text"
                                     isReadOnly={type === "DETAIL" ? true : false}
-                                    value={String(operation.type).toUpperCase() || ""}
+                                    value={operation.type || ""}
                                     name="type"
                                     onChange={HandleForm}
                                     textAlign={"left"}

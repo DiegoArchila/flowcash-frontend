@@ -101,7 +101,7 @@ function FlowcashReports() {
 
                                                 }}
                                             >
-                                                <FaRegFolderOpen size={22} color={"#007FFF"} />
+                                                <FaRegFolderOpen size={22} color={"#718096"} />
                                             </Box>
 
                                             {/* Open Detail balance */}
@@ -110,7 +110,7 @@ function FlowcashReports() {
 
                                                 }}
                                             >
-                                                <BiSolidPrinter size={22} color={"#007FFF"} />
+                                                <BiSolidPrinter size={22} color={"#718096"} />
                                             </Box>
 
                                         </HStack>

@@ -73,21 +73,33 @@ export default function Reports() {
 
                         {/* COLUMN: Caja */}
                         <Td textAlign={"left"}>
-                            <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                            <Text
+                                fontFamily={"paragraphs"}
+                                fontSize={"sm"}
+                                color={"text.paragraphs"}
+                            >
                                 {String(elementReportFlowcash.flowcashtypename).toLocaleUpperCase()}
                             </Text>
                         </Td>
 
                         {/* COLUMN: Ingresos*/}
                         <Td textAlign={"right"}>
-                            <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                            <Text
+                                fontFamily={"paragraphs"}
+                                fontSize={"md"}
+                                color={"text.paragraphs"}
+                            >
                                 {formatCurrencyCOP(elementReportFlowcash.ingresos)}
                             </Text>
                         </Td>
 
                         {/* COLUMN: Egresos*/}
                         <Td textAlign={"right"}>
-                            <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                            <Text
+                                fontFamily={"paragraphs"}
+                                fontSize={"md"}
+                                color={"text.paragraphs"}
+                            >
                                 {formatCurrencyCOP(elementReportFlowcash.egresos)}
                             </Text>
                         </Td>
