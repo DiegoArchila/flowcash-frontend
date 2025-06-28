@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { errorsClear, clearTarget  } from "../../../../../../store/slices/flowcash/Flowcash";
+import { errorsClear, clearTarget } from "../../../../../../store/slices/flowcash/Flowcash";
 import { FlowcashThunks } from "../../../../../../store/slices/flowcash/FlowcashThunks";
+
+//Components
+import Alerts from "../../../../../../components/Alerts/Alerts";
 
 //CHAKRA UI
 import {
@@ -28,21 +31,21 @@ import {
 import { MdOutlineDeleteForever } from "react-icons/md";
 
 function DeleteOperation({ onClose, isOpen }) {
-    
+
     // Redux
     const dispatch = useDispatch();
 
-    const { errors, inProcess, target, isDone, data:{data} } = useSelector(state => state.flowcash);
+    const { errors, inProcess, target, isDone, data: { data } } = useSelector(state => state.flowcash);
     const [toDelete, setToDelete] = useState(null);
 
-    useEffect( () => {
-        if(isDone){
+    useEffect(() => {
+        if (isDone) {
             closeDeleteOperation();
         }
-        if (target!=null) {
+        if (target != null) {
             setToDelete(data.find(e => e.id === target));
         }
-  
+
     }, [dispatch, isDone, target]);
 
     const cancelRef = useRef();
@@ -73,44 +76,62 @@ function DeleteOperation({ onClose, isOpen }) {
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
-                        <AlertDialogHeader fontSize='lg' bgColor={"#E23D28"} color={"white"}>
+                        <AlertDialogHeader
+                            bgColor={"error.500"}>
                             <Box display={"flex"} gap={3}>
                                 <MdOutlineDeleteForever size={28} color={"#FFFFFF"} />
-                                {String("Borrar movimiento").toLocaleUpperCase()}
+                                <Text
+                                    fontFamily={"heading"}
+                                    fontWeight={"bold"}
+                                    fontSize={"xl"}
+                                    color={"gray.50"}
+                                >
+                                    {String("Borrar movimiento")}
+                                </Text>
                             </Box>
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
 
                             {/* Error Message */}
-                            <Alert status='error' mb={3} display={!(errors === null) ? "block" : "none"}>
-                                <HStack>
-                                    <AlertIcon />
-                                    <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
-                                </HStack>
-                                <AlertDescription>{(errors) ? errors?.error : ""}</AlertDescription>
-                            </Alert>
 
-                            <Text>Estas seguro de eliminar el movimiento: </Text>
-                                {
-                                    toDelete ?
-                                    <Text fontFamily={"Input-SemiBold"}>{String(toDelete.description).toLocaleUpperCase()}?</Text>:
-                                    <Text fontFamily={"Input-SemiBold"}>{String("HA OCURRIDO UN ERROR").toLocaleUpperCase()}</Text>
-                                }
-                            <Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
+                            {errors && (
+                                <Alerts
+                                    status='error'
+                                    title='Error al eliminar el movimiento'
+                                    description={errors?.error || ""}
+                                />
+                            )}
+
+                            <Text
+                                fontFamily={"paragraphs"}
+                                fontSize={"md"}
+                            >Estas seguro de eliminar el movimiento: </Text>
+
+                            {
+                                toDelete ?
+                                    <Text fontFamily={"paragraphs"} fontWeight={"bold"}>{String(toDelete.description).toUpperCase()}?</Text> :
+                                    <Text fontFamily={"paragraphs"} fontWeight={"bold"}>{String("HA OCURRIDO UN ERROR")}</Text>
+                            }
+
+                            <Text
+                                fontFamily={"paragraphs"}
+                                fontSize={"md"}
+                            >Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
 
                         </AlertDialogBody>
 
 
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={() => {
+                            <Button ref={cancelRef} fontFamily={"button"} onClick={() => {
                                 closeDeleteOperation();
-                                
+
                             }}>
                                 Cancelar
                             </Button>
                             <Button
                                 colorScheme='red'
+                                fontFamily={"button"}
                                 isLoading={inProcess}
                                 onClick={() => {
                                     handleDelete(toDelete.id);

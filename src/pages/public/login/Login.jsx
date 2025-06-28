@@ -56,7 +56,10 @@ function Login() {
                 >
                     <Stack spacing={6}>
                         <Center>
-                            <Text fontSize="xl" fontWeight="bold" color="blue.600">
+                            <Text fontSize="2xl" 
+                                fontWeight="bold" 
+                                color="blue.600"
+                                fontFamily="heading">
                                 Iniciar sesión
                             </Text>
                         </Center>
@@ -70,7 +73,11 @@ function Login() {
                         )}
 
                         <FormControl isRequired>
-                            <FormLabel color="text.paragraphs">Email</FormLabel>
+                            <FormLabel 
+                                color="text.labels" 
+                                fontSize={'md'}
+                                fontFamily={"label"}
+                                >Dirección de email</FormLabel>
                             <InputGroup>
                                 <InputLeftElement pointerEvents="none">
                                     <FiMail color="gray" />
@@ -81,14 +88,20 @@ function Login() {
                                     placeholder="correo@ejemplo.com"
                                     value={credentials.email}
                                     onChange={handleChange}
-                                    color={"text.subheadings"}
-                                    fontSize={'16px'}
+                                    color={"text.paragraphs"}
+                                    fontSize={'md'}
+                                    inputMode='email'
+                                    fontFamily={"input"}
                                 />
                             </InputGroup>
                         </FormControl>
 
                         <FormControl isRequired>
-                            <FormLabel color="text.paragraphs">Contraseña</FormLabel>
+                            <FormLabel 
+                                color="text.labels" 
+                                fontSize={'md'}
+                                fontFamily={"label"}
+                                >Contraseña</FormLabel>
                             <InputGroup>
                                 <InputLeftElement pointerEvents="none">
                                     <FiLock color="gray" />
@@ -99,6 +112,10 @@ function Login() {
                                     placeholder="••••••••"
                                     value={credentials.password}
                                     onChange={handleChange}
+                                    color={"text.paragraphs"}
+                                    inputMode='text'
+                                    fontSize={'md'}
+                                    fontFamily={"input"}
                                 />
                             </InputGroup>
                         </FormControl>
@@ -108,8 +125,10 @@ function Login() {
                             type="submit"
                             isLoading={isLoading}
                             width="full"
+                            fontSize={'md'}
+                            fontFamily={"button"}
                         >
-                            Iniciar sesión
+                            Ingresar
                         </Button>
                     </Stack>
                 </Box>

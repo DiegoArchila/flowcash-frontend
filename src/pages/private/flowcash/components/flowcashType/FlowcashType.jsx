@@ -98,7 +98,7 @@ function FlowcashType() {
                 isOpen={isOpenCreateFlowcashType}
                 onClose={onCloseCreateFlowcashType}
                 title={"Nueva caja"}
-                icon={<MdAddBox size={32} color='#FFFFFF' />}
+                icon={<MdAddBox size={32} color='#3182ce' />}
                 type={"CREATE"}
             />
 
@@ -106,7 +106,7 @@ function FlowcashType() {
                 isOpen={isOpenDetailFlowcashType}
                 onClose={onCloseDetailFlowcashType}
                 title={"Detalle caja"}
-                icon={<IoIosInformationCircleOutline size={32} color='#FFFFFF' />}
+                icon={<IoIosInformationCircleOutline size={32} color='#3182ce' />}
                 type={"DETAIL"}
             />
 
@@ -114,7 +114,7 @@ function FlowcashType() {
                 isOpen={isOpenEditFlowcashType}
                 onClose={onCloseEditFlowcashType}
                 title={"Editar caja"}
-                icon={<FaRegEdit size={32} color='#FFFFFF' />}
+                icon={<FaRegEdit size={32} color='#3182ce' />}
                 type={"EDIT"}
             />
 
@@ -132,14 +132,14 @@ function FlowcashType() {
                             <Tr key={i}>
                                 {/* COLUMN: Name */}
                                 <Td textAlign={"left"}>
-                                    <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                                    <Text fontFamily={"label"} color={"text.paragraphs"} fontSize={"sm"}>
                                         {String(elementFlowcashType.name).toLocaleUpperCase()}
                                     </Text>
                                 </Td>
 
                                 {/* COLUMN: balance */}
                                 <Td textAlign={"left"}>
-                                    <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16} align={"right"}>
+                                    <Text fontFamily={"label"} color={"text.paragraphs"} fontSize={"md"} align={"right"}>
                                         {
                                             formatCurrencyCOP(
                                                 Number.parseFloat(dataReportsFlowcash

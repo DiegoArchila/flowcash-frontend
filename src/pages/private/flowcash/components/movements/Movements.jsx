@@ -41,7 +41,7 @@ import DeleteMovement from "./components/DeleteOperation";
 //Utils
 import { formatDate } from "../../../../../utils/formatDate";
 import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
-import Pagination from "../../../../../components/pagination/Pagination";
+import Pagination from "../../../../../components/Pagination/Pagination";
 import RoleFilter from "../../../../../components/RoleFilter/RoleFilter";
 
 export default function Movements() {
@@ -109,7 +109,7 @@ export default function Movements() {
                     isOpen={isOpenCreateTransaction}
                     onClose={onCloseCreateTransaction}
                     title={"Nuevo movimiento"}
-                    icon={<MdAddBox size={32} color='#FFFFFF' />}
+                    icon={<MdAddBox size={32} color='#3182ce' />}
                     type={"CREATE"}
                 />
 
@@ -118,7 +118,7 @@ export default function Movements() {
                     isOpen={isOpenEditTransaction}
                     onClose={onCloseEditTransaction}
                     title={"Editar movimiento"}
-                    icon={<FaRegEdit size={32} color='#FFFFFF' />}
+                    icon={<FaRegEdit size={32} color='#3182ce' />}
                     type={"EDIT"}
                 />
 
@@ -127,7 +127,7 @@ export default function Movements() {
                     isOpen={isOpenDetailTransaction}
                     onClose={onCloseDetailTransaction}
                     title={"Detalle movimiento"}
-                    icon={<IoIosInformationCircleOutline size={32} color='#FFFFFF' />}
+                    icon={<IoIosInformationCircleOutline size={32} color='#3182ce' />}
                     type={"DETAIL"}
                 />
 
@@ -149,14 +149,20 @@ export default function Movements() {
 
                                 {/* COLUMN: Hora */}
                                 <Td textAlign={"center"}>
-                                    <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                                    <Text
+                                        fontFamily={"label"}
+                                        color={"text.paragraphs"}
+                                        fontSize={"sm"}>
                                         {formatDate.getDateFormatedLarge(elementFlowcash.datetime)}
                                     </Text>
                                 </Td>
 
                                 {/* COLUMN: FlowcashType */}
                                 <Td textAlign={"center"}>
-                                    <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={14}>
+                                    <Text
+                                        fontFamily={"label"}
+                                        color={"text.paragraphs"}
+                                        fontSize={"sm"}>
                                         {
                                             dataFlowcashType.map(elementFlowcashType => {
                                                 if (elementFlowcash.flowcash_type_id === elementFlowcashType.id) {
@@ -170,7 +176,10 @@ export default function Movements() {
 
                                 {/* COLUMN: Operation */}
                                 <Td textAlign={"center"}>
-                                    <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={13}>
+                                    <Text
+                                        fontFamily={"paragraph"}
+                                        color={"text.label"}
+                                        fontSize={"md"}>
                                         {
                                             dataOperation.map(elementOperation => {
 
@@ -187,9 +196,17 @@ export default function Movements() {
                                                     const fontColor = "#FFFFFF";
 
                                                     return (
-                                                        <Tag key={elementFlowcash + i + elementOperation} size={"sm"} bgColor={color} variant={"outline"} color={fontColor}>
+                                                        <Tag key={elementFlowcash + i + elementOperation}
+                                                            size={"sm"}
+                                                            bgColor={color}
+                                                            variant={"outline"}
+                                                            color={fontColor}>
                                                             <TagLeftIcon as={(res.is_sum) ? RiAddLargeLine : IoMdRemove} />
-                                                            <TagLabel fontSize={11} >{String(elementOperation.type).toLocaleUpperCase()}</TagLabel>
+                                                            <TagLabel
+                                                                fontSize={"xs"}
+                                                                fontFamily={"button"}>
+                                                                {String(elementOperation.type).toLocaleUpperCase()}
+                                                            </TagLabel>
                                                         </Tag>
                                                     );
                                                 }
@@ -200,18 +217,26 @@ export default function Movements() {
 
                                 {/* COLUMN: Description */}
                                 <Td textAlign={"left"}>
-                                    <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16} isTruncated maxWidth={{
-                                        base: "100px",
-                                        md: "200px",
-                                        lg: "330px"
-                                    }}>
+                                    <Text
+                                        fontFamily={"label"}
+                                        color={"text.paragraphs"}
+                                        fontSize={"sm"}
+                                        isTruncated
+                                        maxWidth={{
+                                            base: "100px",
+                                            md: "200px",
+                                            lg: "330px"
+                                        }}>
                                         {elementFlowcash.description}
                                     </Text>
                                 </Td>
 
                                 {/* COLUMN: Valor */}
                                 <Td textAlign={"right"}>
-                                    <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                                    <Text
+                                        fontFamily={"label"}
+                                        color={"text.paragraphs"}
+                                        fontSize={"md"}>
                                         {formatCurrencyCOP(elementFlowcash.value)}
                                     </Text>
                                 </Td>

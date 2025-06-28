@@ -103,7 +103,7 @@ export default function Operation() {
                 isOpen={isOpenCreateOperation}
                 onClose={onCloseCreateOperation}
                 title={"Nueva operación"}
-                icon={<MdAddBox size={32} color='#FFFFFF' />}
+                icon={<MdAddBox size={32} color='#3182ce' />}
                 type={"CREATE"}
             />
 
@@ -112,7 +112,7 @@ export default function Operation() {
                 isOpen={isOpenEditOperation}
                 onClose={onCloseEditOperation}
                 title={"Editar operación"}
-                icon={<FaRegEdit size={32} color='#FFFFFF' />}
+                icon={<FaRegEdit size={32} color='#3182ce' />}
                 type={"EDIT"}
             />
 
@@ -121,7 +121,7 @@ export default function Operation() {
                 isOpen={isOpenDetailOperation}
                 onClose={onCloseDetailOperation}
                 title={"Detalle operación"}
-                icon={<IoIosInformationCircleOutline size={32} color='#FFFFFF' />}
+                icon={<IoIosInformationCircleOutline size={32} color='#3182ce' />}
                 type={"DETAIL"}
             />
 
@@ -143,14 +143,22 @@ export default function Operation() {
 
                             {/* COLUMN: type */}
                             <Td textAlign={"left"}>
-                                <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={16}>
+                                <Text
+                                    fontFamily={"label"}
+                                    color={"text.paragraphs"}
+                                    fontSize={"sm"}
+                                >
                                     {String(elementOperation.type).toLocaleUpperCase()}
                                 </Text>
                             </Td>
 
                             {/* COLUMN: OperationType */}
                             <Td textAlign={"center"}>
-                                <Text fontFamily={"Parrafs-Prices"} color={"#2D3748"} fontSize={13}>
+                                <Text
+                                    fontFamily={"label"}
+                                    color={"text.paragraphs"}
+                                    fontSize={"sm"}
+                                >
                                     {
                                         dataOperationType.map(elementOperationType => {
 
@@ -162,7 +170,10 @@ export default function Operation() {
                                                 return (
                                                     <Tag key={elementOperation.type + i + elementOperationType.type} size={"sm"} bgColor={color} variant={"outline"} color={fontColor}>
                                                         <TagLeftIcon as={(elementOperationType.is_sum) ? RiAddLargeLine : IoMdRemove} />
-                                                        <TagLabel fontSize={11} >{String(elementOperationType.type).toLocaleUpperCase()}</TagLabel>
+                                                        <TagLabel
+                                                            fontSize={"xs"}
+                                                            fontFamily={"button"}
+                                                        >{String(elementOperationType.type).toLocaleUpperCase()}</TagLabel>
                                                     </Tag>
                                                 );
                                             }

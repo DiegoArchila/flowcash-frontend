@@ -47,11 +47,12 @@ function ToolbarItem({
 
   const iconElement = (
     <Flex gap={3} flexWrap="nowrap" align="center">
-      <ToolbarItemIcon size={ToolbarItemIconSize} color="#FFF0F5" />
+      <ToolbarItemIcon size={ToolbarItemIconSize} color="#f7fafc" />
       {isFullSize && (
         <Text 
-          color="#FFF0F5"
-          w={!isViewMobile ? '122px' : 'fit-content'}  
+          color="gray.50"
+          w={!isViewMobile ? '122px' : 'fit-content'}
+          fontFamily={'heading'}
         >
           {ToolbarItemCaption}
         </Text>

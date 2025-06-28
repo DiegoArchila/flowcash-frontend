@@ -23,11 +23,6 @@ import {
     Input,
     Textarea,
     Divider,
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
-    HStack,
     Tag,
     TagLeftIcon,
     TagLabel,
@@ -39,6 +34,8 @@ import {
 import { IoMdRemove } from "react-icons/io";
 import { RiAddLargeLine } from "react-icons/ri";
 
+//Components
+import Alerts from "../../../../../../components/Alerts/Alerts";
 
 //Utils
 import { formatCurrencyCOP } from "../../../../../../utils/formatCurrency";
@@ -63,7 +60,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
 
     // Redux
     const dispatch = useDispatch();
-    const { isDone: isDoneFlowcash, inProcess, errors, data: {data: dataFlowcash}, target: targetFlowcash } = useSelector(state => state.flowcash);
+    const { isDone: isDoneFlowcash, inProcess, errors, data: { data: dataFlowcash }, target: targetFlowcash } = useSelector(state => state.flowcash);
     const { data: dataFlowcashType } = useSelector(state => state.flowcashType);
     const { data: dataOperation } = useSelector(state => state.operation);
     const { data: dataOperationType } = useSelector(state => state.operationType);
@@ -110,14 +107,14 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                 } else {
                     setdisplaybalanceFormat("");
                 }
-                
+
             } else {
                 setNewFlowcash({
                     flowcash_type_id: null,
                     operation_id: null,
                     value: 0,
                     description: null
-               })
+                })
             }
 
             // To null for help to gargabe collector
@@ -198,7 +195,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                 description: newFlowcash.description
             }
             dispatch(FlowcashThunks.updateFlowcash(updateFlowcash, Number.parseInt(targetFlowcash)));
-            updateFlowcash=undefined;
+            updateFlowcash = undefined;
         } else {
 
             dispatch(FlowcashThunks.createFlowcash(newFlowcash));
@@ -233,43 +230,49 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                 sm: "md",
                 md: "sm"
             }}
-            onOverlayClick={closeCreateFlowcash}
+                onOverlayClick={closeCreateFlowcash}
             >
-                <DrawerOverlay/>
+                <DrawerOverlay />
                 <DrawerContent >
-                    <DrawerHeader display={"flex"} gap={2} bgColor={"#0072bb"} color={"#FFFFFF"}>
-
+                    <DrawerHeader
+                        display={"flex"}
+                        gap={2}
+                        bgColor={"info.50"}
+                        color={"info.700"}
+                        fontFamily={"label"}
+                    >
                         {icon}
-                        {String(title).toLocaleUpperCase()}
+                        {String(title)}
 
                     </DrawerHeader>
 
 
-                    <DrawerCloseButton color={"#FFFFFF"} onClick={closeCreateFlowcash}/>
+                    <DrawerCloseButton color={"error.900"} onClick={closeCreateFlowcash} />
                     <Divider orientation="horizontal" />
 
 
                     <DrawerBody>
 
-                        {/* Error Message */}
-                        <Alert status='error' mb={3} display={!(errors === null) ? "block" : "none"}>
-                            <HStack>
-                                <AlertIcon />
-                                <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
-                            </HStack>
-                            <AlertDescription>{(errors) ? (JSON.stringify(errors?.parent?.detail) || JSON.stringify(errors?.parent)) : ""}</AlertDescription>
-                        </Alert>
+                        {errors && (
+                            <Alerts
+                                status='error'
+                                title='Ha ocurrido un error al tratar de obtener los datos'
+                                description={(errors) ? (JSON.stringify(errors?.parent?.detail) || JSON.stringify(errors?.parent)) : ""}
+                            />
+                        )}
 
                         <form>
 
-                            
+
                             {/* FIELD: DATETIME */}
-                            { (type === "DETAIL") ? 
+                            {(type === "DETAIL") ?
                                 <FormControl mt={5}>
-                                    <FormLabel fontFamily={"Input-SemiBold"}>{"Hora"}</FormLabel>
+                                    <FormLabel fontFamily={"label"} color={"text.labels"}>{"Hora"}</FormLabel>
                                     <Input
                                         type="text"
-                                        isReadOnly={type==="DETAIL" ? true:false}
+                                        fontFamily={"input"}
+                                        color={"text.paragraphs"}
+                                        isReadOnly={type === "DETAIL" ? true : false}
                                         value={formatDate.getDateFormatedLarge(newFlowcash.datetime)}
                                         name="datetime"
                                         textAlign={"center"}
@@ -283,12 +286,14 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
 
                             {/* FIELD: Caja */}
                             <FormControl isRequired mt={5}>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Caja"}</FormLabel>
+                                <FormLabel fontFamily={"label"} color={"text.labels"}>{"Caja"}</FormLabel>
 
                                 <Select
+                                    fontFamily={"input"}
+                                    color={"text.paragraphs"}
                                     placeholder="Elije la caja"
                                     onChange={HandleForm}
-                                    isDisabled={type==="DETAIL" ? true:false}
+                                    isDisabled={type === "DETAIL" ? true : false}
                                     required
                                     onBlur={HandleForm}
                                     value={newFlowcash.flowcash_type_id || ""}
@@ -297,7 +302,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                                 >
                                     {dataFlowcashType?.map((e, i) => {
                                         return (
-                                            <option key={i} value={e.id}>{String(e.name).toLocaleUpperCase()}</option>
+                                            <option key={i} value={e.id} fontFamily={"input"}>{String(e.name).toLocaleUpperCase()}</option>
                                         )
                                     })}
                                 </Select>
@@ -315,7 +320,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                             <FormControl isRequired mt={5}>
                                 <Flex>
 
-                                    <FormLabel fontFamily={"Input-SemiBold"}>
+                                    <FormLabel fontFamily={"label"} color={"text.labels"}>
                                         {"Operación"}
                                     </FormLabel>
                                     <Box ml={"auto"}>
@@ -332,7 +337,10 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                                                 return (
                                                     <Tag key={operation.type + i} size={"sm"} bgColor={color} variant={"outline"} color={fontColor} mr={"auto"}>
                                                         <TagLeftIcon as={(res.is_sum) ? RiAddLargeLine : IoMdRemove} />
-                                                        <TagLabel fontSize={11} >{String(res.type).toLocaleUpperCase()}</TagLabel>
+                                                        <TagLabel
+                                                            fontSize={"xs"}
+                                                            fontFamily={"button"}>
+                                                            {String(res.type).toLocaleUpperCase()}</TagLabel>
                                                     </Tag>
                                                 );
                                             }
@@ -343,9 +351,11 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                                 </Flex>
 
                                 <Select
+                                    fontFamily={"input"}
+                                    color={"text.paragraphs"}
                                     placeholder="Elige la operación"
                                     onChange={HandleForm}
-                                    isDisabled={type==="DETAIL" ? true:false}
+                                    isDisabled={type === "DETAIL" ? true : false}
                                     required
                                     onBlur={HandleForm}
                                     value={newFlowcash.operation_id || ""}
@@ -354,7 +364,7 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                                 >
                                     {dataOperation?.map((e, i) => {
                                         return (
-                                            <option key={i} value={e.id} color="#ff6f61">{String(e.type).toLocaleUpperCase()}</option>
+                                            <option key={i} value={e.id} fontFamily={"input"}>{String(e.type).toLocaleUpperCase()}</option>
                                         )
                                     })}
                                 </Select>
@@ -375,10 +385,12 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
 
                             {/* FIELD: Value */}
                             <FormControl isRequired mt={5}>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Valor"}</FormLabel>
+                                <FormLabel fontFamily={"label"} color={"text.labels"}>{"Valor"}</FormLabel>
                                 <Input
+                                    fontFamily={"input"}
+                                    color={"text.paragraphs"}
                                     type="text"
-                                    isReadOnly={type==="DETAIL" ? true:false}
+                                    isReadOnly={type === "DETAIL" ? true : false}
                                     value={displaybalanceFormat}
                                     name="value"
                                     onChange={HandleForm}
@@ -398,8 +410,13 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
 
                             {/* FIELD: notes */}
                             <FormControl mt={5} isRequired>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Descripción"}</FormLabel>
-                                <Textarea value={[newFlowcash.description]} name="description" onChange={HandleForm} isReadOnly={type==="DETAIL" ? true:false}/>
+                                <FormLabel fontFamily={"label"} color={"text.labels"}>{"Descripción"}</FormLabel>
+                                <Textarea
+                                    fontFamily={"input"}
+                                    color={"text.paragraphs"}
+                                    value={[newFlowcash.description]}
+                                    name="description" onChange={HandleForm}
+                                    isReadOnly={type === "DETAIL" ? true : false} />
 
                                 {
                                     (checkFormErrors.description) ?
@@ -416,25 +433,25 @@ function OperationMovement({ isOpen, onClose, title, icon, type }) {
                     <DrawerFooter>
 
                         {
-                            type==="DETAIL" ?
-                            <Button colorScheme='blue' mr={3} onClick={() => {
-                                closeCreateFlowcash();
-                            }}>
-                                {"Cerrar"}
-                            </Button>
-                            :
-                            <Box>
-                                <Button colorScheme='blue' mr={3} onClick={HandleCreate} isLoading={inProcess}
-                                    isDisabled={checkFormErrors.description || checkFormErrors.value || checkFormErrors.flowcash_type_id || checkFormErrors.operation_id}
-                                >
-                                    {"Guardar"}
-                                </Button>
-                                <Button colorScheme='red' mr={3} onClick={() => {
+                            type === "DETAIL" ?
+                                <Button fontFamily={"button"} colorScheme='blue' mr={3} onClick={() => {
                                     closeCreateFlowcash();
                                 }}>
-                                    {"Cancelar"}
+                                    {"Cerrar"}
                                 </Button>
-                            </Box>
+                                :
+                                <Box>
+                                    <Button  fontFamily={"button"} colorScheme='blue' mr={3} onClick={HandleCreate} isLoading={inProcess}
+                                        isDisabled={checkFormErrors.description || checkFormErrors.value || checkFormErrors.flowcash_type_id || checkFormErrors.operation_id}
+                                    >
+                                        {"Guardar"}
+                                    </Button>
+                                    <Button fontFamily={"button"} colorScheme='red' mr={3} onClick={() => {
+                                        closeCreateFlowcash();
+                                    }}>
+                                        {"Cancelar"}
+                                    </Button>
+                                </Box>
                         }
                     </DrawerFooter>
                 </DrawerContent>

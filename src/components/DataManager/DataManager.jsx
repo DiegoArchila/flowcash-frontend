@@ -28,7 +28,7 @@ import { BsDatabaseFillAdd } from "react-icons/bs";
  */
 const DataManager = ({config = {
     title: "Administrador de datos",
-    icon: <FaDatabase size={32} color='#FFFFFF' />,
+    icon: <FaDatabase size={32} color='gray.50' />,
 },children,isLoadingData=true,createFunction}) => {
 
   return (
@@ -59,15 +59,15 @@ const DataManager = ({config = {
                     {config.icon ?
                         config.icon
                         :
-                        <FaDatabase size={24} color={"#FFFFFF"}/>
+                        <FaDatabase size={24} color={"#f7fafc"}/>
                     }
                 </Box>
 
                 <Box borderRadius={2}>
                     <Heading
                         textAlign={'center'}
-                        fontFamily={"Input-SemiBold"}
-                        color={"#FFFFFF"}
+                        fontFamily={"label"}
+                        color={"gray.50"}
                         as={"h3"}
                         size={"md"}
                     >
@@ -87,6 +87,7 @@ const DataManager = ({config = {
                         size={"xs"}
                         color={"#FFFFFF"}
                         variant={"ghost"}
+                        fontFamily={"button"}
                         gap={3}
                         onClick={createFunction}
                     >

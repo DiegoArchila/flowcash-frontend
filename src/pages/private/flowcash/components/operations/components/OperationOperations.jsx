@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { OperationThunks } from "../../../../../../store/slices/flowcash/operation/OperationThunks";
 import { resetStates, errorsClear, clearTarget } from "../../../../../../store/slices/flowcash/operation/Operation";
 
+//Components
+import Alerts from "../../../../../../components/Alerts/Alerts";
+
 //Chakra UI
 import {
     Modal,
@@ -23,11 +26,6 @@ import {
     Input,
     Textarea,
     Divider,
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
-    HStack,
     Tag,
     TagLeftIcon,
     TagLabel,
@@ -68,51 +66,51 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
 
     //REDUX
     const dispatch = useDispatch();
-    const { 
-        data = [], 
+    const {
+        data = [],
         inProcess,
         target,
         errors,
         isDone
     } = useSelector(state => state.operation);
 
-    const { 
-        data: dataOperationType = [], 
+    const {
+        data: dataOperationType = [],
     } = useSelector(state => state.operationType);
 
     //LOAD COMPONENT
     useEffect(() => {
 
-    if (type==="CREATE") {
-        
-        setOperation({
-            type: null,
-            operation_type_id: null,
-            notes: null
-        });
+        if (type === "CREATE") {
 
-    } else if (type==="DETAIL" || type==="EDIT") {
-
-        let temp = data.find(e => e.id === target);
-
-        if (temp) {
             setOperation({
-                id: temp.id,
-                type: temp.type,
-                operation_type_id: temp.operation_type_id,
-                notes: temp.notes
-
+                type: null,
+                operation_type_id: null,
+                notes: null
             });
 
-            //Set to undefined to help the garbage collector
-            temp=undefined;
+        } else if (type === "DETAIL" || type === "EDIT") {
+
+            let temp = data.find(e => e.id === target);
+
+            if (temp) {
+                setOperation({
+                    id: temp.id,
+                    type: temp.type,
+                    operation_type_id: temp.operation_type_id,
+                    notes: temp.notes
+
+                });
+
+                //Set to undefined to help the garbage collector
+                temp = undefined;
+            }
+
         }
 
-    }
-
-    if(isDone){
-        toClose();
-    }
+        if (isDone) {
+            toClose();
+        }
 
     }, [type, isDone, target])
 
@@ -150,12 +148,12 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
 
         switch (type) {
             case "CREATE":
-                
-                dispatch( OperationThunks.createOperation(operation) );
+
+                dispatch(OperationThunks.createOperation(operation));
                 break;
 
             case "EDIT":
-                
+
 
                 dispatch(OperationThunks.updateOperation({
                     type: operation.type,
@@ -191,44 +189,52 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
             <Modal isOpen={isOpen} onClose={onClose} size={{
                 md: "sm"
             }}
-            onOverlayClick={toClose}
+                onOverlayClick={toClose}
             >
-                <ModalOverlay/>
+                <ModalOverlay />
 
                 <ModalContent>
-                    <ModalHeader display={"flex"} gap={2} bgColor={"#0072bb"} color={"#FFFFFF"}>
+                    <ModalHeader
+                        display={"flex"}
+                        gap={2}
+                        bgColor={"info.50"}
+                        color={"info.700"}
+                        fontFamily={"label"}
+                    >
 
                         {icon}
-                        {String(title).toLocaleUpperCase()}
+                        {String(title)}
 
                     </ModalHeader>
 
 
-                    <ModalCloseButton color={"#FFFFFF"} onClick={toClose}/>
+                    <ModalCloseButton color={"error.900"} onClick={toClose} />
                     <Divider orientation="horizontal" />
 
 
                     <ModalBody>
 
-                        {/* Error Message */}
-                        <Alert status='error' mb={3} display={!(errors === null) ? "block" : "none"}>
-                            <HStack>
-                                <AlertIcon />
-                                <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
-                            </HStack>
-                            <AlertDescription>{(errors) ? (JSON.stringify(errors?.parent?.detail) || JSON.stringify(errors?.parent)) : ""}</AlertDescription>
-                        </Alert>
+                        {errors && (
+                            <Alerts
+                                status='error'
+                                title='Ha ocurrido un error al tratar de obtener los datos'
+                                description={(errors) ? (JSON.stringify(errors?.parent?.detail) || JSON.stringify(errors?.parent)) : ""}
+                            />
+                        )}
+
 
                         <form>
 
-                            
+
                             {/* FIELD: Type */}
                             <FormControl mt={5} isRequired>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Nombre operación"}</FormLabel>
+                                <FormLabel fontFamily={"label"} color={"text.labels"}>{"Nombre operación"}</FormLabel>
                                 <Input
+                                    fontFamily={"input"}
+                                    color={"text.paragraphs"}
                                     type="text"
-                                    isReadOnly={type==="DETAIL" ? true:false}
-                                    value={operation.type || ""}
+                                    isReadOnly={type === "DETAIL" ? true : false}
+                                    value={String(operation.type).toUpperCase() || ""}
                                     name="type"
                                     onChange={HandleForm}
                                     textAlign={"left"}
@@ -241,7 +247,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                             <FormControl isRequired mt={5}>
 
                                 <Flex>
-                                    <FormLabel fontFamily={"Input-SemiBold"}>{"Tipo de operación"}</FormLabel>
+                                    <FormLabel fontFamily={"label"} color={"text.labels"}>{"Tipo de operación"}</FormLabel>
 
                                     <Box ml={"auto"}>
 
@@ -257,8 +263,11 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                                             return (
                                                 <Tag key={e + i} size={"sm"} bgColor={color} variant={"outline"} color={fontColor}>
                                                     <TagLeftIcon as={(e.is_sum) ? RiAddLargeLine : IoMdRemove} />
-                                                    <TagLabel fontSize={11} >{(e.is_sum) ? String("suma").toLocaleUpperCase() : "resta".toLocaleUpperCase()}</TagLabel>
-                                                </Tag> 
+                                                    <TagLabel
+                                                        fontSize={"xs"}
+                                                        fontFamily={"button"}
+                                                    >{(e.is_sum) ? String("suma").toLocaleUpperCase() : "resta".toLocaleUpperCase()}</TagLabel>
+                                                </Tag>
                                             );
                                         })}
 
@@ -269,7 +278,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                                 <Select
                                     placeholder="Elije el tipo de operación"
                                     onChange={HandleForm}
-                                    isDisabled={type==="DETAIL" || type==="EDIT" ? true:false}
+                                    isDisabled={type === "DETAIL" || type === "EDIT" ? true : false}
                                     required
                                     onBlur={HandleForm}
                                     value={operation.operation_type_id || ""}
@@ -294,12 +303,16 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
 
                             {/* FIELD: notes */}
                             <FormControl mt={5}>
-                                <FormLabel fontFamily={"Input-SemiBold"}>{"Descripción"}</FormLabel>
-                                <Textarea 
-                                    value={[operation.notes] || ""} 
-                                    name="notes" 
-                                    onChange={HandleForm} 
-                                    isReadOnly={type==="DETAIL" ? true:false}/>
+                                <FormLabel fontFamily={"label"} color={"text.labels"}>{"Descripción"}</FormLabel>
+                                <Textarea
+                                    fontFamily={"input"}
+                                    color={"text.paragraphs"}
+                                    value={operation.notes || ""}
+                                    name="notes"
+                                    onChange={HandleForm}
+                                    isReadOnly={type === "DETAIL" ? true : false}
+                                    height={"150px"}
+                                    />
 
                                 {
                                     (checkFormErrors.description) ?
@@ -312,26 +325,26 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                         </form>
                     </ModalBody>
 
-                    <Divider orientation="horizontal" mt={5}/>
+                    <Divider orientation="horizontal" mt={5} />
 
                     <ModalFooter>
 
                         {
-                            type==="DETAIL" ?
-                            <Button colorScheme='blue' mr={3} onClick={toClose}>
-                                {"Cerrar"}
-                            </Button>
-                            :
-                            <Box>
-                                <Button colorScheme='blue' mr={3} onClick={HandleCreate} isLoading={inProcess}
-                                    isDisabled={checkFormErrors.type || checkFormErrors.operation_type_id }
-                                >
-                                    {"Guardar"}
+                            type === "DETAIL" ?
+                                <Button colorScheme='blue' mr={3} fontFamily={"button"} onClick={toClose}>
+                                    {"Cerrar"}
                                 </Button>
-                                <Button colorScheme='red' mr={3} onClick={toClose}>
-                                    {"Cancelar"}
-                                </Button>
-                            </Box>
+                                :
+                                <Box>
+                                    <Button colorScheme='blue' fontFamily={"button"} mr={3} onClick={HandleCreate} isLoading={inProcess}
+                                        isDisabled={checkFormErrors.type || checkFormErrors.operation_type_id}
+                                    >
+                                        {"Guardar"}
+                                    </Button>
+                                    <Button colorScheme='red' fontFamily={"button"} mr={3} onClick={toClose}>
+                                        {"Cancelar"}
+                                    </Button>
+                                </Box>
                         }
                     </ModalFooter>
                 </ModalContent>

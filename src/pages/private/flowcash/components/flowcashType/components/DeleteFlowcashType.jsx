@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { errorsClear, clearTarget  } from "../../../../../../store/slices/flowcash/flowcashType/FlowcashType";
+import { errorsClear, clearTarget } from "../../../../../../store/slices/flowcash/flowcashType/FlowcashType";
 import { FlowcashTypeThunks } from "../../../../../../store/slices/flowcash/flowcashType/FlowcashTypeThunks";
+
+//Components
+import Alerts from "../../../../../../components/Alerts/Alerts";
 
 //CHAKRA UI
 import {
@@ -43,14 +46,14 @@ function DeleteFlowcashType({ isOpen, onClose }) {
     const { errors, inProcess, target, isDone, data } = useSelector(state => state.flowcashType);
     const [toDelete, setToDelete] = useState(null);
 
-    useEffect( () => {
-        if(isDone){
+    useEffect(() => {
+        if (isDone) {
             closeDeleteOperation();
         }
-        if (target!=null) {
+        if (target != null) {
             setToDelete(data.find(e => e.id === target));
         }
-  
+
     }, [dispatch, isDone, target]);
 
     const cancelRef = useRef();
@@ -72,68 +75,83 @@ function DeleteFlowcashType({ isOpen, onClose }) {
     }
 
 
-  return (
-    <>
+    return (
+        <>
 
-        <AlertDialog
-            isOpen={isOpen}
-            leastDestructiveRef={cancelRef}
-            onClose={onClose}
-            onOverlayClick={closeDeleteOperation}
-        >
-            <AlertDialogOverlay>
-                <AlertDialogContent>
-                    <AlertDialogHeader fontSize='lg' bgColor={"#E23D28"} color={"white"}>
-                        <Box display={"flex"} gap={3}>
-                            <MdOutlineDeleteForever size={28} color={"#FFFFFF"} />
-                            {String("Borrar caja").toLocaleUpperCase()}
-                        </Box>
-                    </AlertDialogHeader>
+            <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+                onOverlayClick={closeDeleteOperation}
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader bgColor={"error.500"}>
+                            <Box display={"flex"} gap={3}>
+                                <MdOutlineDeleteForever size={28} color={"#FFFFFF"} />
+                                <Text
+                                    fontFamily={"heading"}
+                                    fontWeight={"bold"}
+                                    fontSize={"xl"}
+                                    color={"gray.50"}
+                                >
+                                    {String("Borrar caja")}
+                                </Text>
+                            </Box>
+                        </AlertDialogHeader>
 
-                    <AlertDialogBody>
+                        <AlertDialogBody>
 
-                        {/* Error Message */}
-                        <Alert status='error' mb={3} display={!(errors === null) ? "block" : "none"}>
-                            <HStack>
-                                <AlertIcon />
-                                <AlertTitle>¡Ha ocurrido un error!</AlertTitle>
-                            </HStack>
-                            <AlertDescription>{(errors) ? errors?.error : ""}</AlertDescription>
-                        </Alert>
+                            {/* Error Message */}
 
-                        <Text>Estas seguro de eliminar la caja: </Text>
+                            {errors && (
+                                <Alerts
+                                    status='error'
+                                    title='Error al eliminar la caja.'
+                                    description={errors?.error || ""}
+                                />
+                            )}
+
+                            <Text
+                                fontFamily={"paragraphs"}
+                                fontSize={"md"}
+                            >Estas seguro de eliminar la caja: </Text>
                             {
                                 toDelete ?
-                                <Text fontFamily={"Input-SemiBold"}>{String(toDelete.name).toLocaleUpperCase()}?</Text>:
-                                <Text fontFamily={"Input-SemiBold"}>{String("HA OCURRIDO UN ERROR").toLocaleUpperCase()}</Text>
+                                    <Text fontFamily={"paragraphs"} fontWeight={"bold"}>{String(toDelete.name).toUpperCase()}?</Text> :
+                                    <Text fontFamily={"paragraphs"} fontWeight={"bold"}>{String("HA OCURRIDO UN ERROR")}</Text>
                             }
-                        <Text>Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
+                            <Text
+                                fontFamily={"paragraphs"}
+                                fontSize={"md"}
+                            >Luego de ejecutada esta acción no se puede recuperar los datos eliminados.</Text>
 
-                    </AlertDialogBody>
+                        </AlertDialogBody>
 
 
-                    <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={() => {
-                            closeDeleteOperation();
-                            
-                        }}>
-                            Cancelar
-                        </Button>
-                        <Button
-                            colorScheme='red'
-                            isLoading={inProcess}
-                            onClick={() => {
-                                handleDelete(toDelete.id);
-                            }}
-                            ml={3}>
-                            Eliminar
-                        </Button>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialogOverlay>
-        </AlertDialog>
-    </>
-  )
+                        <AlertDialogFooter>
+                            <Button ref={cancelRef} fontFamily={"button"} onClick={() => {
+                                closeDeleteOperation();
+
+                            }}>
+                                Cancelar
+                            </Button>
+                            <Button
+                                fontFamily={"button"}
+                                colorScheme='red'
+                                isLoading={inProcess}
+                                onClick={() => {
+                                    handleDelete(toDelete.id);
+                                }}
+                                ml={3}>
+                                Eliminar
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
+        </>
+    )
 }
 
 DeleteFlowcashType.propTypes = {

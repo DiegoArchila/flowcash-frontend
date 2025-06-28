@@ -81,7 +81,6 @@ function Alerts({ status, title, description }) {
 
     return (
         <Alert
-            // `status` prop is still useful for accessibility and potential future Chakra defaults
             status={status}
             borderRadius="md"
             mb={4}
@@ -98,10 +97,10 @@ function Alerts({ status, title, description }) {
                 justifyContent="space-between"
                 width="100%"
             >
-                <AlertTitle color={currentStyles.titleColor} flex="1" mr={2}>
+                <AlertTitle color={currentStyles.titleColor} flex="1" mr={2} fontFamily={'heading'}>
                     {title}
                 </AlertTitle>
-                <Box minW={iconSize}> {/* Ensure icon doesn't shrink or wrap unncessarily */}
+                <Box minW={iconSize}> {/** Icon */}
                     {IconElement}
                 </Box>
             </Box>
@@ -109,7 +108,7 @@ function Alerts({ status, title, description }) {
                 <AlertDescription
                     color="text.paragraphs" 
                     fontSize={useBreakpointValue({ base: 'sm', md: 'md' })}
-                    fontFamily={'Parrafs-Prices'} // Ensure this font is loaded/available
+                    fontFamily={'paragraphs'} // Ensure this font is loaded/available
                 >
                     {description}
                 </AlertDescription>

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BalancePeriodThunks } from "../../../../../store/slices/flowcash/balancePeriod/BalancePeriodThunks";
 
 //COMPONENTS
-import Pagination from '../../../../../components/pagination/Pagination';
+import Pagination from '../../../../../components/Pagination/Pagination';
 import DataManager from '../../../../../components/DataManager/DataManager';
 import DataManagerBody from '../../../../../components/DataManager/DataManagerBody';
 
@@ -69,14 +69,20 @@ function FlowcashReports() {
 
                                     {/* Column End Date */}
                                     <Td textAlign={'center'}>
-                                        <Text fontFamily={'Parrafs-Prices'} fontSize={'16px'}>
+                                        <Text
+                                            fontFamily={"label"}
+                                            color={"text.paragraphs"}
+                                            fontSize={"sm"}>
                                             {formatDate.getDateFormatedLarge(balance.datetime_end)}
                                         </Text>
                                     </Td>
 
                                     {/* Column Start Date */}
                                     <Td textAlign={'center'}>
-                                        <Text fontFamily={'Parrafs-Prices'} fontSize={'16px'}>
+                                        <Text 
+                                            fontFamily={"label"}
+                                        color={"text.paragraphs"}
+                                        fontSize={"sm"}>
                                             {formatDate.getDateFormatedLarge(balance.datetime_start)}
                                         </Text>
                                     </Td>
@@ -92,7 +98,7 @@ function FlowcashReports() {
                                             {/* Open Detail balance */}
                                             <Box cursor={"pointer"}
                                                 onClick={() => {
-                                                    
+
                                                 }}
                                             >
                                                 <FaRegFolderOpen size={22} color={"#007FFF"} />
@@ -101,7 +107,7 @@ function FlowcashReports() {
                                             {/* Open Detail balance */}
                                             <Box cursor={"pointer"}
                                                 onClick={() => {
-                                                    
+
                                                 }}
                                             >
                                                 <BiSolidPrinter size={22} color={"#007FFF"} />
