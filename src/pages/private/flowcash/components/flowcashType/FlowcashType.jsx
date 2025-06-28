@@ -133,7 +133,7 @@ function FlowcashType() {
                                 {/* COLUMN: Name */}
                                 <Td textAlign={"left"}>
                                     <Text fontFamily={"label"} color={"text.paragraphs"} fontSize={"sm"}>
-                                        {String(elementFlowcashType.name).toLocaleUpperCase()}
+                                        { String(elementFlowcashType.name).toLocaleUpperCase()  }
                                     </Text>
                                 </Td>
 

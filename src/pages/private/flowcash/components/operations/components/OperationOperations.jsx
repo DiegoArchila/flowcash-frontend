@@ -234,7 +234,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                                     color={"text.paragraphs"}
                                     type="text"
                                     isReadOnly={type === "DETAIL" ? true : false}
-                                    value={operation.type || ""}
+                                    value={String(operation.type || "").toLocaleUpperCase()}
                                     name="type"
                                     onChange={HandleForm}
                                     textAlign={"left"}

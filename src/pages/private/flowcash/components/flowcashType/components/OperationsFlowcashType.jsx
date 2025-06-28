@@ -256,7 +256,7 @@ function OperationsFlowcashType({ isOpen, onClose, title, icon, type }) {
                                     fontFamily={"input"}
                                     color={"text.paragraphs"}
                                     isReadOnly={type === "DETAIL" ? true : false}
-                                    value={String(newFlowcashType.name).toUpperCase() || ""}
+                                    value={String(newFlowcashType.name || "").toLocaleUpperCase()}
                                     onChange={HandleForm}
                                     name="name"
                                     textAlign={"left"}
@@ -306,6 +306,7 @@ function OperationsFlowcashType({ isOpen, onClose, title, icon, type }) {
                                     onChange={HandleForm}
                                     isReadOnly={type === "DETAIL" ? true : false}
                                     placeholder='Proporciona la descripción de la caja.'
+                                    height={"150px"}
                                 />
 
                             </FormControl>
