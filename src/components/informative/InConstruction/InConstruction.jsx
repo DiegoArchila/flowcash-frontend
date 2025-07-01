@@ -1,4 +1,6 @@
 //Assets
+import InConstructionGif from '../../../assets/images/app/InConstruction.gif'
+import HiddenGif from '../../../assets/images/app/Hidden.gif'
 
 //Chakra UI
 import { Box, Image, Heading } from '@chakra-ui/react'
@@ -16,8 +18,8 @@ function InConstruction() {
       gap={5}
     >
       <Heading as='h1' size='xl'>En construcción...</Heading>
-      <Image src={'/public/InConstruction.gif'} />
-      <Image src={'/public/Hidden.gif'} />
+      <Image src={InConstructionGif} />
+      <Image src={HiddenGif} />
     </Box>
   )
 }
