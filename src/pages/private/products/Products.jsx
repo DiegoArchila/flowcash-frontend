@@ -1,9 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+//Components
+import ProductsLayout from './layout/ProductsLayout'
+import InConstruction from '../../../components/informative/InConstruction/InConstruction'
+
 function Products(props) {
   return (
-    <div>Products</div>
+    <ProductsLayout>
+      <InConstruction />
+    </ProductsLayout>
   )
 }
 
