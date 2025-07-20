@@ -1,9 +1,9 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const flowcashApi = axios.create({
-    baseURL: "https://api.mabla.app/api"
-    //baseURL: "http://localhost:3001/api"
+    baseURL: API_URL
 });
 
 // Interceptor de request

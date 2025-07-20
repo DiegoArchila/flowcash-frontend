@@ -225,7 +225,7 @@ function OperationsFlowcashType({ isOpen, onClose, title, icon, type }) {
                             <Alerts
                                 status='error'
                                 title='Ha ocurrido un error.'
-                                description={(errors) ? JSON.stringify(errors[0].message) : ""}
+                                description={(errors) ? JSON.stringify(errors.message) : ""}
                             />
                         )}
 

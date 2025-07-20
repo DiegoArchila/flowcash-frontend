@@ -22,6 +22,7 @@ import { BiSolidPrinter } from "react-icons/bi";
 
 //utils
 import { formatDate } from "../../../../../utils/formatDate";
+import { formatCurrencyCOP } from '../../../../../utils/formatCurrency';
 
 
 function FlowcashReports() {
@@ -49,7 +50,7 @@ function FlowcashReports() {
         icon: <TbReportAnalytics size={24} color='#FFFFFF' />
     }
 
-    const HeadersDataManager = ["Fecha final", "Fecha inicial", "Acciones"];
+    const HeadersDataManager = ["Fecha final", "Fecha inicial", "Total Entradas", "Total Salidas", "Total Saldo en Cajas", "Acciones"];
 
     console.log("dataBalancePeriod", dataBalancePeriod);
 
@@ -87,9 +88,40 @@ function FlowcashReports() {
                                         </Text>
                                     </Td>
 
+                                    {/* Column input */}
+                                    <Td textAlign={'center'}>
+                                        <Text
+                                            fontFamily={"label"}
+                                            color={"text.paragraphs"}
+                                            fontSize={"md"}>
+                                            {formatCurrencyCOP(balance.input)}
+                                        </Text>
+                                    </Td>
+
+                                    {/* Column output */}
+                                    <Td textAlign={'center'}>
+                                        <Text
+                                            fontFamily={"label"}
+                                            color={"text.paragraphs"}
+                                            fontSize={"md"}>
+                                            {formatCurrencyCOP(balance.output)}
+                                        </Text>
+                                    </Td>
+
+                                    {/* Column output */}
+                                    <Td textAlign={'center'}>
+                                        <Text
+                                            fontFamily={"label"}
+                                            color={"text.paragraphs"}
+                                            fontSize={"md"}>
+                                            {formatCurrencyCOP(balance.balance)}
+                                        </Text>
+                                    </Td>
+
                                     {/* Column Actions */}
                                     <Td alignContent={"center"} textAlign={"center"}>
                                         <HStack
+                                            justifyContent={"center"}
                                             alignContent={"space-between"}
                                             alignItems={"center"}
                                             gap={5}

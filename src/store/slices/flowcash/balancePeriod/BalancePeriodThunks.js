@@ -27,6 +27,8 @@ export const BalancePeriodThunks = {
                 );
 
                 const data= resp.data;
+
+                console.log("data",data);
     
                 dispatch(setBalanceData({ data: data }));
                 
