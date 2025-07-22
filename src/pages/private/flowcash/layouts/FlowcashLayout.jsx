@@ -9,7 +9,7 @@ function FlowcashLayout() {
     templateAreas={`"toolbarFlowcash" "outlet"`}
       width={'100%'}
       height={'100%'}
-      overflow={'hidden'}
+      overflow={'auto'}
       boxSizing={'border-box'}
       backgroundColor={'#FFFFFF'}
       alignContent={'baseline'}
@@ -32,6 +32,7 @@ function FlowcashLayout() {
       gridArea={'outlet'}
         marginTop={'0px'}
         width={'100%'}
+        overflow={'auto'}
         height={'100%'}
         padding={
           {
