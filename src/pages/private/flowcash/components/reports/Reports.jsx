@@ -1,11 +1,9 @@
 //React
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import { reportsThunks } from "../../../../../store/slices/flowcash/reports/reportsThunks";
-
-
 
 //Chakra UI
 import {
@@ -13,6 +11,7 @@ import {
     Td,
     Text,
     Center,
+    useDisclosure
 } from "@chakra-ui/react";
 
 //Icons
@@ -23,6 +22,7 @@ import { TbReportAnalytics } from "react-icons/tb";
 import DataManager from "../../../../../components/DataManager/DataManager";
 import DataManagerBody from "../../../../../components/DataManager/DataManagerBody";
 import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
+import AlertCloseFlowcash from "./components/AlertCloseFlowcash";
 
 export default function Reports() {
 
@@ -33,6 +33,11 @@ export default function Reports() {
         data = [],
         isLoading,
     } = useSelector(state => state.reportsFlowcash);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef();
+
+    
 
     useEffect(() => {
         dispatch(reportsThunks.getReportsFlowcash());
@@ -60,13 +65,22 @@ export default function Reports() {
     const configDataManager = {
         title: "Reporte actual",
         icon: <TbReportAnalytics size={24} color='#FFFFFF' />,
+        buttonTitle: "Cerrar período",
     }
 
     const HeadersDataManager = ["Caja", "Ingresos", "Egresos"];
 
     return (
-        <DataManager config={configDataManager} isLoadingData={isLoading} >
+        <DataManager config={configDataManager} isLoadingData={isLoading} createFunction={onOpen}>
+                <AlertCloseFlowcash
+                    isOpen={isOpen}
+                    onOpen={onOpen}
+                    onClose={onClose}
+                    cancelRef={cancelRef}
+                />
             <DataManagerBody headerTable={(data.length > 0) ? HeadersDataManager : []}>
+
+
                 {/* TABLE BODY */}
                 {reportArray.map((elementReportFlowcash, i) => (
                     <Tr key={i}>

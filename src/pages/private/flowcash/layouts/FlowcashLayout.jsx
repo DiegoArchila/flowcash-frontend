@@ -33,7 +33,6 @@ function FlowcashLayout() {
         marginTop={'0px'}
         width={'100%'}
         height={'100%'}
-        overflow={'auto'}
         padding={
           {
             base: '0px 5px',
