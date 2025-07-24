@@ -113,7 +113,7 @@ function Pagination({ length, queryFunction, currentPage }) {
             direction={"row"}
             width={"100%"}
             h={"36px"}
-            bgColor={'#0072BB'}
+            bgColor={'#ffffffff'}
             borderBottomRadius="md"
             mt={"-1px"}
             mb={"54px"}
