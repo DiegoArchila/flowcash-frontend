@@ -5,6 +5,10 @@ import {
     startLoadingData
 } from "./BalancePeriod";
 
+import { FlowcashThunks } from "../FlowcashThunks";
+import { FlowcashTypeThunks } from "../flowcashType/FlowcashTypeThunks";
+import { reportsThunks } from "../reports/reportsThunks";
+
 import { flowcashApi } from "../../../../api/flowcashApi";
 
 export const BalancePeriodThunks = {
@@ -57,7 +61,10 @@ export const BalancePeriodThunks = {
 
                 console.log("Response from createBalancePeriod", data);
 
-                dispatch(setBalanceData({ data: data }));
+
+                dispatch(FlowcashThunks.getFlowcash());
+                dispatch(FlowcashTypeThunks.getFlowcashType());
+                dispatch(reportsThunks.getReportsFlowcash());
 
             } catch (error) {
                 dispatch(setErrors(error.response.data));
