@@ -26,6 +26,7 @@ function PrivateLayout() {
       <Box gridArea="toolbar" zIndex={10}>
         <ToolbarPrivate />
       </Box>
+      
       <Box
         gridArea="content"
         overflowY={'auto'}

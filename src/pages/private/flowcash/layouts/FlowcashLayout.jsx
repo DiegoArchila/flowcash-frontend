@@ -11,7 +11,6 @@ function FlowcashLayout() {
       templateColumns={'100%'}
       width={'100%'}
       height={'calc(100% - 48px)'}
-      overflow={'auto'}
       boxSizing={'border-box'}
       backgroundColor={'#FFFFFF'}
       alignContent={'baseline'}
@@ -21,7 +20,7 @@ function FlowcashLayout() {
         gridArea={'outlet'}
         marginTop={'0px'}
         width={'100%'}
-        height={'calc(100% - 48px)'}
+        height={'fit-content'}
         overflow={'auto'}
         padding={
           {
