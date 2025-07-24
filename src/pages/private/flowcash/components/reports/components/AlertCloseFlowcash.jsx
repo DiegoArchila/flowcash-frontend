@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import { BalancePeriodThunks } from "../../../../../../store/slices/flowcash/balancePeriod/BalancePeriodThunks";
+
 //Chakara UI
 import { 
     Button,
@@ -13,6 +17,10 @@ import {
 } from '@chakra-ui/react';
 
 function AlertCloseFlowcash({isOpen, onClose, cancelRef, onClosePeriod}) {
+
+  // Redux
+  const dispatch = useDispatch();
+  const { isLoading: isLoadingBalancePeriod } = useSelector(state => state.balancePeriod);
 
   return (
     <>
@@ -28,14 +36,21 @@ function AlertCloseFlowcash({isOpen, onClose, cancelRef, onClosePeriod}) {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              ¿Estás seguro? No podrás deshacer esta acción después.
+              ¿Estás seguro(a)? No podrás deshacer esta acción después.
             </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
                 Cancelar
               </Button>
-              <Button colorScheme='red' onClick={()=>{}} ml={3}>
+              <Button
+                isDisabled={false} // You can add a condition to disable this button 
+                colorScheme='red' 
+                onClick={()=>{
+                  dispatch(BalancePeriodThunks.createBalancePeriod());
+                  onClose();
+                  onClosePeriod();
+                }} ml={3}>
                 Cerrar Periodo
               </Button>
             </AlertDialogFooter>
