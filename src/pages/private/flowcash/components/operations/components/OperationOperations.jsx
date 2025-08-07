@@ -187,7 +187,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
     return (
         <Fragment>
             <Modal isOpen={isOpen} onClose={onClose} size={{
-                md: "sm"
+                md: "md"
             }}
                 onOverlayClick={toClose}
             >
@@ -200,6 +200,7 @@ function OperationOperations({ isOpen, onClose, title, icon, type }) {
                         bgColor={"info.50"}
                         color={"info.700"}
                         fontFamily={"label"}
+                        borderRadius={5}
                     >
 
                         {icon}

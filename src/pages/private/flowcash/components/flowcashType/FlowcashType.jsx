@@ -84,9 +84,11 @@ function FlowcashType() {
     //DataManager
     const configDataManager = {
         title: "Cajas",
-        icon: <LiaCashRegisterSolid size={24} color='#FFFFFF' />,
+        icon: <LiaCashRegisterSolid size={24} color='#4a5568' />,
         buttonTitle: "Crear nueva",
-        buttonIcon: <MdAddBox size={24} color='#FFFFFF' />,
+        buttonIcon: <MdAddBox size={24} color='#4a5568' />,
+        colorSchemeButton: "teal",
+        variantButton: "outline",
     }
 
     const HeadersDataManager = ["caja", "saldo actual", "acciones"];
@@ -133,7 +135,7 @@ function FlowcashType() {
                                 {/* COLUMN: Name */}
                                 <Td textAlign={"left"}>
                                     <Text fontFamily={"label"} color={"text.paragraphs"} fontSize={"sm"}>
-                                        { String(elementFlowcashType.name).toLocaleUpperCase()  }
+                                        {String(elementFlowcashType.name).toLocaleUpperCase()}
                                     </Text>
                                 </Td>
 

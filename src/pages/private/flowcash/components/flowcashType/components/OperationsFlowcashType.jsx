@@ -196,7 +196,7 @@ function OperationsFlowcashType({ isOpen, onClose, title, icon, type }) {
         <React.Fragment>
 
             <Modal isOpen={isOpen} onClose={onClose} onOverlayClick={closeFlowcashType} size={{
-                md: "sm"
+                md: "md"
             }}
             >
 
@@ -211,6 +211,7 @@ function OperationsFlowcashType({ isOpen, onClose, title, icon, type }) {
                         bgColor={"info.50"}
                         color={"info.700"}
                         fontFamily={"label"}
+                        borderRadius={5}
                     >
                         {icon}
                         {String(title).toLocaleUpperCase()}

@@ -24,6 +24,7 @@ import DataManagerBody from "../../../../../components/DataManager/DataManagerBo
 import { formatCurrencyCOP } from "../../../../../utils/formatCurrency";
 import AlertCloseFlowcash from "./components/AlertCloseFlowcash";
 
+
 export default function Reports() {
 
     // Redux
@@ -35,15 +36,13 @@ export default function Reports() {
     } = useSelector(state => state.reportsFlowcash);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const cancelRef = useRef();
-
-    
+    const cancelRef = useRef();    
 
     useEffect(() => {
         dispatch(reportsThunks.getReportsFlowcash());
     }, [dispatch]);
 
-    // Agrupa los datos por flowcashtypeid
+    // group data by flowcashtypeid and calculate total ingresos and egresos
     const groupedData = data.reduce((acc, curr) => {
         const { flowcashtypeid, is_sum, total } = curr;
 
@@ -59,13 +58,15 @@ export default function Reports() {
         return acc;
     }, {});
 
-    // Convierte el objeto agrupado en un array
+    // Cast grouped data to an array
     const reportArray = Object.values(groupedData);
 
     const configDataManager = {
         title: "Reporte actual",
-        icon: <TbReportAnalytics size={24} color='#FFFFFF' />,
+        icon: <TbReportAnalytics size={24} color='#4a5568' />,
         buttonTitle: "Cerrar período",
+        colorSchemeButton: "red",
+        variantButton: "solid",
     }
 
     const HeadersDataManager = ["Caja", "Ingresos", "Egresos"];

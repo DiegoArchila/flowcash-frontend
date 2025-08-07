@@ -28,6 +28,7 @@ export const balancePeriodSlice = createSlice({
     setCreated: (state) => {
       state.inProcess = false;
       state.isDone = true;
+      state.isLoading = false;
     },
 
     // Target management
@@ -50,6 +51,7 @@ export const balancePeriodSlice = createSlice({
     resetStates: (state) => {
       state.inProcess = false;
       state.isDone = false;
+      state.isLoading = false;
     }
   }
 });

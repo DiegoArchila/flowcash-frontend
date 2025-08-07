@@ -2,7 +2,8 @@ import {
     resetStates, 
     setErrors, 
     setBalanceData, 
-    startLoadingData
+    startLoadingData,
+    setCreated,
 } from "./BalancePeriod";
 
 import { FlowcashThunks } from "../FlowcashThunks";
@@ -35,8 +36,6 @@ export const BalancePeriodThunks = {
                 );
 
                 const data= resp.data;
-
-                console.log("data",data);
     
                 dispatch(setBalanceData({ data: data }));
                 
@@ -55,7 +54,7 @@ export const BalancePeriodThunks = {
                 dispatch(startLoadingData());
 
                 // Request HTTP
-                const resp = await flowcashApi.post("/admin/flowcash/balance/create");
+                const resp = await flowcashApi.post("/admin/flowcash/reports/create");
 
                 const data = resp.data;
 
@@ -65,9 +64,11 @@ export const BalancePeriodThunks = {
                 dispatch(FlowcashThunks.getFlowcash());
                 dispatch(FlowcashTypeThunks.getFlowcashType());
                 dispatch(reportsThunks.getReportsFlowcash());
+                dispatch(setCreated());
 
             } catch (error) {
                 dispatch(setErrors(error.response.data));
+                dispatch(resetStates());
             }
         }
     },

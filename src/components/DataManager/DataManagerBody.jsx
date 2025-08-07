@@ -29,12 +29,13 @@ function DataManagerBody({headerTable=[], children}) {
             h={"100%"}
         >
             <Table
+                variant={"simple"}
                 size={"sm"}
             >
 
                 {/* TABLE HEADER */}
 
-                <Thead>
+                <Thead bgColor={"gray.100"} borderBottom={"1px solid"} borderColor={"gray.200"}>
                     <Tr>
                         {headerTable ?
                             headerTable.map((element, i) => {

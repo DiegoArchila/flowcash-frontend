@@ -28,7 +28,7 @@ import { BsDatabaseFillAdd } from "react-icons/bs";
  */
 const DataManager = ({config = {
     title: "Administrador de datos",
-    icon: <FaDatabase size={32} color='gray.50' />,
+    icon: <FaDatabase size={32} color='gray.100' colorSchemeButton='teal' variantButton='outline'/>,
 },children,isLoadingData=true,createFunction}) => {
 
   return (
@@ -36,11 +36,11 @@ const DataManager = ({config = {
         width={"100%"}
         h={"100%"}
         minHeight={"100%"}
-        bgColor={'#FFFFFF'}
         borderTopRadius="md"
-        mt={3} pb={3}
-        border={"1px"}
-        borderColor={"#E2E8F0"}
+        borderWidth={1}
+        borderColor={"gray.200"}
+        borderBottomRadius={"md"}
+        mt={3} pb={3} mb={3}
     >
 
         {/* HEADER */}
@@ -48,10 +48,12 @@ const DataManager = ({config = {
         <HStack
             pt={1} w={"100%"}
             justifyContent={"space-between"}
-            px={2} bgColor={"#0072BB"}
+            px={2}
             borderTopRadius="md"
+            bgColor={"gray.100"}
+            height={"2.5rem"}
         >
-
+            {/* Header */}
             <HStack pb={1}>
 
                 {/* Sets an icon */}
@@ -59,7 +61,7 @@ const DataManager = ({config = {
                     {config.icon ?
                         config.icon
                         :
-                        <FaDatabase size={24} color={"#f7fafc"}/>
+                        <FaDatabase size={24} color={"#4a5568"}/>
                     }
                 </Box>
 
@@ -67,7 +69,7 @@ const DataManager = ({config = {
                     <Heading
                         textAlign={'center'}
                         fontFamily={"label"}
-                        color={"gray.50"}
+                        color={"#4a5568"}
                         as={"h3"}
                         size={"md"}
                     >
@@ -83,12 +85,12 @@ const DataManager = ({config = {
             {
                 config.buttonTitle!= null || undefined ?
                     <Button
-                        colorScheme='whiteAlpha'
+                        colorScheme={config.colorSchemeButton}
                         size={"xs"}
-                        color={"#FFFFFF"}
-                        variant={"ghost"}
+                        variant={config.variantButton}
                         fontFamily={"button"}
                         gap={3}
+                        height={"1.8rem"}
                         onClick={createFunction}
                     >
                         {config.buttonTitle ?
@@ -101,7 +103,7 @@ const DataManager = ({config = {
                         {config.buttonIcon ?
                             config.buttonIcon
                             :
-                            <BsDatabaseFillAdd size={24} color='#FFFFFF' />
+                            <BsDatabaseFillAdd size={24} color='#e9f5ff' />
                         }
                     </Button>
                 :
@@ -131,7 +133,9 @@ DataManager.propTypes = {
         title: PropTypes.string,
         icon: PropTypes.node,
         buttonTitle: PropTypes.string,
-        buttonIcon: PropTypes.node
+        buttonIcon: PropTypes.node,
+        colorSchemeButton: PropTypes.string,
+        variantButton: PropTypes.string,
     }),
     isLoadingData: PropTypes.bool,
     createFunction: PropTypes.func

@@ -114,9 +114,7 @@ function Pagination({ length, queryFunction, currentPage }) {
             width={"100%"}
             h={"36px"}
             bgColor={'#ffffffff'}
-            borderBottomRadius="md"
-            mt={"-1px"}
-            mb={"54px"}
+            borderRadius="md"
             border={"1px"}
             borderColor={"#E2E8F0"}
             alignContent={"center"}

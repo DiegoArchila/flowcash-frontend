@@ -89,9 +89,11 @@ export default function Movements() {
     //DataManager
     const configDataManager = {
         title: "Movimientos",
-        icon: <PiArrowsDownUpBold size={24} color='#FFFFFF' />,
+        icon: <PiArrowsDownUpBold size={24} color='#4a5568' />,
         buttonTitle: "Crear nuevo",
-        buttonIcon: <MdAddBox size={24} color='#FFFFFF' />,
+        buttonIcon: <MdAddBox size={24} color='#4a5568' />,
+        colorSchemeButton: "teal",
+        variantButton: "outline",
     }
 
     const HeadersDataManager = ["hora", "caja", "operación", "Descripción", "valor", "acciones"];
@@ -150,9 +152,9 @@ export default function Movements() {
                                 {/* COLUMN: Hora */}
                                 <Td textAlign={"center"}>
                                     <Text
-                                        fontFamily={"label"}
-                                        color={"text.paragraphs"}
-                                        fontSize={"sm"}>
+                                        fontFamily={"paragraphs"}
+                                        fontSize={"md"}
+                                        color={"text.paragraphs"}>
                                         {formatDate.getDateFormatedLarge(elementFlowcash.datetime)}
                                     </Text>
                                 </Td>
@@ -160,9 +162,9 @@ export default function Movements() {
                                 {/* COLUMN: FlowcashType */}
                                 <Td textAlign={"center"}>
                                     <Text
-                                        fontFamily={"label"}
-                                        color={"text.paragraphs"}
-                                        fontSize={"sm"}>
+                                        fontFamily={"paragraphs"}
+                                        fontSize={"md"}
+                                        color={"text.paragraphs"}>
                                         {
                                             dataFlowcashType.map(elementFlowcashType => {
                                                 if (elementFlowcash.flowcash_type_id === elementFlowcashType.id) {
@@ -177,9 +179,9 @@ export default function Movements() {
                                 {/* COLUMN: Operation */}
                                 <Td textAlign={"center"}>
                                     <Text
-                                        fontFamily={"paragraph"}
-                                        color={"text.label"}
-                                        fontSize={"md"}>
+                                        fontFamily={"paragraphs"}
+                                        fontSize={"md"}
+                                        color={"text.paragraphs"}>
                                         {
                                             dataOperation.map(elementOperation => {
 
@@ -218,9 +220,9 @@ export default function Movements() {
                                 {/* COLUMN: Description */}
                                 <Td textAlign={"left"}>
                                     <Text
-                                        fontFamily={"label"}
+                                        fontFamily={"paragraphs"}
                                         color={"text.paragraphs"}
-                                        fontSize={"sm"}
+                                        fontSize={"md"}
                                         isTruncated
                                         maxWidth={{
                                             base: "100px",
@@ -234,7 +236,7 @@ export default function Movements() {
                                 {/* COLUMN: Valor */}
                                 <Td textAlign={"right"}>
                                     <Text
-                                        fontFamily={"label"}
+                                        fontFamily={"paragraphs"}
                                         color={"text.paragraphs"}
                                         fontSize={"md"}>
                                         {formatCurrencyCOP(elementFlowcash.value)}

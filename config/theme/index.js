@@ -20,6 +20,32 @@ const theme = extendTheme({
         bg: "gray.50",
         color: "gray.600",
       },
+      a: {
+        color: "brand.500",
+        _hover: {
+          textDecoration: "underline",
+        },
+      },
+      "h1, h2, h3, h4, h5, h6": {
+        fontFamily: "heading",
+        color: "text.headings",
+      },
+      "p": {
+        fontFamily: "paragraphs",
+        color: "text.paragraphs",
+      },
+      "button": {
+        fontFamily: "button",
+        color: "text.buttons",
+      },
+      "input, textarea": {
+        fontFamily: "input",
+        color: "text.inputs",
+      },
+      "label": {
+        fontFamily: "label",
+        color: "text.labels",
+      },
       "@font-face": [{
         fontFamily: "brand",
         src: "url('/fonts/Anta/Anta-Regular.woff2') format('woff2')",

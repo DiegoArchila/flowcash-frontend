@@ -88,9 +88,11 @@ export default function Operation() {
     //DataManager
     const configDataManager = {
         title: "Operaciones",
-        icon: <PiMathOperationsFill size={24} color='#FFFFFF' />,
+        icon: <PiMathOperationsFill size={24} color='#4a5568' />,
         buttonTitle: "Crear nueva",
-        buttonIcon: <MdAddBox size={24} color='#FFFFFF' />,
+        buttonIcon: <MdAddBox size={24} color='#4a5568' />,
+        colorSchemeButton: "teal",
+        variantButton: "outline",
     }
 
     const HeadersDataManager = ["nombre", "tipo", "acciones"];
