@@ -86,7 +86,7 @@ const DataManager = ({ config = {
 
                 {config.buttonTitle != null || undefined ?
                     <RoleFilter
-                        roles={["admin",roles]}
+                        roles={roles}
                     >
                         <Button
                             colorScheme={config.colorSchemeButton}

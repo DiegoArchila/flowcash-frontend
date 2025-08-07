@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
  * @param {React.ReactNode} props.children - Elements to render if the role matches.
  * @returns {React.ReactNode|null} The children if access is allowed, otherwise null.
  */
-function RoleFilter({ roles, children }) {
+function RoleFilter({ roles=[], children }) {
 
     const { role } = useSelector((state) => state.user);
 
