@@ -72,7 +72,13 @@ export default function Reports() {
     const HeadersDataManager = ["Caja", "Ingresos", "Egresos"];
 
     return (
-        <DataManager config={configDataManager} isLoadingData={isLoading} createFunction={onOpen}>
+        <DataManager 
+            config={configDataManager} 
+            isLoadingData={isLoading} 
+            createFunction={onOpen}
+            roles={["admin"]}
+            >
+
                 <AlertCloseFlowcash
                     isOpen={isOpen}
                     onOpen={onOpen}

@@ -104,6 +104,7 @@ export default function Movements() {
                 config={configDataManager}
                 isLoadingData={isLoadingFlowcash}
                 createFunction={OnOpenCreateTransaction}
+                roles={["admin", "common"]}
             >
 
                 {/* COMPONENT TO CREATE A NEW MOVEMENT */}

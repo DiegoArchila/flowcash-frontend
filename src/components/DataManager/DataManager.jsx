@@ -30,7 +30,7 @@ import RoleFilter from '../RoleFilter/RoleFilter';
 const DataManager = ({ config = {
     title: "Administrador de datos",
     icon: <FaDatabase size={32} color='gray.100' colorSchemeButton='teal' variantButton='outline' />,
-}, children, isLoadingData = true, createFunction }) => {
+}, children, isLoadingData = true, createFunction, roles = [] }) => {
 
     return (
         <Box
@@ -86,7 +86,7 @@ const DataManager = ({ config = {
 
                 {config.buttonTitle != null || undefined ?
                     <RoleFilter
-                        roles={["admin"]}
+                        roles={["admin",roles]}
                     >
                         <Button
                             colorScheme={config.colorSchemeButton}
@@ -144,7 +144,8 @@ DataManager.propTypes = {
         variantButton: PropTypes.string,
     }),
     isLoadingData: PropTypes.bool,
-    createFunction: PropTypes.func
+    createFunction: PropTypes.func,
+    roles: PropTypes.arrayOf(PropTypes.string)
 }
 
 //Functions Secundaries

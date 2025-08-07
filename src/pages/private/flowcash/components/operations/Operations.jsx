@@ -98,7 +98,12 @@ export default function Operation() {
     const HeadersDataManager = ["nombre", "tipo", "acciones"];
 
     return (
-        <DataManager config={configDataManager} isLoadingData={isLoading} createFunction={OnOpenCreateOperation} >
+        <DataManager 
+            config={configDataManager} 
+            isLoadingData={isLoading} 
+            createFunction={OnOpenCreateOperation} 
+            roles={["admin"]}
+        >
 
             {/* COMPONENT TO CREATE A NEW MOVEMENT */}
             <OperationOperations

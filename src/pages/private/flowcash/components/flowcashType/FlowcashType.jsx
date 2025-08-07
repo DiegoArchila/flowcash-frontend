@@ -94,7 +94,12 @@ function FlowcashType() {
     const HeadersDataManager = ["caja", "saldo actual", "acciones"];
 
     return (
-        <DataManager config={configDataManager} isLoadingData={isLoadingFlowcashType} createFunction={OnOpenCreateFlowcashType}>
+        <DataManager 
+            config={configDataManager} 
+            isLoadingData={isLoadingFlowcashType} 
+            createFunction={OnOpenCreateFlowcashType}
+            roles={["admin"]}
+        >
 
             <OperationsFlowcashType
                 isOpen={isOpenCreateFlowcashType}
